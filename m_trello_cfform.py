@@ -21,7 +21,7 @@ with st.form("Trello Dynamic Custom Field Form"):
     cfd = st.session_state['cfd']
     for df in cfd:
         if df['type'] == 'text' :
-            ['collect'][df['name']] = st.text_input(df['name'])
+            collect[df['name']] = st.text_input(df['name'])
         elif df['type'] == 'checkbox' :
             collect[df['name']] = st.checkbox(df['name'], value=False)
         elif df['type'] == 'date' :
