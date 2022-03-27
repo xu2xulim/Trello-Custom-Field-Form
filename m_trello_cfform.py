@@ -11,10 +11,10 @@ st.expander('Configure Trello Dynamic Custom Field Form', expanded=False)
 with st.form("Configure Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     # Every form must have a submit button.
-    submitted = st.form_submit_button("Submit")
+    configured = st.form_submit_button("Submit")
 
-    if submitted:
-        st.json(collect)
+    if configured:
+        #st.json(collect)
         res = httpx.post('https://70297.wayscript.io/function5')#st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res.json()['cfd']
 
@@ -38,9 +38,9 @@ with st.form("Trello Dynamic Custom Field Form"):
             collect[df['name']] = st.slider(df['name'])
 
     # Every form must have a submit button.
-    submitted = st.form_submit_button("Submit")
+    ready = st.form_submit_button("Submit")
 
-    if submitted:
+    if ready:
         st.json(collect)
         #st.write("slider", slider_val, "checkbox", checkbox_val)
 
