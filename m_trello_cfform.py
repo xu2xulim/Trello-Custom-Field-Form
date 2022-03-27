@@ -24,6 +24,8 @@ with st.form("Trello Dynamic Custom Field Form"):
         elif df['type'] == 'list' :
             options = [choice['value']['text'] for choice in df['options']]
             collect[df['name']] = st.selectbox(df['name'], options=options)
+        elif df['type'] == 'number' :
+            collect[df['name']] = st.slider(df['name'], step=0.1)
 
     # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
