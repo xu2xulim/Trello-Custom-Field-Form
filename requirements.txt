@@ -1,0 +1,5 @@
+deta
+
+pandas
+numpy
+httpx
