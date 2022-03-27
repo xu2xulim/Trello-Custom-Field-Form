@@ -22,8 +22,10 @@ with st.form("Configure Trello Dynamic Custom Field Form"):
         st.session_state['cfd'] = cfd
 
 
-
-st.session_state['collect'] = {}
+if st.session_state['collect'] != {}:
+    pass
+else:
+    st.session_state['collect'] = {}
 with st.form("Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     cfd = st.session_state['cfd']
