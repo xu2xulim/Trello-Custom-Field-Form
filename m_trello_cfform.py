@@ -19,6 +19,8 @@ with st.form("Configure Trello Dynamic Custom Field Form"):
         #st.json(collect)
         res = httpx.post('https://70297.wayscript.io/function5?board_id={}'.format(board_id))#st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res.json()['cfd']
+    else:
+        cfd = {}
 
 
 collect = {}
