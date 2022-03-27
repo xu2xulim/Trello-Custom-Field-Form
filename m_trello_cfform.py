@@ -12,3 +12,6 @@ cfd = res.json()['cfd']
 for df in cfd:
     if df['type'] == 'text' :
         st.text_input(df['name'])
+    else:
+        df['type'] == 'checkbox' :
+            st.checkbox(df['name'], value=False)
