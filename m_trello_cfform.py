@@ -6,8 +6,11 @@ from datetime import datetime
 from deta import Deta
 import json
 import httpx
+board_id = st.sidebar.selectbox(
+    "Select a board",
+    ("5fdd53039a97d380e792101e", "5fdd5958823f7d04004f236f")
+)
 
-st.session_state['cfd'] = {}
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
 
 res = httpx.post('https://70297.wayscript.io/function5?board_id={}'.format("5fdd5958823f7d04004f236f")) #st.write("slider", slider_val, "checkbox", checkbox_val)
