@@ -12,7 +12,7 @@ if 'collect' in st.session_state.keys():
     collect =  st.session_state['collect']
 else:
     collect = {}
-    
+
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
 
 with st.form("Configure Trello Dynamic Custom Field Form"):
@@ -52,7 +52,10 @@ with st.form("Trello Dynamic Custom Field Form"):
     ready = st.form_submit_button("Submit")
 
     if ready:
+        st.session_state['collect']=collect
+        st.write('Write Session')
         st.write(st.session_state['collect'])
+        st.write('Write Collect')
         st.write(collect)
 #st.write("slider", slider_val, "checkbox", checkbox_val)
 
