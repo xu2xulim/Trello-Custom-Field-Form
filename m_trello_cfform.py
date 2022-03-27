@@ -6,10 +6,12 @@ from datetime import datetime
 from deta import Deta
 import json
 import httpx
+
+cfd = {}
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
 
 with st.form("Configure Trello Dynamic Custom Field Form"):
-    st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
+    st.write("Collect information required to fetch CF definitions")
     # Every form must have a submit button.
     configured = st.form_submit_button("Submit Request")
 
@@ -42,7 +44,7 @@ with st.form("Trello Dynamic Custom Field Form"):
 
     if ready:
         st.json(collect)
-                #st.write("slider", slider_val, "checkbox", checkbox_val)
+        #st.write("slider", slider_val, "checkbox", checkbox_val)
 
 st.write("Outside the form")
 st.header('Above is the json output generated')
