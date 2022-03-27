@@ -7,7 +7,7 @@ from deta import Deta
 import json
 import httpx
 
-cfd = {}
+st.session_state['cfd'] = {}
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
 
 with st.form("Configure Trello Dynamic Custom Field Form"):
@@ -20,8 +20,7 @@ with st.form("Configure Trello Dynamic Custom Field Form"):
         res = httpx.post('https://70297.wayscript.io/function5?board_id={}'.format(board_id))#st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res.json()['cfd']
         st.session_state['cfd'] = cfd
-    else:
-        st.session_state['cfd'] = {}
+
 
 
 
