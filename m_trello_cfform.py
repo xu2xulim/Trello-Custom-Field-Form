@@ -45,10 +45,11 @@ with st.form("Trello Dynamic Custom Field Form"):
             collect[df['name']] = st.slider(df['name'])
 
                     # Every form must have a submit button.
-    st.session_state['collect'] = collect
+
     ready = st.form_submit_button("Submit")
 
     if ready:
+        st.session_state['collect'] = collect
         st.json(st.session_state['collect'])
         #st.write("slider", slider_val, "checkbox", checkbox_val)
 
