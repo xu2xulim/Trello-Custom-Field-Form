@@ -29,24 +29,25 @@ with st.form("Configure Trello Dynamic Custom Field Form"):
         st.session_state['cfd'] = cfd
 
 
-collect = {}
+
 with st.form("Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
+    collect = {}
     cfd = st.session_state['cfd']
     for df in cfd:
         if df['type'] == 'text' :
-            text_val = st.text_input(df['name'])
+            collect[df['name']] = st.text_input(df['name'])
         elif df['type'] == 'checkbox' :
-            checkbox_val = st.checkbox(df['name'], value=False)
+            collect[df['name']] = st.checkbox(df['name'], value=False)
         elif df['type'] == 'date' :
             date = st.date_input("Enter date for {}".format(df['name']))
             time = st.time_input("Enter time for {}".format(df['name']))
-            date_val = "{}T{}".format(date, time)
+            collect[df['name']] = "{}T{}".format(date, time)
         elif df['type'] == 'list' :
             options = [choice['value']['text'] for choice in df['options']]
-            list_val = st.selectbox(df['name'], options=options)
+            collect[df['name']] = st.selectbox(df['name'], options=options)
         elif df['type'] == 'number' :
-            slider_val = st.slider(df['name'])
+            collect[df['name']] = st.slider(df['name'])
 
 
             # Every form must have a submit button.
@@ -54,7 +55,7 @@ with st.form("Trello Dynamic Custom Field Form"):
     ready = st.form_submit_button("Submit")
 
     if ready:
-        st.write("slider", slider_val )
+        st.write(collect)
 #st.write("slider", slider_val, "checkbox", checkbox_val)
 
 
