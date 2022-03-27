@@ -8,26 +8,11 @@ import json
 import httpx
 
 st.session_state['cfd'] = {}
-
-"""if 'collect' in st.session_state.keys():
-    collect =  st.session_state['collect']
-else:
-    st.session_state['collect'] = {}
-    collect = {}"""
-
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
 
-with st.form("Configure Trello Dynamic Custom Field Form"):
-    st.write("Collect information required to fetch CF definitions")
-    board_id = st.selectbox('Board', options=("5fdd5958823f7d04004f236f", "5fdd53039a97d380e792101e"))
-    configured = st.form_submit_button("Submit Request")
-
-    if configured:
-        #st.json(collect)
-        res = httpx.post('https://70297.wayscript.io/function5?board_id={}'.format(board_id))#st.write("slider", slider_val, "checkbox", checkbox_val)
-        cfd = res.json()['cfd']
-        st.session_state['cfd'] = cfd
-
+res = httpx.post('https://70297.wayscript.io/function5?board_id={}'.format("5fdd5958823f7d04004f236f")) #st.write("slider", slider_val, "checkbox", checkbox_val)
+cfd = res.json()['cfd']
+st.session_state['cfd'] = cfd
 
 
 with st.form("Trello Dynamic Custom Field Form"):
@@ -36,7 +21,7 @@ with st.form("Trello Dynamic Custom Field Form"):
     cfd = st.session_state['cfd']
     for df in cfd:
         if df['type'] == 'text' :
-            collect[df['name']] = st.text_input(df['name'])
+            ['collect'][df['name']] = st.text_input(df['name'])
         elif df['type'] == 'checkbox' :
             collect[df['name']] = st.checkbox(df['name'], value=False)
         elif df['type'] == 'date' :
@@ -48,10 +33,6 @@ with st.form("Trello Dynamic Custom Field Form"):
             collect[df['name']] = st.selectbox(df['name'], options=options)
         elif df['type'] == 'number' :
             collect[df['name']] = st.slider(df['name'])
-
-    st.write(collect)
-
-
             # Every form must have a submit button.
 
     ready = st.form_submit_button("Submit")
