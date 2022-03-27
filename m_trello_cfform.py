@@ -33,8 +33,7 @@ with st.form("Trello Dynamic Custom Field Form"):
     cfd = st.session_state['cfd']
     for df in cfd:
         if df['type'] == 'text' :
-            #collect[df['name']] = st.text_input(df['name'])
-            st.session_state['collect'][df['name']]= st.text_input(df['name'])
+            collect[df['name']] = st.text_input(df['name'])
         elif df['type'] == 'checkbox' :
             collect[df['name']] = st.checkbox(df['name'], value=False)
         elif df['type'] == 'date' :
@@ -46,6 +45,8 @@ with st.form("Trello Dynamic Custom Field Form"):
             collect[df['name']] = st.selectbox(df['name'], options=options)
         elif df['type'] == 'number' :
             collect[df['name']] = st.slider(df['name'])
+
+        st.session_state['collect']=collect
 
             # Every form must have a submit button.
 
