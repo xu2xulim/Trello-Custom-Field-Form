@@ -23,11 +23,12 @@ with st.form("Configure Trello Dynamic Custom Field Form"):
 
 
 
-st.session_state['collect'] = {}
+collect = {}
 with st.form("Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     cfd = st.session_state['cfd']
-    collect = st.session_state['collect']
+    if st.session_state['collect'] != {}
+        collect = st.session_state['collect']
     for df in cfd:
         if df['type'] == 'text' :
             collect[df['name']] = st.text_input(df['name'])
@@ -44,11 +45,11 @@ with st.form("Trello Dynamic Custom Field Form"):
             collect[df['name']] = st.slider(df['name'])
 
                     # Every form must have a submit button.
+    st.session_state['collect'] = collect
     ready = st.form_submit_button("Submit")
 
     if ready:
-        st.session_state['collect'] = collect
-        st.json(collect)
+        st.json(st.session_state['collect'])
         #st.write("slider", slider_val, "checkbox", checkbox_val)
 
 st.write("Outside the form")
