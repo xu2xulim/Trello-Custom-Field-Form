@@ -8,7 +8,7 @@ import json
 import httpx
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
 st.expander('Configure Trello Dynamic Custom Field Form', expanded=False)
-with st.form("Trello Dynamic Custom Field Form"):
+with st.form("Configure Trello Dynamic Custom Field Form):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
@@ -18,7 +18,7 @@ with st.form("Trello Dynamic Custom Field Form"):
         res = httpx.post('https://70297.wayscript.io/function5')#st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res.json()['cfd']
 
-st.expander('Submit custom field data, expanded=False)
+st.expander('Submit custom field data', expanded=False)
 collect = {}
 with st.form("Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
