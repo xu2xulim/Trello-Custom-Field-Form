@@ -47,7 +47,7 @@ with st.form("Trello Dynamic Custom Field Form"):
     ready = st.form_submit_button("Submit")
 
     if ready:
-        st.write(collect)
+        st.write(collect.keys())
         #st.write("slider", slider_val, "checkbox", checkbox_val)
 
 st.write("Outside the form")
