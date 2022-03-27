@@ -9,6 +9,7 @@ import httpx
 res = httpx.post('https://70297.wayscript.io/function5')
 cfd = res.json()['cfd']
 collect = {}
+st.title("Trello Dynamic Custom Field Form and other cool stuff")
 with st.form("Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     for df in cfd:
