@@ -37,7 +37,7 @@ with st.form("Trello Dynamic Custom Field Form"):
             options = [choice['value']['text'] for choice in df['options']]
             collect[df['name']] = st.selectbox(df['name'], options=options)
         elif df['type'] == 'number' :
-            collect[df['name']] = st.number(df['name'])
+            collect[df['name']] = st.number_input(df['name'])
             # Every form must have a submit button.
 
     ready = st.form_submit_button("Submit")
