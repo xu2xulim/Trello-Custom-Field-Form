@@ -55,7 +55,8 @@ with st.form("Trello Dynamic Custom Field Form"):
     ready = st.form_submit_button("Submit")
 
     if ready:
-        st.write([f"{df['name']}" for df in cfd])
+        for df in cfd :
+            st.write(f"{df}")
 #st.write("slider", slider_val, "checkbox", checkbox_val)
 
 
