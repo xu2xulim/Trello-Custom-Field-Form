@@ -19,10 +19,10 @@ st.session_state['cfd'] = cfd
 
 
 with st.form("Trello Dynamic Custom Field Form"):
-    st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     collect = {}
     collect['cardname'] = st.text_input('Card Name')
     collect['carddescription'] = st.text_area('Card Description')
+    st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     cfd = st.session_state['cfd']
     for df in cfd:
         if df['type'] == 'text' :
@@ -37,7 +37,7 @@ with st.form("Trello Dynamic Custom Field Form"):
             options = [choice['value']['text'] for choice in df['options']]
             collect[df['name']] = st.selectbox(df['name'], options=options)
         elif df['type'] == 'number' :
-            collect[df['name']] = st.slider(df['name'])
+            collect[df['name']] = st.number(df['name'])
             # Every form must have a submit button.
 
     ready = st.form_submit_button("Submit")
