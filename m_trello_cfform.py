@@ -10,7 +10,7 @@ import httpx
 res = httpx.post('https://70297.wayscript.io/function5')
 cfd = res.json()['cfd']
 for df in cfd:
-    if df['type'] = 'text' :
+    if df['type'] == 'text' :
         st.text_input(df['name'])
-    elif df['type'] = 'list'
+    elif df['type'] == 'list'
         st.text_input(df['name'], options=df['options'])
