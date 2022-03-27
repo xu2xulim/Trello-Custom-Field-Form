@@ -19,13 +19,15 @@ with st.form("Configure Trello Dynamic Custom Field Form"):
         #st.json(collect)
         res = httpx.post('https://70297.wayscript.io/function5?board_id={}'.format(board_id))#st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res.json()['cfd']
+        st.session_state['cfd'] = cfd
     else:
-        cfd = {}
+        st.session_state['cfd'] = {}
 
 
 collect = {}
 with st.form("Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
+    cfd = st.session_state['cfd']
     for df in cfd:
         if df['type'] == 'text' :
             collect[df['name']] = st.text_input(df['name'])
