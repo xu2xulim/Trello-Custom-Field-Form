@@ -8,9 +8,11 @@ import json
 import httpx
 
 st.session_state['cfd'] = {}
+
 if 'collect' in st.session_state.keys():
     collect =  st.session_state['collect']
 else:
+    st.session_state['collect'] = {}
     collect = {}
 
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
