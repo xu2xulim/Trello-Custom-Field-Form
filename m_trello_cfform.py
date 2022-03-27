@@ -14,3 +14,6 @@ for df in cfd:
         st.text_input(df['name'])
     elif df['type'] == 'checkbox' :
         st.checkbox(df['name'], value=False)
+    elif df['type'] == 'date' :
+        st.date_input("Enter date for {}".format(df['name']))
+        st.time_input("Enter time for {}".format(df['name']))
