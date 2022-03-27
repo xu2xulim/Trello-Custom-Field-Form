@@ -8,7 +8,7 @@ import json
 import httpx
 st.title("Trello Dynamic Custom Field Form and other cool stuff")
 st.expander('Configure Trello Dynamic Custom Field Form', expanded=False)
-with st.form("Configure Trello Dynamic Custom Field Form):
+with st.form("Configure Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
