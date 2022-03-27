@@ -17,3 +17,6 @@ for df in cfd:
     elif df['type'] == 'date' :
         st.date_input("Enter date for {}".format(df['name']))
         st.time_input("Enter time for {}".format(df['name']))
+    elif df['type'] == 'list' :
+        options = [choice['value']['text'] for choice in df['options']]
+        st.selectbox(df['name'], options=options)
