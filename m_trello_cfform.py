@@ -23,12 +23,11 @@ with st.form("Configure Trello Dynamic Custom Field Form"):
 
 
 
-collect = {}
+st.session_state['collect'] = {}
 with st.form("Trello Dynamic Custom Field Form"):
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     cfd = st.session_state['cfd']
-    if st.session_state['collect'] != {} :
-        collect = st.session_state['collect']
+    collect = st.session_state['collect']
     for df in cfd:
         if df['type'] == 'text' :
             collect[df['name']] = st.text_input(df['name'])
