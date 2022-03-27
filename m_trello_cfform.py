@@ -9,14 +9,18 @@ import httpx
 
 res = httpx.post('https://70297.wayscript.io/function5')
 cfd = res.json()['cfd']
+collect = {}
 for df in cfd:
     if df['type'] == 'text' :
-        st.text_input(df['name'])
+        collect[df['name']] = st.text_input(df['name'])
     elif df['type'] == 'checkbox' :
-        st.checkbox(df['name'], value=False)
+        collect[df['name']] = st.checkbox(df['name'], value=False)
     elif df['type'] == 'date' :
-        st.date_input("Enter date for {}".format(df['name']))
-        st.time_input("Enter time for {}".format(df['name']))
+        date = st.date_input("Enter date for {}".format(df['name']))
+        time = st.time_input("Enter time for {}".format(df['name']))
+        collect[df['name']] = "{}T{}".format(date, time)
     elif df['type'] == 'list' :
         options = [choice['value']['text'] for choice in df['options']]
-        st.selectbox(df['name'], options=options)
+        collect[df['name']] = st.selectbox(df['name'], options=options)
+
+st.json(collect)
