@@ -6,13 +6,14 @@ from datetime import datetime
 from deta import Deta
 import json
 import httpx
-
+st.write("Data ....loading started")
 res = httpx.post('https://70297.wayscript.io/function5')
 cfd = res.json()['cfd']
 collect = {}
-
+st.write("Data ....loading completed")
+st.Title("Trello Dynamic Custom Field Form"")
 with st.form("Trello Dynamic Custom Field Form"):
-    st.write("Inside the form")
+    st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     for df in cfd:
         if df['type'] == 'text' :
             collect[df['name']] = st.text_input(df['name'])
@@ -28,9 +29,15 @@ with st.form("Trello Dynamic Custom Field Form"):
 
     # Every form must have a submit button.
     submitted = st.form_submit_button("Submit")
+
     if submitted:
         st.json(collect)
         #st.write("slider", slider_val, "checkbox", checkbox_val)
 
 st.write("Outside the form")
+st.header('Above is the json output generated')
+st.header('You can incorporate other cool things like')
 st.camera_input('Test Camera')
+st.file_uploader('Upload any file up to 200MB')
+st.color_picker('Pick a color')
+st.write('Please note that this is demo and the data is not capture in Trello')
