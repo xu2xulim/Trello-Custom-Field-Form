@@ -6,7 +6,6 @@ from datetime import datetime
 from deta import Deta
 import json
 import httpx
-st.write("Data ....loading started")
 res = httpx.post('https://70297.wayscript.io/function5')
 cfd = res.json()['cfd']
 collect = {}
