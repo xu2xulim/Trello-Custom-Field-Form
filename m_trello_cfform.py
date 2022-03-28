@@ -45,19 +45,19 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
         st.json(collect)
         res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
         if res_update.status_code == 200:
-            card_id = res_update.json()['card_id']
+            st.session_state['card_id'] = res_update.json()['card_id']
         else:
             st.error(res_update.text)
 
 
 st.write("Outside the form")
-st.write(card_id)
+
 st.header('Above is the json output generated')
 uploaded_file = st.file_uploader('Upload any file up to 200MB')
 attach = {}
 if uploaded_file is not None:
      # To read file as bytes:
-     attach['card_id'] = card_id
+     attach['card_id'] = st.session_state['card_id']
      attach['bytes_data'] = uploaded_file.getvalue()
      res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach)
 
