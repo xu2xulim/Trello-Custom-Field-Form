@@ -6,6 +6,7 @@ from datetime import datetime
 from deta import Deta
 import json
 import requests
+import base64
 board_id = st.sidebar.selectbox(
     "Select a board",
     ("5fdd53039a97d380e792101e", "5fdd5958823f7d04004f236f")
@@ -58,7 +59,7 @@ attach = {}
 if uploaded_file is not None:
      # To read file as bytes:
      attach['card_id'] = st.session_state['card_id']
-     attach['bytes_data'] = uploaded_file.getvalue()
+     attach['bytes_data'] = base64.b64decode(uploaded_file.getvalue())
      res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach)
 
 """
