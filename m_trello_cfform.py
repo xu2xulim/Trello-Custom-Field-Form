@@ -62,6 +62,15 @@ if uploaded_file is not None:
     attach['filename'] = uploaded_file.name
     res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
 
+
+img_file_buffer = st.camera_input("Take a picture")
+photo = {}
+if img_file_buffer is not None:
+    # To read image file buffer as bytes:
+    bytes_data = img_file_buffer.getvalue()
+    attach['card_id'] = st.session_state['card_id']
+    attach['filename'] = 'Picture Taken'
+    res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
 ## Test
 """
 st.header('You can incorporate other cool things like')
