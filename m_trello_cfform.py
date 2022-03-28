@@ -45,6 +45,7 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
         st.json(collect)
         res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
         if res_update.status_code == 200:
+            card_id = res_update.json()['card_id']
             st.balloons()
         else:
             st.error(res_update.text)
@@ -52,10 +53,18 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
 
 st.write("Outside the form")
 st.header('Above is the json output generated')
+uploaded_file = st.file_uploader('Upload any file up to 200MB')
+attach = {}
+if uploaded_file is not None:
+     # To read file as bytes:
+     attach['card_id'] = card_id
+     attach['bytes_data'] = uploaded_file.getvalue()
+     res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach)
+
 """
 st.header('You can incorporate other cool things like')
 st.camera_input('Test Camera')
-st.file_uploader('Upload any file up to 200MB')
+
 st.color_picker('Pick a color')
 st.write('Please note that this is demo and the data is not capture in Trello')
 
