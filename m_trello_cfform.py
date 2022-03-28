@@ -20,6 +20,7 @@ st.session_state['cfd'] = cfd
 
 with st.form("Trello Dynamic Custom Field Form"):
     collect = {}
+    collect['board_id'] = board_id
     collect['cardname'] = st.text_input('Card Name')
     collect['carddescription'] = st.text_area('Card Description')
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
