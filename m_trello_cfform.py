@@ -46,6 +46,10 @@ with st.form("Trello Dynamic Custom Field Form"):
     if ready:
         st.write(collect)
         res = httpx.post('https://bpqc1s.deta.dev/update', json=collect)
+        if res.status_code == 200:
+            st.balloons()
+        else:
+            st.error(res.text)
 
 
 st.write("Outside the form")
