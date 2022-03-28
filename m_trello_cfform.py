@@ -61,7 +61,7 @@ if uploaded_file is not None:
      attach['card_id'] = st.session_state['card_id']
      attach['bytes_data'] = base64.b64decode(uploaded_file.getvalue())
      res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach)
-
+## Test
 """
 st.header('You can incorporate other cool things like')
 st.camera_input('Test Camera')
