@@ -2,4 +2,3 @@ deta
 
 pandas
 numpy
-base64
