@@ -58,10 +58,16 @@ uploaded_file = st.file_uploader('Upload any file up to 200MB')
 attach = {}
 if uploaded_file is not None:
      # To read file as bytes:
+     bytes_data = uploaded_file.getvalue()
+     st.write(bytes_data)
+
+     # To convert to a string based IO:
+     stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+     st.write(stringio)
      attach['card_id'] = st.session_state['card_id']
-     attach['bytes_data'] = base64.b64decode(uploaded_file.getvalue())
+     #attach['bytes_data'] = base64.b64decode(uploaded_file.getvalue())
      st.write(attach['bytes_data'])
-     res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach)
+     res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach, file =stringio)
 ## Test
 """
 st.header('You can incorporate other cool things like')
