@@ -16,8 +16,9 @@ st.title("Trello Dynamic Custom Field Form")
 res = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
 cfd = res.json()['cfd']
 
+collect = {}
 with st.form("Trello Dynamic Custom Field Form"):
-    collect = {}
+
     collect['board_id'] = board_id
     collect['cardname'] = st.text_input('Card Name')
     collect['carddescription'] = st.text_area('Card Description')
@@ -41,11 +42,10 @@ with st.form("Trello Dynamic Custom Field Form"):
     ready = st.form_submit_button("Submit")
 
     if ready:
-        st.write(collect)
+        st.json(collect)
         res = requests.post('https://bpqc1s.deta.dev/update', json=collect)
         if res.status_code == 200:
             st.balloons()
-            collect = {}
         else:
             st.error(res.text)
 
