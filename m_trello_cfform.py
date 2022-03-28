@@ -15,8 +15,6 @@ st.title("Trello Dynamic Custom Field Form")
 #changed to requests
 res = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
 cfd = res.json()['cfd']
-st.session_state['cfd'] = cfd
-
 
 with st.form("Trello Dynamic Custom Field Form"):
     collect = {}
