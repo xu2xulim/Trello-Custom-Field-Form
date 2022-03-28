@@ -16,9 +16,9 @@ st.title("Trello Dynamic Custom Field Form")
 res = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
 cfd = res.json()['cfd']
 
-collect = {}
-with st.form("Trello Dynamic Custom Field Form"):
 
+with st.form("Trello Dynamic Custom Field Form"):
+    collect = {}
     collect['board_id'] = board_id
     collect['cardname'] = st.text_input('Card Name')
     collect['carddescription'] = st.text_area('Card Description')
@@ -39,7 +39,7 @@ with st.form("Trello Dynamic Custom Field Form"):
             collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
             # Every form must have a submit button.
 
-    ready = st.form_submit_button("Submit")
+    ready = st.form_submit_button("Submit", clear_on_submit=True)
 
     if ready:
         st.json(collect)
