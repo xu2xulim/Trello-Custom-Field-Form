@@ -46,12 +46,12 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
         res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
         if res_update.status_code == 200:
             card_id = res_update.json()['card_id']
-            st.balloons()
         else:
             st.error(res_update.text)
 
 
 st.write("Outside the form")
+st.write(card_id)
 st.header('Above is the json output generated')
 uploaded_file = st.file_uploader('Upload any file up to 200MB')
 attach = {}
