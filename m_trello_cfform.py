@@ -10,7 +10,7 @@ board_id = st.sidebar.selectbox(
     "Select a board",
     ("5fdd53039a97d380e792101e", "5fdd5958823f7d04004f236f")
 )
-
+cfd = {}
 st.title("Trello Dynamic Custom Field Form")
 #changed to requests
 res = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
