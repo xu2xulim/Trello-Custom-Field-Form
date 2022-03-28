@@ -13,8 +13,8 @@ board_id = st.sidebar.selectbox(
 cfd = {}
 st.title("Trello Dynamic Custom Field Form")
 #changed to requests
-res = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
-cfd = res.json()['cfd']
+res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
+cfd = res_get.json()['cfd']
 
 
 with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
@@ -43,12 +43,11 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
 
     if ready:
         st.json(collect)
-        res = requests.post('https://bpqc1s.deta.dev/update', json=collect)
-        if res.status_code == 200:
+        res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+        if res_update.status_code == 200:
             st.balloons()
-            res = {}
         else:
-            st.error(res.text)
+            st.error(res_update.text)
 
 
 st.write("Outside the form")
