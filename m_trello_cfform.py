@@ -22,6 +22,7 @@ with st.form("Trello Dynamic Custom Field Form"):
     collect = {}
     collect['cardname'] = st.text_input('Card Name')
     collect['carddescription'] = st.text_area('Card Description')
+    upload_file = st.file_uploader('Upload any file up to 200MB')
     st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
     cfd = st.session_state['cfd']
     for df in cfd:
