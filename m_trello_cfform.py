@@ -52,16 +52,18 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
 
 
 st.write("Outside the form")
+filename = ""
+filename = st.text_input('What is the filename?')
 
-st.header('Above is the json output generated')
-uploaded_file = st.file_uploader('Upload any file up to 200MB')
-attach = {}
-if uploaded_file is not None:
-    filename = st.text_input('What is the filename?')
-    bytes_data = uploaded_file.getvalue()
-    attach['card_id'] = st.session_state['card_id']
-    attach['filename'] = filename
-    res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
+if filename != "":
+    uploaded_file = st.file_uploader('Upload any file up to 200MB')
+    attach = {}
+    if uploaded_file is not None:
+
+        bytes_data = uploaded_file.getvalue()
+        attach['card_id'] = st.session_state['card_id']
+        attach['filename'] = filename
+        res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
 
 ## Test
 """
