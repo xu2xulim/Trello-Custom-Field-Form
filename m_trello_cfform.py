@@ -60,6 +60,7 @@ if uploaded_file is not None:
      # To read file as bytes:
      attach['card_id'] = st.session_state['card_id']
      attach['bytes_data'] = base64.b64decode(uploaded_file.getvalue())
+     st.write(attach['bytes_data'])
      res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach)
 ## Test
 """
