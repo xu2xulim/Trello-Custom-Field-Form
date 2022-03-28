@@ -45,6 +45,7 @@ with st.form("Trello Dynamic Custom Field Form"):
 
     if ready:
         st.write(collect)
+        res = httpx.post('https://bpqc1s.deta.dev/update, json=collect))
 
 
 st.write("Outside the form")
