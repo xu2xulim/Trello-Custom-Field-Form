@@ -67,7 +67,7 @@ if uploaded_file is not None:
      attach['card_id'] = st.session_state['card_id']
      #attach['bytes_data'] = base64.b64decode(uploaded_file.getvalue())
      #st.write(attach['bytes_data'])
-     res_attach = requests.post('https://bpqc1s.deta.dev/attach', json=attach, files =file)
+     res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': file})
 ## Test
 """
 st.header('You can incorporate other cool things like')
