@@ -45,6 +45,7 @@ with st.form("Trello Dynamic Custom Field Form"):
         res = requests.post('https://bpqc1s.deta.dev/update', json=collect)
         if res.status_code == 200:
             st.balloons()
+            collect = {}
         else:
             st.error(res.text)
 
