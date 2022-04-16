@@ -8,9 +8,6 @@ import json
 import requests
 import base64
 
-
-
-
 order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
 st.title("Trello Order with Deta")
 st.header("Create Line Items")
@@ -37,7 +34,6 @@ if st.session_state['more'] == "Yes" :
         line['remarks'] = st.text_input(label="Remarks")
         last = st.selectbox("Last Item", ("No", "Yes"))
 
-
         line['sno'] = len(items) + 1
         last_line = line['sno']
         enter = st.form_submit_button("Enter")
@@ -53,7 +49,7 @@ if st.session_state['more'] == "Yes" :
 
 
 
-
+st.write(last)
 if last == "Yes":
     st.header("Create an Order Card")
     with st.form("Create Order Card", clear_on_submit=True):
