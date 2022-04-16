@@ -82,7 +82,7 @@ if card_id != None :
                 items.append(line)
 
                 create = st.form_submit_button("Create")
-                st.write(lines)
+                st.write(line)
                 st.write(create)
                 st.write(items)
                 if create :
