@@ -97,4 +97,4 @@ if last == "Yes":
                 order.put({"line_items" : items}, res_update.json()['card_id'], expire_in = 60)
 
             else:
-                st.error(res_update.text))
+                st.error(res_update.text)
