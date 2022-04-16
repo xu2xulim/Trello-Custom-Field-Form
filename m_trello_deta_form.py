@@ -18,6 +18,8 @@ if 'more' in st.session_state :
 else:
     st.session_state['more'] = "Yes"
 
+last_line = 0
+
 if st.session_state['more'] == "Yes" :
     with st.form("Order Details", clear_on_submit=True):
         line = {}
@@ -26,7 +28,7 @@ if st.session_state['more'] == "Yes" :
         line['quantity'] = st.number_input("Quantity", min_value=1)
         line['remarks'] = st.text_input(label="Remarks")
         last = st.selectbox("Last Item", ("Yes", "No"))
-        line['sno'] = last_order + 1
+        line['sno'] = last_line + 1
         items.append(line)
         create = st.form_submit_button("Submit")
         if create :
