@@ -20,39 +20,39 @@ st.title("Trello Dynamic Custom Field Form")
 res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
 cfd = res_get.json()['cfd']
 
-with st.form("Trello Order with Deta", clear_on_submit=True):
-    collect = {}
-    collect['board_id'] = board_id
-    collect['cardname'] = st.text_input('Card Name')
-    collect['carddescription'] = st.text_area('Card Description')
-    st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
-    for df in cfd:
-        if df['type'] == 'text' :
-            collect[df['name']] = st.text_input(df['name'])
-        elif df['type'] == 'checkbox' :
-            collect[df['name']] = st.checkbox(df['name'], value=False)
-        elif df['type'] == 'date' :
-            date = st.date_input("Enter date for {}".format(df['name']))
-            time = st.time_input("Enter time for {}".format(df['name']))
-            collect[df['name']] = "{}T{}".format(date, time)
-        elif df['type'] == 'list' :
-            options = [choice['value']['text'] for choice in df['options']]
-            collect[df['name']] = st.selectbox(df['name'], options=options)
-        elif df['type'] == 'number' :
-            collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
+form1 = st.form("Trello Order with Deta", clear_on_submit=True):
+collect = {}
+collect['board_id'] = board_id
+collect['cardname'] =form1.text_input('Card Name')
+collect['carddescription'] = form1.text_area('Card Description')
+form1.write("The form is dynamically created based on the custom field definitions of any Trello Board")
+for df in cfd:
+    if df['type'] == 'text' :
+        collect[df['name']] = form1.text_input(df['name'])
+    elif df['type'] == 'checkbox' :
+        collect[df['name']] = form1.checkbox(df['name'], value=False)
+    elif df['type'] == 'date' :
+        date = form1.date_input("Enter date for {}".format(df['name']))
+        time = form1.time_input("Enter time for {}".format(df['name']))
+        collect[df['name']] = "{}T{}".format(date, time)
+    elif df['type'] == 'list' :
+        options = [choice['value']['text'] for choice in df['options']]
+        collect[df['name']] = form1.selectbox(df['name'], options=options)
+    elif df['type'] == 'number' :
+        collect[df['name']] = round(form1.number_input(df['name'],step=0.1), 2)
     # Every form must have a submit button.
 
-    ready = st.form_submit_button("Submit")
+ready = form1.form_submit_button("Submit")
 
-    if ready:
-        st.json(collect)
-        res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
-        if res_update.status_code == 200:
-            st.session_state['card_id'] = res_update.json()['card_id']
-            card_id = res_update.json()['card_id']
-            order.put({"line_items" : []},card_id)
-        else:
-            st.error(res_update.text)
+if ready:
+    st.json(collect)
+    res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+    if res_update.status_code == 200:
+        st.session_state['card_id'] = res_update.json()['card_id']
+        card_id = res_update.json()['card_id']
+        order.put({"line_items" : []},card_id)
+    else:
+        st.error(res_update.text)
 
 
 st.header("You can now add order items to be stored in Deta Base")
@@ -68,27 +68,27 @@ if 'card_id' in st.session_state:
 
         more = "Yes"
         while 'card_id' in st.session_state :
-            with st.form("Order Details", clear_on_submit=True):
-                line = {}
-                col1, col2, col3, col4, col5= st.columns(5)
-                line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
-                line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-                line['quantity'] = col3.number_input("Quantity", min_value=1)
-                line['remarks'] = col4.text_input(label="Remarks")
-                more = col5.selectbox("Last Item", ("Yes", "No"))
+            form2 = st.form("Order Details", clear_on_submit=True):
+            line = {}
 
-                st.session_state['more'] = more
+            line['collar'] = form2.selectbox("Collar", ("Round", "V-shaped"))
+            line['size'] = form2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
+            line['quantity'] = form2.number_input("Quantity", min_value=1)
+            line['remarks'] = form2.text_input(label="Remarks")
+            more = form2.selectbox("Last Item", ("Yes", "No"))
 
-                line['sno'] = last_order + 1
-                items.append(line)
+            st.session_state['more'] = more
 
-                create = st.form_submit_button("Create")
+            line['sno'] = last_order + 1
+            items.append(line)
 
-                if create :
-                    st.write(line)
-                    st.write(items)
-                    st.write(ready)
-                    update_base = order.put({"line_items" : items}, card_id)
-                    st.write(update_base)
-                    if more == "No" :
-                        del st.session_state['card_id']
+            create = form2.form_submit_button("Create")
+
+            if create :
+                st.write(line)
+                st.write(items)
+                st.write(ready)
+                update_base = order.put({"line_items" : items}, card_id)
+                st.write(update_base)
+                if more == "No" :
+                    del st.session_state['card_id']
