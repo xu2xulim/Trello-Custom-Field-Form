@@ -16,23 +16,23 @@ order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
 
 more = True
 while more:
-    form2 = st.form("Order Details", clear_on_submit=True)
-    line = {}
+    with st.form("Order Details", clear_on_submit=True):
+        line = {}
 
-    line['collar'] = form2.selectbox("Collar", ("Round", "V-shaped"))
-    line['size'] = form2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-    line['quantity'] = form2.number_input("Quantity", min_value=1)
-    line['remarks'] = form2.text_input(label="Remarks")
-    last = form2.selectbox("Last Item", ("Yes", "No"))
+        line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
+        line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
+        line['quantity'] = st.number_input("Quantity", min_value=1)
+        line['remarks'] = st.text_input(label="Remarks")
+        last = st.selectbox("Last Item", ("Yes", "No"))
 
-    line['sno'] = last_order + 1
-    items.append(line)
+        line['sno'] = last_order + 1
+        items.append(line)
 
-    create = form2.form_submit_button("Create")
+        create = st.form_submit_button("Create")
 
-    if create :
-        st.write(line)
-        #update_base = order.put({"line_items" : items}, card_id)
-        st.dataframe(items)
-        if last == "Yes" :
-            more = False
+        if create :
+            st.write(line)
+            #update_base = order.put({"line_items" : items}, card_id)
+            st.dataframe(items)
+            if last == "Yes" :
+                more = False
