@@ -54,6 +54,10 @@ if 'more' in st.session_state:
     pass
 else:
     st.header("Create a card")
+    cfd = {}
+    #changed to requests
+    res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format("61120a2d004a725ed3f7f0db")) #st.write("slider", slider_val, "checkbox", checkbox_val)
+    cfd = res_get.json()['cfd']
     collect = {}
     collect['board_id'] ="61120a2d004a725ed3f7f0db"
     collect['cardname'] = st.text_input('Card Name')
