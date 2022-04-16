@@ -19,9 +19,9 @@ else:
     st.session_state['more'] = "Yes"
 
 last_line = 0
-
+items = []
 if st.session_state['more'] == "Yes" :
-    with st.form("Order Details", clear_on_submit=True):
+    with st.form("Order Line Items", clear_on_submit=True):
         line = {}
         line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
         line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
@@ -30,7 +30,7 @@ if st.session_state['more'] == "Yes" :
         last = st.selectbox("Last Item", ("Yes", "No"))
         line['sno'] = last_line + 1
         items.append(line)
-        create = st.form_submit_button("Submit")
+        create = st.form_submit_button("Create")
         if create :
             st.write(line)
             st.dataframe(items)
