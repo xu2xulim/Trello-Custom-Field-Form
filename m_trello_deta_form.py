@@ -13,10 +13,10 @@ board_id = st.sidebar.selectbox(
 )
 
 order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
-if 'more' in st.session.state :
+if 'more' in st.session_state :
     pass
 else:
-    st.session.state['more'] = "Yes"
+    st.session_state['more'] = "Yes"
 
 if st.session.state['more'] == "Yes" :
     with st.form("Order Details", clear_on_submit=True):
@@ -38,4 +38,4 @@ if st.session.state['more'] == "Yes" :
             #update_base = order.put({"line_items" : items}, card_id)
             st.dataframe(items)
             if last == "Yes" :
-                st.session.state['more'] = "No"
+                st.session_state['more'] = "No"
