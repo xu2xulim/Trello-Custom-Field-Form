@@ -89,5 +89,6 @@ if last == "Yes" :
                 for key in st.session_state :
                     del st.session_state[key]
                 st.write("Finishing cleaning up.....")
+                st.experimental_rerun()
             else:
                 st.error(res_update.text)
