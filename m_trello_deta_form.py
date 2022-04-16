@@ -14,6 +14,7 @@ board_id = st.sidebar.selectbox(
 
 order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
 cfd = {}
+card_id = None
 st.title("Trello Dynamic Custom Field Form")
 #changed to requests
 res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
@@ -49,27 +50,28 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
         res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
         if res_update.status_code == 200:
             st.session_state['card_id'] = res_update.json()['card_id']
+            card_id = res_update.json()['card_id']
         else:
             st.error(res_update.text)
 
-card_id = st.session_state['card_id']
+
 st.header("You can now add order items to be stored in Deta Base")
+if card_id != None :
+    items = []
+    last_order = 0
+    res = order.get(card_id)
+    if res['line_items'] != None :
+        items = res['line_items']
+        last_order = len(items.keys())
+        st.write(items)
 
-items = []
-last_order = 0
-res = order.get(card_id)
-if res['line_items'] != None :
-    items = res['line_items']
-    last_order = len(items.keys())
-st.write(items)
+        line = {}
+        col1, col2, col3, col4= st.columns(4)
+        line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
+        line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
+        line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
+        line['remarks'] = col4.text_input(label="Remarks")
+        line['sno'] = len + 1
+        items.append(line)
 
-line = {}
-col1, col2, col3, col4= st.columns(4)
-line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
-line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
-line['remarks'] = col4.text_input(label="Remarks")
-line['sno'] = len + 1
-items.append(line)
-
-update_base = order.put({"line_items" : items}, card_id)
+        update_base = order.put({"line_items" : items}, card_id)
