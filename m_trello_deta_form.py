@@ -20,7 +20,6 @@ st.title("Trello Dynamic Custom Field Form")
 res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
 cfd = res_get.json()['cfd']
 
-
 with st.form("Trello Order with Deta", clear_on_submit=True):
     collect = {}
     collect['board_id'] = board_id
@@ -41,7 +40,7 @@ with st.form("Trello Order with Deta", clear_on_submit=True):
             collect[df['name']] = st.selectbox(df['name'], options=options)
         elif df['type'] == 'number' :
             collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
-            # Every form must have a submit button.
+    # Every form must have a submit button.
 
     ready = st.form_submit_button("Submit")
 
@@ -57,7 +56,7 @@ with st.form("Trello Order with Deta", clear_on_submit=True):
 
 
 st.header("You can now add order items to be stored in Deta Base")
-if card_id != None :
+if 'card_id' in st.session_state:
     items = []
     last_order = 0
     res = order.get(card_id)
@@ -68,7 +67,7 @@ if card_id != None :
         last_order = len(items)
 
         more = "Yes"
-        while more == "Yes" and ready !=None :
+        while 'card_id' in st.session_state :
             with st.form("Order Details", clear_on_submit=True):
                 line = {}
                 col1, col2, col3, col4, col5= st.columns(5)
@@ -77,6 +76,8 @@ if card_id != None :
                 line['quantity'] = col3.number_input("Quantity", min_value=1)
                 line['remarks'] = col4.text_input(label="Remarks")
                 more = col5.selectbox("Last Item", ("Yes", "No"))
+
+                st.session_state['more'] = more
 
                 line['sno'] = last_order + 1
                 items.append(line)
@@ -90,4 +91,4 @@ if card_id != None :
                     update_base = order.put({"line_items" : items}, card_id)
                     st.write(update_base)
                     if more == "No" :
-                        ready = None
+                        del st.session_state['card_id']
