@@ -21,21 +21,17 @@ else:
 if st.session_state['more'] == "Yes" :
     with st.form("Order Details", clear_on_submit=True):
         line = {}
-
         line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
         line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
         line['quantity'] = st.number_input("Quantity", min_value=1)
         line['remarks'] = st.text_input(label="Remarks")
         last = st.selectbox("Last Item", ("Yes", "No"))
-
         line['sno'] = last_order + 1
         items.append(line)
-
         create = st.form_submit_button("Submit")
-
         if create :
             st.write(line)
-            #update_base = order.put({"line_items" : items}, card_id)
             st.dataframe(items)
             if last == "Yes" :
                 st.session_state['more'] = "No"
+st.header("Create a card")
