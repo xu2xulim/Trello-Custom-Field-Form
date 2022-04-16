@@ -51,12 +51,11 @@ if st.session_state['more'] == "Yes" :
                 del st.session_state['items']
                 del st.session_state['more']
 
-st.header("Create an Order Card")
 
 
-if 'more' in st.session_state:
-    pass
-else:
+
+if last == "Yes":
+    st.header("Create an Order Card")
     with st.form("Create Order Card", clear_on_submit=True):
         cfd = {}
         #changed to requests
@@ -98,6 +97,4 @@ else:
                 order.put({"line_items" : items}, res_update.json()['card_id'], expire_in = 60)
 
             else:
-                st.error(res_update.text)
-        else:
-            st.write("what is going on?")
+                st.error(res_update.text))
