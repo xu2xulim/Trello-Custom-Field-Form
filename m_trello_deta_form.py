@@ -59,7 +59,7 @@ else:
         collect['board_id'] = board_id
         collect['cardname'] = st.text_input('Card Name')
         collect['carddescription'] = st.text_area('Card Description')
-        create = st.form_submit_button("Create")S
+        create = st.form_submit_button("Create")
         if create :
             res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
             if res_update.status_code == 200:
