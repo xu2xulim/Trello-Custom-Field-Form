@@ -18,8 +18,13 @@ if 'more' in st.session_state :
 else:
     st.session_state['more'] = "Yes"
 
+
+if 'items' in st.session_state :
+    pass
+else:
+    st.session_state['items'] = []
 last_line = 0
-items = []
+items = st.session_state['items']
 if st.session_state['more'] == "Yes" :
     with st.form("Order Line Items", clear_on_submit=True):
         line = {}
@@ -27,9 +32,10 @@ if st.session_state['more'] == "Yes" :
         line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
         line['quantity'] = st.number_input("Quantity", min_value=1)
         line['remarks'] = st.text_input(label="Remarks")
-        last = st.selectbox("Last Item", ("Yes", "No"))
+        last = st.selectbox("Last Item", ("No", "Yes"))
         line['sno'] = last_line + 1
         items.append(line)
+        st.session_state['items'] = items
         create = st.form_submit_button("Create")
         if create :
             st.write(line)
