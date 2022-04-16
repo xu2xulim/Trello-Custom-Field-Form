@@ -28,11 +28,11 @@ while more:
         line['sno'] = last_order + 1
         items.append(line)
 
-        create = st.form_submit_button("Create")
+    create = st.form_submit_button("Create")
 
-        if create :
-            st.write(line)
+    if create :
+        st.write(line)
             #update_base = order.put({"line_items" : items}, card_id)
-            st.dataframe(items)
-            if last == "Yes" :
-                more = False
+        st.dataframe(items)
+        if last == "Yes" :
+            more = False
