@@ -74,7 +74,7 @@ if card_id != None :
                 col1, col2, col3, col4, col5= st.columns(5)
                 line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
                 line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-                line['quantity'] = col3.number_input("Quantity", min_value=1, max_value=100, value=1, step=1)
+                line['quantity'] = col3.number_input("Quantity", min_value=1)
                 line['remarks'] = col4.text_input(label="Remarks")
                 more = col5.selectbox("Last Item", ("Yes", "No"))
 
@@ -82,7 +82,9 @@ if card_id != None :
                 items.append(line)
 
                 create = st.form_submit_button("Create")
-
+                st.write(lines)
+                st.write(create)
+                st.write(items)
                 if create :
                     update_base = order.put({"line_items" : items}, card_id)
                     if more == "No" :
