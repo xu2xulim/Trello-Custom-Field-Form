@@ -66,16 +66,21 @@ if card_id != None :
     if res['line_items'] != None :
         items = res['line_items']
         last_order = len(items)
-        st.write(items)
-        more = st.radio("Have you finished entering your last item", ('Yes', 'No'))
-        if more == 'No' :
-            line = {}
-            col1, col2, col3, col4= st.columns(4)
-            line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
-            line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-            line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
-            line['remarks'] = col4.text_input(label="Remarks")
-            line['sno'] = last_order + 1
-            items.append(line)
 
-            update_base = order.put({"line_items" : items}, card_id)
+        more = "No"
+        while more == "No" :
+                with st.form("Order Details", clear_on_submit=True):
+                    line = {}
+                    col1, col2, col3, col4= st.columns(5)
+                    line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
+                    line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
+                    line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
+                    line['remarks'] = col4.text_input(label="Remarks")
+                    more = col4.text_input("Last Item", ("Yes", "No"))
+                    line['sno'] = last_order + 1
+                    items.append(line)
+
+                    create = st.form_submit_button("Create")
+
+                    if create :
+                        update_base = order.put({"line_items" : items}, card_id)
