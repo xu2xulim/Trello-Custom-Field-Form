@@ -67,7 +67,7 @@ if card_id != None :
         items = res['line_items']
         last_order = len(items)
 
-        more = "No"
+        more = "Yes"
         while more == "Yes" and ready !=None :
             with st.form("Order Details", clear_on_submit=True):
                 line = {}
