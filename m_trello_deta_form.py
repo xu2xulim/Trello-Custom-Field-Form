@@ -55,8 +55,8 @@ if ready:
         st.error(res_update.text)
 
 
-st.header("You can now add order items to be stored in Deta Base")
-if 'card_id' in st.session_state:
+    st.header("You can now add order items to be stored in Deta Base")
+
     items = []
     last_order = 0
     res = order.get(card_id)
