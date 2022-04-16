@@ -83,6 +83,9 @@ else:
 
         ready = st.form_submit_button("Submit")
 
+        st.write(collect)
+        st.write(ready)
+
         if ready:
             st.write("Creating a card....")
             st.json(collect)
