@@ -36,8 +36,9 @@ if st.session_state['more'] == "Yes" :
         line['remarks'] = st.text_input(label="Remarks")
         last = st.selectbox("Last Item", ("No", "Yes"))
 
-        last_line = last_line + 1
-        line['sno'] = last_line
+
+        line['sno'] = len(items) + 1
+        last_line = line['sno']
         create = st.form_submit_button("Create")
         if create :
             items.append(line)
@@ -49,3 +50,5 @@ if st.session_state['more'] == "Yes" :
                 del st.session_state['items']
 st.header("Create a card")
 del st.session_state['more']
+st.text_input("Card Name")
+st.text_area("Card Description")
