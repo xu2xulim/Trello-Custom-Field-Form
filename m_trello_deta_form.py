@@ -36,7 +36,8 @@ if st.session_state['more'] == "Yes" :
         line['sno'] = last_line + 1
         create = st.form_submit_button("Create")
         if create :
-            st.session_state['items'] = items.append(line)
+            items.append(line)
+            st.session_state['items'] = items
             st.dataframe(items)
             if last == "Yes" :
                 st.session_state['more'] = "No"
