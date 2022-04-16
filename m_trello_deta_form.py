@@ -48,50 +48,46 @@ if st.session_state['more'] == "Yes" :
                 del st.session_state['items']
                 del st.session_state['more']
 
+                st.header("Create an Order Card")
+                with st.form("Create Order Card", clear_on_submit=True):
+                    cfd = {}
+                    #changed to requests
+                    res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format("61120a2d004a725ed3f7f0db")) #st.write("slider", slider_val, "checkbox", checkbox_val)
+                    cfd = res_get.json()['cfd']
+                    collect = {}
+                    collect['board_id'] ="61120a2d004a725ed3f7f0db"
+                    collect['cardname'] = st.text_input('Card Name')
+                    collect['carddescription'] = st.text_area('Card Description')
+                    st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
+                    for df in cfd:
+                        if df['type'] == 'text' :
+                            collect[df['name']] = st.text_input(df['name'])
+                        elif df['type'] == 'checkbox' :
+                            collect[df['name']] = st.checkbox(df['name'], value=False)
+                        elif df['type'] == 'date' :
+                            date = st.date_input("Enter date for {}".format(df['name']))
+                            time = st.time_input("Enter time for {}".format(df['name']))
+                            collect[df['name']] = "{}T{}".format(date, time)
+                        elif df['type'] == 'list' :
+                            options = [choice['value']['text'] for choice in df['options']]
+                            collect[df['name']] = st.selectbox(df['name'], options=options)
+                        elif df['type'] == 'number' :
+                            collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
 
+                    ready = st.form_submit_button("Submit")
 
+                    if ready:
+                        st.write(ready)
+                        st.dataframe(items)
+                        st.json(collect)
+                        st.write("Creating a card....")
+                        st.stop()
 
-if last == "Yes":
-    st.header("Create an Order Card")
-    with st.form("Create Order Card", clear_on_submit=True):
-        cfd = {}
-        #changed to requests
-        res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format("61120a2d004a725ed3f7f0db")) #st.write("slider", slider_val, "checkbox", checkbox_val)
-        cfd = res_get.json()['cfd']
-        collect = {}
-        collect['board_id'] ="61120a2d004a725ed3f7f0db"
-        collect['cardname'] = st.text_input('Card Name')
-        collect['carddescription'] = st.text_area('Card Description')
-        st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
-        for df in cfd:
-            if df['type'] == 'text' :
-                collect[df['name']] = st.text_input(df['name'])
-            elif df['type'] == 'checkbox' :
-                collect[df['name']] = st.checkbox(df['name'], value=False)
-            elif df['type'] == 'date' :
-                date = st.date_input("Enter date for {}".format(df['name']))
-                time = st.time_input("Enter time for {}".format(df['name']))
-                collect[df['name']] = "{}T{}".format(date, time)
-            elif df['type'] == 'list' :
-                options = [choice['value']['text'] for choice in df['options']]
-                collect[df['name']] = st.selectbox(df['name'], options=options)
-            elif df['type'] == 'number' :
-                collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
+                        res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+                        if res_update.status_code == 200:
+                    #st.session_state['card_id'] = res_update.json()['card_id']
+                            st.write("Creating a order lines in Deta....")
+                            order.put({"line_items" : items}, res_update.json()['card_id'], expire_in = 60)
 
-        ready = st.form_submit_button("Submit")
-
-        if ready:
-            st.write(ready)
-            st.dataframe(items)
-            st.json(collect)
-            st.write("Creating a card....")
-            st.stop()
-
-            res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
-            if res_update.status_code == 200:
-        #st.session_state['card_id'] = res_update.json()['card_id']
-                st.write("Creating a order lines in Deta....")
-                order.put({"line_items" : items}, res_update.json()['card_id'], expire_in = 60)
-
-            else:
-                st.error(res_update.text)
+                        else:
+                            st.error(res_update.text)
