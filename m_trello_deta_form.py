@@ -80,11 +80,12 @@ else:
                 collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
 
         ready = st.form_submit_button("Submit")
-        st.write(ready)
-        st.dataframe(items)
-        st.write(collect)
-        st.stop()
+
         if ready:
+            st.write(ready)
+            st.dataframe(items)
+            st.write(collect)
+            st.stop()
             st.dataframe(items)
             st.write("Creating a card....")
             st.json(collect)
