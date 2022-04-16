@@ -84,10 +84,13 @@ else:
         ready = st.form_submit_button("Submit")
 
         if ready:
+            st.write("Creating a card....")
             st.json(collect)
             res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
             if res_update.status_code == 200:
             #st.session_state['card_id'] = res_update.json()['card_id']
+                st.write("Creating a order lines in Deta....")
                 order.put({"line_items" : items}, res_update.json()['card_id'], expire_in = 60)
+
             else:
                 st.error(res_update.text)
