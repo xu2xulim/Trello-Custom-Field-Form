@@ -54,7 +54,7 @@ if 'more' in st.session_state:
     pass
 else:
     st.header("Create and Order")
-    with st.form("Create Order Card", clear_on_submit=True)
+    with st.form("Create Order Card", clear_on_submit=True):
 
         cfd = {}
         #changed to requests
