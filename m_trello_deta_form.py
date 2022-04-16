@@ -8,7 +8,7 @@ import json
 import requests
 import base64
 
-board_id = "61120a2d004a725ed3f7f0db"
+
 
 
 order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
@@ -54,15 +54,34 @@ if 'more' in st.session_state:
     pass
 else:
     st.header("Create a card")
-    with st.form("Create Card", clear_on_submit=True):
-        collect={}
-        collect['board_id'] = board_id
-        collect['cardname'] = st.text_input('Card Name')
-        collect['carddescription'] = st.text_area('Card Description')
-        create = st.form_submit_button("Create")
-        if create :
-            res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
-            if res_update.status_code == 200:
-                order.put({"line_item" : items}, res_update.json()['card_id'])
-            else:
-                st.error(res_update.text)
+    collect = {}
+    collect['board_id'] ="61120a2d004a725ed3f7f0db"
+    collect['cardname'] = st.text_input('Card Name')
+    collect['carddescription'] = st.text_area('Card Description')
+    st.write("The form is dynamically created based on the custom field definitions of any Trello Board")
+    for df in cfd:
+        if df['type'] == 'text' :
+            collect[df['name']] = st.text_input(df['name'])
+        elif df['type'] == 'checkbox' :
+            collect[df['name']] = st.checkbox(df['name'], value=False)
+        elif df['type'] == 'date' :
+            date = st.date_input("Enter date for {}".format(df['name']))
+            time = st.time_input("Enter time for {}".format(df['name']))
+            collect[df['name']] = "{}T{}".format(date, time)
+        elif df['type'] == 'list' :
+            options = [choice['value']['text'] for choice in df['options']]
+            collect[df['name']] = st.selectbox(df['name'], options=options)
+        elif df['type'] == 'number' :
+            collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
+            # Every form must have a submit button.
+
+    ready = st.form_submit_button("Submit")
+
+    if ready:
+        st.json(collect)
+        res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+        if res_update.status_code == 200:
+            #st.session_state['card_id'] = res_update.json()['card_id']
+            order.put({"line_items" : items}, res_update.json()['card_id'], expire_in = 60)
+        else:
+            st.error(res_update.text)
