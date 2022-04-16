@@ -26,7 +26,7 @@ else:
 last_line = 0
 items = st.session_state['items']
 st.write(items)
-if st.session_state['more'] == "Yes" :
+while st.session_state['more'] == "Yes" :
     with st.form("Order Line Items", clear_on_submit=True):
         line = {}
         line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
