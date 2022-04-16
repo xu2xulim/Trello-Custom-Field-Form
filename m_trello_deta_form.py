@@ -11,6 +11,8 @@ board_id = st.sidebar.selectbox(
     "Select a board",
     ("5fdd53039a97d380e792101e", "5fdd5958823f7d04004f236f", "61120a2d004a725ed3f7f0db")
 )
+
+order = Deta().Base("trello_orders")
 cfd = {}
 st.title("Trello Dynamic Custom Field Form")
 #changed to requests
@@ -50,24 +52,24 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
         else:
             st.error(res_update.text)
 
+card_id = st.session_state['card_id']
+st.header("You can now add order items to be stored in Deta Base")
 
-st.header("You can now do all the cool things now that the card is created with the Custom Fields")
+items = []
+last_order = 0
+res = order.get(card_id)
+if res['line_items'] != None :
+    items = res['line_items']
+    last_order = len(items.keys())
+st.write(items)
 
-uploaded_file = st.file_uploader('Upload any file up to 200MB')
-attach = {}
-if uploaded_file is not None:
+line = {}
+col1, col2, col3, col4= st.columns(4)
+line['collar'] = col1.download_button(label="Collar", ("Round", "V-shaped"))
+line['size'] = col2.selectbox(label="Size", ("Extra Large", "Large", "Medium", "Small"))
+line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
+line['remarks'] = col4.text_input(label="Remarks")
+line['sno'] = len + 1
+items.append(line)
 
-    bytes_data = uploaded_file.getvalue()
-    attach['card_id'] = st.session_state['card_id']
-    attach['filename'] = uploaded_file.name
-    res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
-
-
-"""img_file_buffer = st.camera_input("Take a picture")
-photo = {}
-if img_file_buffer is not None:
-    # To read image file buffer as bytes:
-    bytes_data = img_file_buffer.getvalue()
-    attach['card_id'] = st.session_state['card_id']
-    attach['filename'] = 'Picture Taken'
-    res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})"""
+update_base = order.put({"line_items" = items}, card_id)
