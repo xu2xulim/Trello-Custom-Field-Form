@@ -21,7 +21,7 @@ res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.for
 cfd = res_get.json()['cfd']
 
 
-with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
+with st.form("Trello Order with Deta", clear_on_submit=True):
     collect = {}
     collect['board_id'] = board_id
     collect['cardname'] = st.text_input('Card Name')
@@ -76,16 +76,16 @@ if card_id != None :
                 line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
                 line['quantity'] = col3.number_input("Quantity", min_value=1)
                 line['remarks'] = col4.text_input(label="Remarks")
-                more = col5.selectbox("Last Item", ("Yes", "No"))
+                more = col5.selectbox("Last Item", ("No", "Yes"))
 
                 line['sno'] = last_order + 1
                 items.append(line)
 
-                create = st.form_submit_button("Create")
-                st.write(line)
-                st.write(create)
-                st.write(items)
-                if create :
-                    update_base = order.put({"line_items" : items}, card_id)
-                    if more == "No" :
-                        ready = None
+            create = st.form_submit_button("Create")
+            st.write(line)
+            st.write(create)
+            st.write(items)
+            if create :
+                update_base = order.put({"line_items" : items}, card_id)
+                if more == "No" :
+                    ready = None
