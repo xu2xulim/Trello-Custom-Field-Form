@@ -9,7 +9,7 @@ import requests
 import base64
 board_id = st.sidebar.selectbox(
     "Select a board",
-    ("5fdd53039a97d380e792101e", "5fdd5958823f7d04004f236f", "61120a2d004a725ed3f7f0db")
+    ("61120a2d004a725ed3f7f0db")
 )
 
 order = Deta().Base("trello_orders")
