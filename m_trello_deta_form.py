@@ -86,6 +86,7 @@ if last == "Yes" :
         #st.session_state['card_id'] = res_update.json()['card_id']
                 st.write("Creating a order lines in Deta....")
                 order.put({"line_items" : items}, res_update.json()['card_id'])
-                del st.session_state['items']
+                for key in st.session_state :
+                    del st.session_state[key]
             else:
                 st.error(res_update.text)
