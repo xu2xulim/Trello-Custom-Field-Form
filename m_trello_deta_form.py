@@ -18,7 +18,7 @@ if 'more' in st.session_state :
 else:
     st.session_state['more'] = "Yes"
 
-if st.session.state['more'] == "Yes" :
+if st.session_state['more'] == "Yes" :
     with st.form("Order Details", clear_on_submit=True):
         line = {}
 
