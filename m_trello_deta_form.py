@@ -65,7 +65,7 @@ st.write(items)
 
 line = {}
 col1, col2, col3, col4= st.columns(4)
-line['collar'] = col1.download_button(label="Collar", ("Round", "V-shaped"))
+line['collar'] = col1.selectbox(label="Collar", ("Round", "V-shaped"))
 line['size'] = col2.selectbox(label="Size", ("Extra Large", "Large", "Medium", "Small"))
 line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
 line['remarks'] = col4.text_input(label="Remarks")
