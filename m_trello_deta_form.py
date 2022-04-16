@@ -31,7 +31,7 @@ if st.session_state['more'] == "Yes" :
         line['sno'] = last_order + 1
         items.append(line)
 
-        create = st.form_submit_button("Create")
+        create = st.form_submit_button("Submit")
 
         if create :
             st.write(line)
