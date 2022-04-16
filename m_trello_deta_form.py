@@ -76,7 +76,7 @@ if card_id != None :
                 line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
                 line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
                 line['remarks'] = col4.text_input(label="Remarks")
-                more = col5.text_input("Last Item", ("Yes", "No"))
+                more = col5.selectbox("Last Item", ("Yes", "No"))
                 line['sno'] = last_order + 1
                 items.append(line)
 
