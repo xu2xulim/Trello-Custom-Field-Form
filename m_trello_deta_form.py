@@ -64,7 +64,7 @@ if card_id != None :
     st.write(res)
     if res['line_items'] != None :
         items = res['line_items']
-        last_order = len(items.keys())
+        last_order = len(items)
         st.write(items)
 
         line = {}
