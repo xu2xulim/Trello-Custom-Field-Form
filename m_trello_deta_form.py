@@ -25,6 +25,7 @@ else:
     st.session_state['items'] = []
 last_line = 0
 items = st.session_state['items']
+st.write(items)
 if st.session_state['more'] == "Yes" :
     with st.form("Order Line Items", clear_on_submit=True):
         line = {}
@@ -37,6 +38,7 @@ if st.session_state['more'] == "Yes" :
         create = st.form_submit_button("Create")
         if create :
             items.append(line)
+            st.write(items)
             st.session_state['items'] = items
             st.dataframe(items)
             if last == "Yes" :
