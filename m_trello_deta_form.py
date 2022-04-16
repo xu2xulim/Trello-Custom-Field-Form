@@ -8,7 +8,7 @@ import json
 import requests
 import base64
 
-order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
+order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.title("Trello Order with Deta")
 st.header("Create Line Items")
 if 'more' in st.session_state :
