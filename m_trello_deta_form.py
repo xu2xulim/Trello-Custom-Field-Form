@@ -48,17 +48,21 @@ if st.session_state['more'] == "Yes" :
             if last == "Yes" :
                 st.session_state['more'] = "No"
                 del st.session_state['items']
-                st.header("Create a card")
-                del st.session_state['more']
-                with st.form("Create Card", clear_on_submit=True):
-                    collect['board_id'] = board_id
-                    collect['cardname'] = st.text_input('Card Name')
-                    collect['carddescription'] = st.text_area('Card Description')
-                    create = st.form_submit_button("Create")
 
-                    if create :
-                        res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
-                        if res_update.status_code == 200:
-                            order.put({"line_item" : items}, res_update.json()['card_id'])
-                        else:
-                            st.error(res_update.text)
+                del st.session_state['more']
+
+if 'more' in st.session_state:
+    pass
+else:
+    st.header("Create a card")
+    with st.form("Create Card", clear_on_submit=True):
+        collect['board_id'] = board_id
+        collect['cardname'] = st.text_input('Card Name')
+        collect['carddescription'] = st.text_area('Card Description')
+        create = st.form_submit_button("Create")S
+        if create :
+            res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+            if res_update.status_code == 200:
+                order.put({"line_item" : items}, res_update.json()['card_id'])
+            else:
+                st.error(res_update.text)
