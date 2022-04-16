@@ -12,6 +12,8 @@ import base64
 
 
 order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
+st.title("Trello Order with Deta")
+st.header("Create Line Items")
 if 'more' in st.session_state :
     pass
 else:
@@ -49,11 +51,12 @@ if st.session_state['more'] == "Yes" :
                 del st.session_state['items']
                 del st.session_state['more']
 
+st.header("Create an Order Card")
+
+
 if 'more' in st.session_state:
     pass
 else:
-    st.header("Create and Order")
-    st.dataframe(items)
     with st.form("Create Order Card", clear_on_submit=True):
         cfd = {}
         #changed to requests
@@ -84,12 +87,10 @@ else:
         if ready:
             st.write(ready)
             st.dataframe(items)
-            st.write(collect)
-            st.stop()
-            st.dataframe(items)
-            st.write("Creating a card....")
             st.json(collect)
-            st.write(collect)
+            st.write("Creating a card....")
+            st.stop()
+
             res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
             if res_update.status_code == 200:
         #st.session_state['card_id'] = res_update.json()['card_id']
@@ -98,3 +99,5 @@ else:
 
             else:
                 st.error(res_update.text)
+        else:
+            st.write("what is going on?")
