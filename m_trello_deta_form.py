@@ -88,5 +88,6 @@ if last == "Yes" :
                 order.put({"line_items" : items}, res_update.json()['card_id'])
                 for key in st.session_state :
                     del st.session_state[key]
+                st.write("Finishing cleaning up.....")
             else:
                 st.error(res_update.text)
