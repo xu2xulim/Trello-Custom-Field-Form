@@ -81,11 +81,11 @@ if card_id != None :
                 line['sno'] = last_order + 1
                 items.append(line)
 
-            create = st.form_submit_button("Create")
-            st.write(line)
-            st.write(create)
-            st.write(items)
-            if create :
-                update_base = order.put({"line_items" : items}, card_id)
-                if more == "No" :
-                    ready = None
+                create = st.form_submit_button("Create")
+                st.write(line)
+                st.write(create)
+                st.write(items)
+                if create :
+                    update_base = order.put({"line_items" : items}, card_id)
+                    if more == "No" :
+                        ready = None
