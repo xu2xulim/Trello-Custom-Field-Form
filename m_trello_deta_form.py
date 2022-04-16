@@ -27,14 +27,17 @@ last_line = 0
 items = st.session_state['items']
 st.write(items)
 while st.session_state['more'] == "Yes" :
-    with st.form("Order Line Items {}".format(last_line), clear_on_submit=True):
+    form_name = "Order Line Items {}".format(last_line)
+    with st.form(form_name, clear_on_submit=True):
         line = {}
         line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
         line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
         line['quantity'] = st.number_input("Quantity", min_value=1)
         line['remarks'] = st.text_input(label="Remarks")
         last = st.selectbox("Last Item", ("No", "Yes"))
-        line['sno'] = last_line + 1
+
+        last_line = last_line + 1
+        line['sno'] = last_line
         create = st.form_submit_button("Create")
         if create :
             items.append(line)
