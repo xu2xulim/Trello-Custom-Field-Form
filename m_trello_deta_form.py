@@ -55,6 +55,7 @@ if 'more' in st.session_state:
 else:
     st.header("Create a card")
     with st.form("Create Card", clear_on_submit=True):
+        collect={}
         collect['board_id'] = board_id
         collect['cardname'] = st.text_input('Card Name')
         collect['carddescription'] = st.text_area('Card Description')
