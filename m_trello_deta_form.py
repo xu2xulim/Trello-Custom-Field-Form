@@ -39,8 +39,8 @@ if st.session_state['more'] == "Yes" :
 
         line['sno'] = len(items) + 1
         last_line = line['sno']
-        create = st.form_submit_button("Create")
-        if create :
+        enter = st.form_submit_button("Enter")
+        if enter :
             items.append(line)
             st.write(items)
             st.session_state['items'] = items
@@ -50,11 +50,15 @@ if st.session_state['more'] == "Yes" :
                 del st.session_state['items']
                 st.header("Create a card")
                 del st.session_state['more']
-                collect['board_id'] = board_id
-                collect['cardname'] = st.text_input('Card Name')
-                collect['carddescription'] = st.text_area('Card Description')
-                res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
-                if res_update.status_code == 200:
-                    order.put({"line_item" : items}, res_update.json()['card_id'])
-                else:
-                    st.error(res_update.text)
+                with st.form("Create Card", clear_on_submit=True):
+                    collect['board_id'] = board_id
+                    collect['cardname'] = st.text_input('Card Name')
+                    collect['carddescription'] = st.text_area('Card Description')
+                    create = st.form_submit_button("Create")
+
+                    if create :
+                        res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+                        if res_update.status_code == 200:
+                            order.put({"line_item" : items}, res_update.json()['card_id'])
+                        else:
+                            st.error(res_update.text)
