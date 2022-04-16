@@ -24,7 +24,7 @@ else:
     st.session_state['items'] = []
 last_line = 0
 items = st.session_state['items']
-st.write(items)
+
 if st.session_state['more'] == "Yes" :
     form_name = "Order Line Items {}".format(last_line)
     with st.form(form_name, clear_on_submit=True):
@@ -54,8 +54,8 @@ if 'more' in st.session_state:
     pass
 else:
     st.header("Create and Order")
+    st.dataframe(items)
     with st.form("Create Order Card", clear_on_submit=True):
-
         cfd = {}
         #changed to requests
         res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format("61120a2d004a725ed3f7f0db")) #st.write("slider", slider_val, "checkbox", checkbox_val)
@@ -79,14 +79,11 @@ else:
                 collect[df['name']] = st.selectbox(df['name'], options=options)
             elif df['type'] == 'number' :
                 collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
-            # Every form must have a submit button.
 
         ready = st.form_submit_button("Submit")
-
-        st.write(collect)
-        st.write(ready)
-
+        st.balloons()
         if ready:
+            st.dataframe(items)
             st.write("Creating a card....")
             st.json(collect)
             res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
