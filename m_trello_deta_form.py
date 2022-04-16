@@ -22,8 +22,9 @@ if 'items' in st.session_state :
 else:
     st.session_state['items'] = []
 last_line = 0
-items = st.session_state['items']
 
+items = st.session_state['items']
+last = "No"
 if st.session_state['more'] == "Yes" :
     form_name = "Order Line Items {}".format(last_line)
     with st.form(form_name, clear_on_submit=True):
@@ -49,7 +50,7 @@ if st.session_state['more'] == "Yes" :
 
 
 
-st.write(last)
+
 if last == "Yes":
     st.header("Create an Order Card")
     with st.form("Create Order Card", clear_on_submit=True):
