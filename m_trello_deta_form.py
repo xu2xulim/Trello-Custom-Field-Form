@@ -46,7 +46,8 @@ if st.session_state['more'] == "Yes" :
                 del st.session_state['more']
                 st.session_state['items'] = items
 
-if last == "Yes" :
+#if last == "Yes" :
+if 'more' not in st.session_state :
     st.header("Create an Order Card")
     with st.form("Create Order Card", clear_on_submit=True):
         cfd = {}
