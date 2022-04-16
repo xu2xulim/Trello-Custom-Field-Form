@@ -26,7 +26,7 @@ else:
 last_line = 0
 items = st.session_state['items']
 st.write(items)
-while st.session_state['more'] == "Yes" :
+if st.session_state['more'] == "Yes" :
     form_name = "Order Line Items {}".format(last_line)
     with st.form(form_name, clear_on_submit=True):
         line = {}
