@@ -13,9 +13,12 @@ board_id = st.sidebar.selectbox(
 )
 
 order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
+if 'more' in st.session.state :
+    pass
+else:
+    st.session.state['more'] = "Yes"
 
-more = True
-while more:
+if st.session.state['more'] == "Yes" :
     with st.form("Order Details", clear_on_submit=True):
         line = {}
 
@@ -28,11 +31,11 @@ while more:
         line['sno'] = last_order + 1
         items.append(line)
 
-    create = st.form_submit_button("Create")
+        create = st.form_submit_button("Create")
 
-    if create :
-        st.write(line)
+        if create :
+            st.write(line)
             #update_base = order.put({"line_items" : items}, card_id)
-        st.dataframe(items)
-        if last == "Yes" :
-            more = False
+            st.dataframe(items)
+            if last == "Yes" :
+                st.session.state['more'] = "No"
