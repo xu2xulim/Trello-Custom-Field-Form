@@ -45,4 +45,4 @@ while st.session_state['more'] == "Yes" :
                 st.session_state['more'] = "No"
                 del st.session_state['items']
 st.header("Create a card")
-del st.session_state['items']
+del st.session_state['more']
