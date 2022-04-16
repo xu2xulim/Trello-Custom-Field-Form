@@ -62,18 +62,20 @@ if card_id != None :
     last_order = 0
     res = order.get(card_id)
     st.write(res)
+    continue = True
     if res['line_items'] != None :
         items = res['line_items']
         last_order = len(items)
         st.write(items)
+        more = st.radio("Have you finished entering your last item", ('Yes', 'No'))
+        if more == 'No' :
+            line = {}
+            col1, col2, col3, col4= st.columns(4)
+            line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
+            line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
+            line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
+            line['remarks'] = col4.text_input(label="Remarks")
+            line['sno'] = last_order + 1
+            items.append(line)
 
-        line = {}
-        col1, col2, col3, col4= st.columns(4)
-        line['collar'] = col1.selectbox("Collar", ("Round", "V-shaped"))
-        line['size'] = col2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-        line['quantity'] = col3.number_input(label="Quantity", min_value=1, max_value=100, step=1)
-        line['remarks'] = col4.text_input(label="Remarks")
-        line['sno'] = last_order + 1
-        items.append(line)
-
-        update_base = order.put({"line_items" : items}, card_id)
+            update_base = order.put({"line_items" : items}, card_id)
