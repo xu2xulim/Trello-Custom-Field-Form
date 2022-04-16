@@ -15,8 +15,8 @@ board_id = st.sidebar.selectbox(
 order = Deta("c0vidk60_8unssenvnHkuZmQfqhZ4jW49o5hRMvwG").Base("trello_orders")
 cfd = {}
 card_id = None
-st.title("Trello Dynamic Custom Field Form")
-#changed to requests
+st.title("Trello Form on Deta")
+"""#changed to requests
 res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
 cfd = res_get.json()['cfd']
 
@@ -66,29 +66,26 @@ if ready:
         items = res['line_items']
         last_order = len(items)
 
-        more = "Yes"
-        while 'card_id' in st.session_state :
-            form2 = st.form("Order Details", clear_on_submit=True)
-            line = {}
+        more = "Yes""""
+more = True
+while more:
+    form2 = st.form("Order Details", clear_on_submit=True)
+    line = {}
 
-            line['collar'] = form2.selectbox("Collar", ("Round", "V-shaped"))
-            line['size'] = form2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-            line['quantity'] = form2.number_input("Quantity", min_value=1)
-            line['remarks'] = form2.text_input(label="Remarks")
-            more = form2.selectbox("Last Item", ("Yes", "No"))
+    line['collar'] = form2.selectbox("Collar", ("Round", "V-shaped"))
+    line['size'] = form2.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
+    line['quantity'] = form2.number_input("Quantity", min_value=1)
+    line['remarks'] = form2.text_input(label="Remarks")
+    last = form2.selectbox("Last Item", ("Yes", "No"))
 
-            st.session_state['more'] = more
+    line['sno'] = last_order + 1
+    items.append(line)
 
-            line['sno'] = last_order + 1
-            items.append(line)
+    create = form2.form_submit_button("Create")
 
-            create = form2.form_submit_button("Create")
-
-            if create :
-                st.write(line)
-                st.write(items)
-                st.write(ready)
-                update_base = order.put({"line_items" : items}, card_id)
-                st.write(update_base)
-                if more == "No" :
-                    del st.session_state['card_id']
+    if create :
+        st.write(line)
+        #update_base = order.put({"line_items" : items}, card_id)
+        st.dataframe(items)
+        if last == "Yes" :
+            more = False
