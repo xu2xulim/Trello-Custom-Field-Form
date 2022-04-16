@@ -72,4 +72,4 @@ line['remarks'] = col4.text_input(label="Remarks")
 line['sno'] = len + 1
 items.append(line)
 
-update_base = order.put({"line_items" = items}, card_id)
+update_base = order.put({"line_items" : items}, card_id)
