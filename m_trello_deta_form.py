@@ -34,11 +34,9 @@ if st.session_state['more'] == "Yes" :
         line['remarks'] = st.text_input(label="Remarks")
         last = st.selectbox("Last Item", ("No", "Yes"))
         line['sno'] = last_line + 1
-        items.append(line)
-        st.session_state['items'] = items
         create = st.form_submit_button("Create")
         if create :
-            st.write(line)
+            st.session_state['items'] = items.append(line)
             st.dataframe(items)
             if last == "Yes" :
                 st.session_state['more'] = "No"
