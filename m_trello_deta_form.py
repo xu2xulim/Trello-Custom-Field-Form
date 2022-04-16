@@ -62,7 +62,7 @@ if card_id != None :
     last_order = 0
     res = order.get(card_id)
     st.write(res)
-    continue = True
+    
     if res['line_items'] != None :
         items = res['line_items']
         last_order = len(items)
