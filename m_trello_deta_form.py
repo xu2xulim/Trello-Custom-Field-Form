@@ -51,6 +51,7 @@ with st.form("Trello Dynamic Custom Field Form", clear_on_submit=True):
         if res_update.status_code == 200:
             st.session_state['card_id'] = res_update.json()['card_id']
             card_id = res_update.json()['card_id']
+            order.put({"line_items" : []},card_id)
         else:
             st.error(res_update.text)
 
@@ -60,6 +61,7 @@ if card_id != None :
     items = []
     last_order = 0
     res = order.get(card_id)
+    st.write(res)
     if res['line_items'] != None :
         items = res['line_items']
         last_order = len(items.keys())
