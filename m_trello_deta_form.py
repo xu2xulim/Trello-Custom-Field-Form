@@ -34,9 +34,7 @@ if st.session_state['more'] == "Yes" :
         line['quantity'] = st.number_input("Quantity", min_value=1)
         line['remarks'] = st.text_input(label="Remarks")
         last = st.selectbox("Last Item", ("No", "Yes"))
-
-        line['sno'] = len(items) + 1
-        last_line = line['sno']
+        last_line = len(items) + 1
         enter = st.form_submit_button("Enter")
         if enter :
             items.append(line)
