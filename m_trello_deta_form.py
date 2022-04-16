@@ -20,7 +20,7 @@ st.title("Trello Dynamic Custom Field Form")
 res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(board_id)) #st.write("slider", slider_val, "checkbox", checkbox_val)
 cfd = res_get.json()['cfd']
 
-form1 = st.form("Trello Order with Deta", clear_on_submit=True):
+form1 = st.form("Trello Order with Deta", clear_on_submit=True)
 collect = {}
 collect['board_id'] = board_id
 collect['cardname'] =form1.text_input('Card Name')
@@ -68,7 +68,7 @@ if 'card_id' in st.session_state:
 
         more = "Yes"
         while 'card_id' in st.session_state :
-            form2 = st.form("Order Details", clear_on_submit=True):
+            form2 = st.form("Order Details", clear_on_submit=True)
             line = {}
 
             line['collar'] = form2.selectbox("Collar", ("Round", "V-shaped"))
