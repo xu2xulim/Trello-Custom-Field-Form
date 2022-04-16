@@ -77,11 +77,12 @@ with st.form("Create Order Card", clear_on_submit=True):
             collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
 
     ready = st.form_submit_button("Submit")
-    st.balloons()
+
     if ready:
         st.dataframe(items)
         st.write("Creating a card....")
         st.json(collect)
+        st,write(collect)
         res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
         if res_update.status_code == 200:
         #st.session_state['card_id'] = res_update.json()['card_id']
