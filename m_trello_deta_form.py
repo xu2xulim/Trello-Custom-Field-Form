@@ -110,16 +110,17 @@ if st.session_state['focus'] == 2 :
 if st.session_state['focus'] == 3 :
     with st.expander("Open to upload samples"):
         uploaded_file = st.file_uploader('Upload any file up to 200MB')
+        finished = st.button("Done")
         attach = {}
-        if uploaded_file is not None:
-            bytes_data = uploaded_file.getvalue()
-            attach['card_id'] = st.session_state['card_id']
-            attach['filename'] = uploaded_file.name
-            res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
+        if finished :
+            for key in st.session_state :
+                del st.session_state[key]
+            st.session_state['focus'] = 1
+            st.experimental_rerun()
         else:
-            finished = st.button("Done")
-            if finished :
-                for key in st.session_state :
-                    del st.session_state[key]
-                st.session_state['focus'] = 1
-                st.experimental_rerun()
+            if uploaded_file is not None:
+                bytes_data = uploaded_file.getvalue()
+                attach['card_id'] = st.session_state['card_id']
+                attach['filename'] = uploaded_file.name
+                res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
+            
