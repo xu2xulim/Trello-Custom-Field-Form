@@ -9,16 +9,13 @@ import requests
 import base64
 
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
-st.title("Trello Order with Deta")
+st.header("Trello Order with Deta")
 
 with st.expander("Open to enter order details"):
-
-    st.header("Create Line Items")
     if 'more' in st.session_state :
         pass
     else:
         st.session_state['more'] = "Yes"
-
 
     if 'items' in st.session_state :
         pass
@@ -29,6 +26,7 @@ with st.expander("Open to enter order details"):
     items = st.session_state['items']
     last = "No"
     if st.session_state['more'] == "Yes" :
+        st.subheader("Create Line Items")
         form_name = "Order Line Items {}".format(last_line)
         with st.form(form_name, clear_on_submit=True):
             line = {}
@@ -53,10 +51,9 @@ with st.expander("Open to enter order details"):
 
 if last == "Yes" :
     with st.expander("Open to create order card"):
-        st.header("Create an Order Card")
         with st.form("Create Order Card", clear_on_submit=True):
+            st.subheader("Create an Order Card")
             cfd = {}
-            #changed to requests
             res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format("61120a2d004a725ed3f7f0db")) #st.write("slider", slider_val, "checkbox", checkbox_val)
             cfd = res_get.json()['cfd']
             collect = {}
@@ -82,14 +79,13 @@ if last == "Yes" :
             ready = st.form_submit_button("Submit")
 
             if ready:
+                st.write("Creating a card....")
                 items = st.session_state['items']
                 st.dataframe(items)
                 st.json(collect)
-                st.write("Creating a card....")
                 st.stop()
                 res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                 if res_update.status_code == 200:
-            #st.session_state['card_id'] = res_update.json()['card_id']
                     st.write("Creating a order lines in Deta....")
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     for key in st.session_state :
