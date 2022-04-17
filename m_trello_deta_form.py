@@ -59,7 +59,7 @@ if st.session_state['focus'] == 1:
 
 
 
-if last == "Yes" :
+if st.session_state['focus'] == 2 :
     with st.expander("Open to create order card"):
         with st.form("Create Order Card", clear_on_submit=True):
             st.subheader("Create an Order Card")
@@ -93,9 +93,7 @@ if last == "Yes" :
                 items = st.session_state['items']
                 st.dataframe(items)
                 st.json(collect)
-                for key in st.session_state :
-                    del st.session_state[key]
-                st.stop()
+                st.write(st.session_state)
                 res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                 if res_update.status_code == 200:
                     st.write("Creating a order lines in Deta....")
@@ -103,6 +101,10 @@ if last == "Yes" :
                     for key in st.session_state :
                         del st.session_state[key]
                     st.write("Finishing cleaning up.....")
+                    for key in st.session_state :
+                        del st.session_state[key]
+                    st.session_state['focus'] = 1
+                    st.write(st.session_state)
                     st.experimental_rerun()
                 else:
                     st.error(res_update.text)
