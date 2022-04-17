@@ -86,7 +86,7 @@ if last == "Yes" :
                 st.dataframe(items)
                 st.json(collect)
                 st.write("Creating a card....")
-
+                st.stop()
                 res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                 if res_update.status_code == 200:
             #st.session_state['card_id'] = res_update.json()['card_id']
