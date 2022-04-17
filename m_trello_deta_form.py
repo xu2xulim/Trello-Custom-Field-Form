@@ -43,9 +43,8 @@ with st.expander("Open to enter order details"):
                 st.dataframe(items)
                 st.session_state['items'] = items
                 if last == "Yes" :
-                    #st.session_state['more'] = "No"
                     st.session_state['more'] = "No"
-                    #st.session_state['items'] = items
+
 
 
 
@@ -83,6 +82,8 @@ if last == "Yes" :
                 items = st.session_state['items']
                 st.dataframe(items)
                 st.json(collect)
+                for key in st.session_state :
+                    del st.session_state[key]
                 st.stop()
                 res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                 if res_update.status_code == 200:
