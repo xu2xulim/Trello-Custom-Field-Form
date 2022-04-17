@@ -97,14 +97,25 @@ if st.session_state['focus'] == 2 :
                 res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                 if res_update.status_code == 200:
                     st.write("Creating a order lines in Deta....")
+                    st.session_state['card_id'] = res_update.json()['card_id']
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     for key in st.session_state :
                         del st.session_state[key]
                     st.write("Finishing cleaning up.....")
                     for key in st.session_state :
                         del st.session_state[key]
-                    st.session_state['focus'] = 1
+                    st.session_state['focus'] = 3
                     st.write(st.session_state)
                     st.experimental_rerun()
                 else:
                     st.error(res_update.text)
+
+if st.session_state['focus'] == 3 :
+    with st.expander("Open to upload samples"):
+        uploaded_file = st.file_uploader('Upload any file up to 200MB')
+        attach = {}
+        if uploaded_file is not None:
+            bytes_data = uploaded_file.getvalue()
+            attach['card_id'] = st.session_state['card_id']
+            attach['filename'] = uploaded_file.name
+            res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
