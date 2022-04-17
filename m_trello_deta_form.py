@@ -41,7 +41,7 @@ with st.expander("Open to enter order details"):
             enter = st.form_submit_button("Enter")
             if enter :
                 items.append(line)
-                st.subheader(Items Entered)
+                st.subheader("Your items :")
                 st.dataframe(items)
                 st.session_state['items'] = items
                 if last == "Yes" :
