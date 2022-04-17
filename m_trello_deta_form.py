@@ -55,6 +55,7 @@ if st.session_state['focus'] == 1:
                         st.session_state['more'] = "No"
                         st.session_state['focus'] = 2
                         st.write(st.session_state)
+                        st.experimental_rerun()
 
 
 
@@ -100,8 +101,6 @@ if st.session_state['focus'] == 2 :
                     st.session_state['card_id'] = res_update.json()['card_id']
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     st.write("Finishing cleaning up.....")
-                    for key in st.session_state :
-                        del st.session_state[key]
                     st.session_state['focus'] = 3
                     st.write(st.session_state)
                     st.experimental_rerun()
@@ -122,4 +121,5 @@ if st.session_state['focus'] == 3 :
             if finished :
                 for key in st.session_state :
                     del st.session_state[key]
-                    st.session_state['focus'] = 1
+                st.session_state['focus'] = 1
+                st.experimental_rerun()
