@@ -54,7 +54,7 @@ if st.session_state['focus'] == 1:
                     if last == "Yes" :
                         st.session_state['more'] = "No"
                         st.session_state['focus'] = 2
-
+                        st.write(st.session_state)
 
 
 
