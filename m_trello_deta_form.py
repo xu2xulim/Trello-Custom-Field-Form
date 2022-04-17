@@ -10,7 +10,8 @@ import base64
 
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.title("Trello Order with Deta")
-with st.expander("Open to enter order details"):
+stage_1 = False
+with st.expander("Open to enter order details", expanded=stage_1):
     st.header("Create Line Items")
     if 'more' in st.session_state :
         pass
@@ -46,6 +47,7 @@ with st.expander("Open to enter order details"):
                     st.session_state['more'] = "No"
                     del st.session_state['more']
                     st.session_state['items'] = items
+                    stage_1 = False
 
 
 if last == "Yes" :
