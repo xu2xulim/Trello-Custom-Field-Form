@@ -25,13 +25,12 @@ if 'focus' in st.session_state:
     pass
 else:
     st.session_state['focus'] = 1
+    
 st.write(st.session_state)
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
-
         last_line = 0
-
         items = st.session_state['items']
         last = "No"
         if st.session_state['more'] == "Yes" :
@@ -54,7 +53,7 @@ if st.session_state['focus'] == 1:
                     if last == "Yes" :
                         st.session_state['more'] = "No"
                         st.session_state['focus'] = 2
-                        st.write(st.session_state)
+                        #st.write(st.session_state)
                         st.experimental_rerun()
 
 
@@ -62,6 +61,8 @@ if st.session_state['focus'] == 1:
 
 if st.session_state['focus'] == 2 :
     with st.expander("Open to create order card"):
+        st.subheader("Your items")
+        st.dataframe(items)
         with st.form("Create Order Card", clear_on_submit=True):
             st.subheader("Create an Order Card")
             cfd = {}
@@ -92,9 +93,9 @@ if st.session_state['focus'] == 2 :
             if ready:
                 st.write("Creating a card....")
                 items = st.session_state['items']
-                st.dataframe(items)
-                st.json(collect)
-                st.write(st.session_state)
+                #st.dataframe(items)
+                #st.json(collect)
+                #st.write(st.session_state)
                 res_update = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                 if res_update.status_code == 200:
                     st.write("Creating a order lines in Deta....")
@@ -102,7 +103,6 @@ if st.session_state['focus'] == 2 :
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     st.write("Finishing cleaning up.....")
                     st.session_state['focus'] = 3
-                    st.write(st.session_state)
                     st.experimental_rerun()
                 else:
                     st.error(res_update.text)
@@ -123,4 +123,3 @@ if st.session_state['focus'] == 3 :
                 attach['card_id'] = st.session_state['card_id']
                 attach['filename'] = uploaded_file.name
                 res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
-            
