@@ -30,12 +30,12 @@ st.write(st.session_state)
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
-        last_line = 0
+        #last_line = 0
         items = st.session_state['items']
         last = "No"
         if st.session_state['more'] == "Yes" :
             st.subheader("Create Line Items")
-            form_name = "Order Line Items {}".format(last_line)
+            form_name = "Order Line Items {}".format(len(items))
             with st.form(form_name, clear_on_submit=True):
                 line = {}
                 line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
@@ -43,7 +43,7 @@ if st.session_state['focus'] == 1:
                 line['quantity'] = st.number_input("Quantity", min_value=1)
                 line['remarks'] = st.text_input(label="Remarks")
                 last = st.selectbox("Last Item", ("No", "Yes"))
-                last_line = len(items) + 1
+                #last_line = len(items) + 1
                 enter = st.form_submit_button("Enter")
                 if enter :
                     items.append(line)
