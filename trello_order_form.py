@@ -11,6 +11,9 @@ import base64
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
 
+st.subheader("Your items :")
+st.dataframe(items)
+
 if 'more' in st.session_state :
     pass
 else:
@@ -56,10 +59,7 @@ if st.session_state['focus'] == 1:
                         st.write("just after if check")
                         st.session_state['more'] = "No"
                         st.write(st.session_state)
-                        confirm = st.button("Click to confirm")
-                        st.experimental_rerun()
-                        if confirm :
-                            st.session_state['focus'] = 2
+                        st.session_state['focus'] = 2
                     st.experimental_rerun()
 
 
