@@ -34,6 +34,8 @@ if st.session_state['focus'] == 1:
         items = st.session_state['items']
         last = "No"
         if st.session_state['more'] == "Yes" :
+            st.subheader("Your items :")
+            st.dataframe(items)
             st.subheader("Create Line Items")
             form_name = "Order Line Items {}".format(len(items))
             with st.form(form_name, clear_on_submit=True):
@@ -47,8 +49,6 @@ if st.session_state['focus'] == 1:
                 enter = st.form_submit_button("Enter")
                 if enter :
                     items.append(line)
-                    st.subheader("Your items :")
-                    st.dataframe(items)
                     st.session_state['items'] = items
                     st.write("just before if check")
                     st.write(last)
@@ -57,7 +57,7 @@ if st.session_state['focus'] == 1:
                         st.session_state['more'] = "No"
                         st.session_state['focus'] = 2
                         st.write(st.session_state)
-                        #st.experimental_rerun()
+                        st.experimental_rerun()
 
 
 if st.session_state['focus'] == 2 :
