@@ -26,7 +26,7 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 1
 
-#st.write(st.session_state)
+st.dataframe(st.session_state['items'])
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
