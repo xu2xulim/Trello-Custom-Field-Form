@@ -26,7 +26,7 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 1
 
-st.write(st.session_state)
+#st.write(st.session_state)
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
@@ -55,9 +55,6 @@ if st.session_state['focus'] == 1:
                         st.session_state['focus'] = 2
                         #st.write(st.session_state)
                         st.experimental_rerun()
-
-
-
 
 if st.session_state['focus'] == 2 :
     with st.expander("Open to create order card"):
@@ -93,7 +90,6 @@ if st.session_state['focus'] == 2 :
 
             if ready:
                 st.write("Creating a card....")
-
                 #st.dataframe(items)
                 #st.json(collect)
                 #st.write(st.session_state)
