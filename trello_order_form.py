@@ -55,8 +55,11 @@ if st.session_state['focus'] == 1:
                     if last == "Yes" :
                         st.write("just after if check")
                         st.session_state['more'] = "No"
-                        st.session_state['focus'] = 2
                         st.write(st.session_state)
+                        confirm = st.click("Click to confirm")
+                        st.experimental_rerun()
+                        if confirm :
+                            st.session_state['focus'] = 2
                     st.experimental_rerun()
 
 
