@@ -27,7 +27,7 @@ else:
     st.session_state['focus'] = 1
 
 st.subheader("Your items :")
-st.dataframe(items)
+st.dataframe(st.session_state['items'])
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
