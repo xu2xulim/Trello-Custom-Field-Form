@@ -26,8 +26,9 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 1
 
-st.subheader("Your items :")
-st.dataframe(st.session_state['items'])
+if st.session_state['focus'] = 2 :
+    st.subheader("Your items :")
+    st.dataframe(st.session_state['items'])
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
@@ -64,8 +65,6 @@ if st.session_state['focus'] == 1:
 if st.session_state['focus'] == 2 :
     with st.expander("Open to create order card"):
         items = st.session_state['items']
-        st.subheader("Your items")
-        st.dataframe(items)
         with st.form("Create Order Card", clear_on_submit=True):
             st.subheader("Create an Order Card")
             cfd = {}
