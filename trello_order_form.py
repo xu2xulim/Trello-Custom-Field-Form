@@ -105,7 +105,7 @@ if st.session_state['focus'] == 2 :
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     st.write("Finishing cleaning up.....")
                     st.session_state['focus'] = 3
-                    #st.experimental_rerun()
+                    st.experimental_rerun()
                 else:
                     st.error(res_update.text)
 
