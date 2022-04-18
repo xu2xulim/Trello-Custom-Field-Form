@@ -50,10 +50,12 @@ if st.session_state['focus'] == 1:
                     st.subheader("Your items :")
                     st.dataframe(items)
                     st.session_state['items'] = items
+                    st.write("just before if check")
                     if last == "Yes" :
                         st.session_state['more'] = "No"
                         st.session_state['focus'] = 2
                         st.write(st.session_state)
+                        st.stop()
                         st.experimental_rerun()
 
 if st.session_state['focus'] == 2 :
