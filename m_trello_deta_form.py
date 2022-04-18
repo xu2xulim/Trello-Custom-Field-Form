@@ -11,10 +11,10 @@ import base64
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
 
-#if 'more' in st.session_state :
-    #pass
-#else:
-    #st.session_state['more'] = "Yes"
+if 'more' in st.session_state :
+    pass
+else:
+    st.session_state['more'] = "Yes"
 
 if 'items' in st.session_state :
     pass
@@ -26,43 +26,45 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 1
 
-st.write(st.session_state)
+if st.session_state['focus'] == 2 :
+    st.subheader("Your items :")
+    st.dataframe(st.session_state['items'])
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
         #last_line = 0
         items = st.session_state['items']
         last = "No"
-        #if st.session_state['more'] == "Yes" :
-        st.subheader("Create Line Items")
-        form_name = "Order Line Items {}".format(len(items))
-        with st.form(form_name, clear_on_submit=True):
-            line = {}
-            line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
-            line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-            line['quantity'] = st.number_input("Quantity", min_value=1)
-            line['remarks'] = st.text_input(label="Remarks")
-            last = st.selectbox("Last Item", ("No", "Yes"))
-            #last_line = len(items) + 1
-            enter = st.form_submit_button("Enter")
-            if enter :
-                items.append(line)
-                st.subheader("Your items :")
-                st.dataframe(items)
-                st.session_state['items'] = items
-                st.write("just before if check")
-                st.write(last)
-                if last == "Yes" :
-                    st.write("just after if check")
-                    #st.session_state['more'] = "No"
-                    st.session_state['focus'] = 2
-                st.experimental_rerun()    
+        if st.session_state['more'] == "Yes" :
+            st.subheader("Your items :")
+            st.dataframe(items)
+            st.subheader("Create Line Items")
+            form_name = "Order Line Items {}".format(len(items))
+            with st.form(form_name, clear_on_submit=True):
+                line = {}
+                line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
+                line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
+                line['quantity'] = st.number_input("Quantity", min_value=1)
+                line['remarks'] = st.text_input(label="Remarks")
+                last = st.selectbox("Last Item", ("No", "Yes"))
+                #last_line = len(items) + 1
+                enter = st.form_submit_button("Enter")
+                if enter :
+                    items.append(line)
+                    st.session_state['items'] = items
+                    st.write("just before if check")
+                    st.write(last)
+                    if last == "Yes" :
+                        st.write("just after if check")
+                        st.session_state['more'] = "No"
+                        st.write(st.session_state)
+                        st.session_state['focus'] = 2
+                    st.experimental_rerun()
+
 
 if st.session_state['focus'] == 2 :
     with st.expander("Open to create order card"):
         items = st.session_state['items']
-        st.subheader("Your items")
-        st.dataframe(items)
         with st.form("Create Order Card", clear_on_submit=True):
             st.subheader("Create an Order Card")
             cfd = {}
@@ -102,7 +104,7 @@ if st.session_state['focus'] == 2 :
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     st.write("Finishing cleaning up.....")
                     st.session_state['focus'] = 3
-                    #st.experimental_rerun()
+                    st.experimental_rerun()
                 else:
                     st.error(res_update.text)
 
