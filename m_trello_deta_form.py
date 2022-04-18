@@ -57,7 +57,9 @@ if st.session_state['focus'] == 1:
                         st.session_state['more'] = "No"
                         st.session_state['focus'] = 2
                         st.write(st.session_state)
-                        st.experimental_rerun()
+                        check = st.click("Pause")
+                        if check:
+                            st.experimental_rerun()
 
 if st.session_state['focus'] == 2 :
     with st.expander("Open to create order card"):
