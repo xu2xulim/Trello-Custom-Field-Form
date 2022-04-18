@@ -11,9 +11,6 @@ import base64
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
 
-st.subheader("Your items :")
-st.dataframe(items)
-
 if 'more' in st.session_state :
     pass
 else:
@@ -29,7 +26,8 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 1
 
-st.write(st.session_state)
+st.subheader("Your items :")
+st.dataframe(items)
 
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
