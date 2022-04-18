@@ -56,7 +56,7 @@ if st.session_state['focus'] == 1:
                         st.write("just after if check")
                         st.session_state['more'] = "No"
                         st.write(st.session_state)
-                        confirm = st.click("Click to confirm")
+                        confirm = st.button("Click to confirm")
                         st.experimental_rerun()
                         if confirm :
                             st.session_state['focus'] = 2
