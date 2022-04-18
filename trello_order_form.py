@@ -26,7 +26,7 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 1
 
-if st.session_state['focus'] = 2 :
+if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
     st.dataframe(st.session_state['items'])
 
