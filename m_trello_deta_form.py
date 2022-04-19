@@ -72,6 +72,7 @@ if st.session_state['focus'] == 2 :
             if del_index :
                 del items[del_index]
                 st.session_state['items'] = items
+                st.experimental_rerun()
 
 
 
