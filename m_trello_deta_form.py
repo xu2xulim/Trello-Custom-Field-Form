@@ -77,6 +77,7 @@ if st.session_state['focus'] == 2 :
 
             if add_more:
                 st.session_state['focus'] = 1
+                st.session_state['more'] = "Yes"
                 st.experimental_rerun()
 
 if st.session_state['focus'] == 2 :
