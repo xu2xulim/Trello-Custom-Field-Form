@@ -69,7 +69,7 @@ if st.session_state['focus'] == 2 :
         with st.form("Pick the record by its index to remove",clear_on_submit=True):
             col1, col2, col3 = st.columns(3)
             col1.st.write("Index")
-            index = col2.number_input("Index", min_value=0, max_value=max_index, step=1)
+            col2.number_input("Index", min_value=0, max_value=max_index, step=1)
             del_index = col3.form_submit_button("Delete")
 
             if del_index :
