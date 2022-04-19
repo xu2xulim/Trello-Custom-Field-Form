@@ -67,10 +67,8 @@ if st.session_state['focus'] == 2 :
         st.dataframe(items)
         max_index = len(items) - 1
         with st.form("Pick the record by its index to remove",clear_on_submit=True):
-            col1, col2, col3 = st.columns(3)
-            col1.write("Index")
-            col2.number_input("Index", min_value=0, max_value=max_index, step=1)
-            del_index = col3.form_submit_button("Delete")
+            st.number_input("Index", min_value=0, max_value=max_index, step=1)
+            del_index = st.form_submit_button("Delete")
 
             if del_index :
                 del items[del_index]
