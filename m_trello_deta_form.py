@@ -68,7 +68,7 @@ if st.session_state['focus'] == 2 :
         with st.form("Pick the record by its index to remove",clear_on_submit=True):
             st.number_input("Index", min_value=0, max_value=max_index, step=1)
             del_index = st.form_submit_button("Delete")
-            add_more = st.form_submit_button("Delete")
+            add_more = st.form_submit_button("Add More")
 
             if del_index :
                 del items[del_index]
