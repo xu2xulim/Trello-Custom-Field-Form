@@ -61,6 +61,19 @@ if st.session_state['focus'] == 1:
                         st.session_state['focus'] = 2
                     st.experimental_rerun()
 
+if st.session_state['focus'] == 2 :
+    with st.expander("Open if you need to remove any line items"):
+        items = st.session_state['items']
+        st.dataframe(items)
+        max_index = len(items) - 1
+        with st.form("Pick the record by its index to remove",clear_on_submit=True):
+            index = st.number_input("Index", min=0, max=max_index, step=1)
+        del_index = st.form_submit_button("Delete")
+        if del_index :
+            del items[del_index]
+            st.session_state['items'] = items
+
+
 
 if st.session_state['focus'] == 2 :
     with st.expander("Open to create order card"):
