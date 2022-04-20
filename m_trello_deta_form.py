@@ -10,6 +10,9 @@ import base64
 
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
+if st.session_state['focus'] == 1:
+    for key in st.session_state :
+        del st.session_state[key]
 
 if 'more' in st.session_state :
     pass
@@ -132,8 +135,8 @@ if st.session_state['focus'] == 3 :
         finished = st.button("Done")
         attach = {}
         if finished :
-            for key in st.session_state :
-                del st.session_state[key]
+            #for key in st.session_state :
+                #del st.session_state[key]
             st.session_state['focus'] = 1
             st.experimental_rerun()
         else:
@@ -142,3 +145,33 @@ if st.session_state['focus'] == 3 :
                 attach['card_id'] = st.session_state['card_id']
                 attach['filename'] = uploaded_file.name
                 res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
+
+if st.session_state['focus'] == 3 :
+    with st.expander("Open to add labels, members or move to another list"):
+        with st.form("Add more stuff", clear_on_submit=True):
+            st.subheader("Add more to card")
+            cfd = {}
+            res_get = requests.get('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
+            cfd = res_get.json()['more']
+            labels = st.multiselect("Pick the label(s) to add to card", cfd['labels'].keys())
+            st.write('You selected:', labels)
+            members = st.multiselect("Pick the member(s) to add to card", cfd['members'].keys())
+            st.write('You selected:', members)
+        finished = st.button("Done")
+        attach = {}
+        if finished :
+            return_struct = {}
+            inv_labels = {v: k for k, v in cfd['labels'].items()}
+            return_struct['labels'] = []
+            for lbl in labels :
+                return_struct['labels'].append(inv_labels(lbl))
+            inv_memberss = {v: k for k, v in cfd['members'].items()}
+            return_struct['members'] = []
+            for lbl in labels :
+                return_struct['members'].append(inv_members(lbl))
+            st.write(return_struct)
+            st.write('Updating card....')
+            #for key in st.session_state :
+                #del st.session_state[key]
+            st.session_state['focus'] = 1
+            st.experimental_rerun()
