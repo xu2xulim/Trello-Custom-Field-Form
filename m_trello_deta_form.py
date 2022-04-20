@@ -171,7 +171,6 @@ if st.session_state['focus'] == 3 :
                     return_struct['members'].append(cfd['members'][mbr])
                 if column :
                     return_struct['move'] = cfd['lists'][column]
-                st.write(return_struct)
                 st.write('Updating card....')
                 res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
                 #for key in st.session_state :
