@@ -139,7 +139,7 @@ if st.session_state['focus'] == 3 :
         if finished :
             #for key in st.session_state :
                 #del st.session_state[key]
-            st.session_state['focus'] = 1
+            st.session_state['focus'] = 4
             st.experimental_rerun()
         else:
             if uploaded_file is not None:
@@ -148,7 +148,7 @@ if st.session_state['focus'] == 3 :
                 attach['filename'] = uploaded_file.name
                 res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
 
-if st.session_state['focus'] == 3 :
+if st.session_state['focus'] == 4 :
     with st.expander("Open to add labels, members or move to another list"):
         res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res_get.json()['more']
