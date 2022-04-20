@@ -152,7 +152,7 @@ if st.session_state['focus'] == 3 :
     with st.expander("Open to add labels, members or move to another list"):
         res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res_get.json()['more']
-        st.write([lbl for lbl in cfd['labels'].keys()])
+        st.write(cfd)
         with st.form("Add more stuff", clear_on_submit=True):
             st.subheader("Add more to card")
             labels = st.multiselect("Pick the labels to add to card", [lbl for lbl in cfd['labels'].keys()])
