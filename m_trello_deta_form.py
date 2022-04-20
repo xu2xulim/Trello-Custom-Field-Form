@@ -155,16 +155,15 @@ if st.session_state['focus'] == 3 :
         st.write(cfd)
         with st.form("Add more stuff", clear_on_submit=True):
             st.subheader("Add more to card")
-            labels = st.multiselect("Pick the labels to add to card", [list(dd.keys())[0] for dd in cfd['labels']])
-            st.write('You selected:', labels)
-            members = st.multiselect("Pick the members to add to card", [list(dd.keys())[0] for dd in cfd['members']])
-            st.write('You selected:', members)
+            labels = st.multiselect("Pick the labels to add to card", [cfd['labels'].keys()])
+            members = st.multiselect("Pick the members to add to card", [cfd['members'].keys()])
 
-            no_more = st.button("Done")
-            attach = {}
+            no_more = st.form_submit_button("Submit")
+
             if no_more :
                 return_struct = {}
                 inv_labels = {v: k for k, v in cfd['labels'].items()}
+                st.write(inv_labels)
                 return_struct['labels'] = []
                 for lbl in labels :
                     return_struct['labels'].append(inv_labels(lbl))
