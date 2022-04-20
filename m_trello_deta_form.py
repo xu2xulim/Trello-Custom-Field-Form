@@ -166,7 +166,7 @@ if st.session_state['focus'] == 3 :
                 for lbl in labels :
                     return_struct['labels'].append(cfd['labels'][lbl])
                 return_struct['members'] = []
-                for lbl in members :
+                for mbr in members :
                     return_struct['members'].append(cfd['members'][mbr])
                 st.write(return_struct)
                 st.write('Updating card....')
