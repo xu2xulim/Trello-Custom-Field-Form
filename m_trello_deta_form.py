@@ -155,9 +155,9 @@ if st.session_state['focus'] == 3 :
             cfd = {}
             res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
             cfd = res_get.json()['more']
-            labels = st.multiselect("Pick the label(s) to add to card", [lbl for lbl in cfd['labels'].keys()])
+            labels = st.multiselect("Pick the labels to add to card", [lbl for lbl in cfd['labels'].keys()])
             st.write('You selected:', labels)
-            members = st.multiselect("Pick the member(s) to add to card", [mbr for mbr in cfd['members'].keys()])
+            members = st.multiselect("Pick the members to add to card", [mbr for mbr in cfd['members'].keys()])
             st.write('You selected:', members)
 
             no_more = st.button("Done")
