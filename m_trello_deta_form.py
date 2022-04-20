@@ -172,8 +172,11 @@ if st.session_state['focus'] == 3 :
                 return_struct['move'] = column
                 st.write(return_struct)
                 st.write('Updating card....')
-                res_get = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
+                res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
                 #for key in st.session_state :
                     #del st.session_state[key]
-                st.session_state['focus'] = 1
-                st.experimental_rerun()
+                if res_update.status_code == 200:
+                    st.session_state['focus'] = 1
+                    st.experimental_rerun()
+                else:
+                    st.write(res_update.text)
