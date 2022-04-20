@@ -159,21 +159,22 @@ if st.session_state['focus'] == 3 :
             st.write('You selected:', labels)
             members = st.multiselect("Pick the member(s) to add to card", cfd['members'].keys())
             st.write('You selected:', members)
-        finished = st.button("Done")
-        attach = {}
-        if finished :
-            return_struct = {}
-            inv_labels = {v: k for k, v in cfd['labels'].items()}
-            return_struct['labels'] = []
-            for lbl in labels :
-                return_struct['labels'].append(inv_labels(lbl))
-            inv_memberss = {v: k for k, v in cfd['members'].items()}
-            return_struct['members'] = []
-            for lbl in labels :
-                return_struct['members'].append(inv_members(lbl))
-            st.write(return_struct)
-            st.write('Updating card....')
-            #for key in st.session_state :
-                #del st.session_state[key]
-            st.session_state['focus'] = 1
-            st.experimental_rerun()
+
+            finished = st.button("Done")
+            attach = {}
+            if finished :
+                return_struct = {}
+                inv_labels = {v: k for k, v in cfd['labels'].items()}
+                return_struct['labels'] = []
+                for lbl in labels :
+                    return_struct['labels'].append(inv_labels(lbl))
+                inv_memberss = {v: k for k, v in cfd['members'].items()}
+                return_struct['members'] = []
+                for lbl in labels :
+                    return_struct['members'].append(inv_members(lbl))
+                st.write(return_struct)
+                st.write('Updating card....')
+                #for key in st.session_state :
+                    #del st.session_state[key]
+                st.session_state['focus'] = 1
+                st.experimental_rerun()
