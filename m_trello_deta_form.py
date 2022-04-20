@@ -155,8 +155,9 @@ if st.session_state['focus'] == 3 :
         st.write(cfd)
         with st.form("Add more stuff", clear_on_submit=True):
             st.subheader("Add labels, members to card")
-            labels = st.multiselect("Pick the labels to add to card", list(cfd['labels'].keys()))
-            members = st.multiselect("Pick the members to add to card",list(cfd['members'].keys()))
+            labels = st.multiselect("Pick the labels to add to the card", list(cfd['labels'].keys()))
+            members = st.multiselect("Pick the members to add to the card",list(cfd['members'].keys()))
+            column = st.selectbox("Select the list to move the card",list(cfd['lists'].keys()))
 
             no_more = st.form_submit_button("Submit")
 
@@ -168,9 +169,11 @@ if st.session_state['focus'] == 3 :
                 return_struct['members'] = []
                 for mbr in members :
                     return_struct['members'].append(cfd['members'][mbr])
+                return_struct['move'] = column
                 st.write(return_struct)
                 st.write('Updating card....')
+                res_get = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
                 #for key in st.session_state :
                     #del st.session_state[key]
-                #st.session_state['focus'] = 1
+                st.session_state['focus'] = 1
                 st.experimental_rerun()
