@@ -12,9 +12,10 @@ order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
 
 if 'focus' in st.session_state:
-    if st.session_state == 1 :
+    if st.session_state['focus'] == 1 :
         for key in st.session_state :
             del st.session_state[key]
+        st.session_state['focus'] = 1
 
 if 'more' in st.session_state :
     pass
