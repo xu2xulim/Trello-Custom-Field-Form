@@ -160,9 +160,9 @@ if st.session_state['focus'] == 3 :
             members = st.multiselect("Pick the member(s) to add to card", cfd['members'].keys())
             st.write('You selected:', members)
 
-            finished = st.button("Done")
+            no_more = st.button("Done")
             attach = {}
-            if finished :
+            if no_more :
                 return_struct = {}
                 inv_labels = {v: k for k, v in cfd['labels'].items()}
                 return_struct['labels'] = []
