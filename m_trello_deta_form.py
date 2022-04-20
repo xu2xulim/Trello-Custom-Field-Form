@@ -11,19 +11,6 @@ import base64
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
 
-if st.session_state:
-    if 'focus' in  st.session_state:
-        if st.session_state['focus'] == 1 :
-            for key in st.session_state :
-                if key != 'focus' :
-                    del st.session_state[key]
-    else:
-        st.session_state['focus'] == 1
-else:
-    st.session_state['focus'] == 1
-
-else:
-    st.session_state['focus'] = 1
 
 if 'more' in st.session_state :
     pass
@@ -161,7 +148,6 @@ if st.session_state['focus'] == 4 :
     with st.expander("Open to add labels, members or move to another list"):
         res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res_get.json()['more']
-        st.write(cfd)
         with st.form("Add more stuff", clear_on_submit=True):
             st.subheader("Add labels, members to card")
             labels = st.multiselect("Pick the labels to add to the card", list(cfd['labels'].keys()))
@@ -185,6 +171,8 @@ if st.session_state['focus'] == 4 :
                 #for key in st.session_state :
                     #del st.session_state[key]
                 if res_update.status_code == 200:
+                    for key in st.session_state :
+                        del st.session_state[key]
                     st.session_state['focus'] = 1
                     st.experimental_rerun()
                 else:
