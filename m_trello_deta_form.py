@@ -155,8 +155,8 @@ if st.session_state['focus'] == 3 :
         st.write(cfd)
         with st.form("Add more stuff", clear_on_submit=True):
             st.subheader("Add more to card")
-            labels = st.multiselect("Pick the labels to add to card", [cfd['labels'].keys()])
-            members = st.multiselect("Pick the members to add to card", [cfd['members'].keys()])
+            labels = st.multiselect("Pick the labels to add to card", list(cfd['labels'].keys()))
+            members = st.multiselect("Pick the members to add to card",list(cfd['members'].keys()))
 
             no_more = st.form_submit_button("Submit")
 
