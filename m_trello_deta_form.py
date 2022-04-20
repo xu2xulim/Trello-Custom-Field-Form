@@ -10,9 +10,11 @@ import base64
 
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
-if st.session_state['focus'] == 1:
-    for key in st.session_state :
-        del st.session_state[key]
+
+if 'focus' in st.session_state:
+    if st.session_state == 1 :
+        for key in st.session_state :
+            del st.session_state[key]
 
 if 'more' in st.session_state :
     pass
