@@ -154,7 +154,7 @@ if st.session_state['focus'] == 3 :
         cfd = res_get.json()['more']
         st.write(cfd)
         with st.form("Add more stuff", clear_on_submit=True):
-            st.subheader("Add more to card")
+            st.subheader("Add labels, members to card")
             labels = st.multiselect("Pick the labels to add to card", list(cfd['labels'].keys()))
             members = st.multiselect("Pick the members to add to card",list(cfd['members'].keys()))
 
@@ -162,18 +162,15 @@ if st.session_state['focus'] == 3 :
 
             if no_more :
                 return_struct = {}
-                inv_labels = {v: k for k, v in cfd['labels'].items()}
-                st.write(inv_labels)
                 return_struct['labels'] = []
                 for lbl in labels :
-                    return_struct['labels'].append(inv_labels(lbl))
-                inv_memberss = {v: k for k, v in cfd['members'].items()}
+                    return_struct['labels'].append(cfd['labels'][lbl]))
                 return_struct['members'] = []
-                for lbl in labels :
-                    return_struct['members'].append(inv_members(lbl))
+                for lbl in members :
+                    return_struct['members'].append(cfd['members'][mbr]))
                 st.write(return_struct)
                 st.write('Updating card....')
                 #for key in st.session_state :
                     #del st.session_state[key]
-                st.session_state['focus'] = 1
+                #st.session_state['focus'] = 1
                 st.experimental_rerun()
