@@ -16,6 +16,8 @@ if 'focus' in st.session_state:
         for key in st.session_state :
             del st.session_state[key]
         st.session_state['focus'] = 1
+else:
+    st.session_state['focus'] = 1
 
 if 'more' in st.session_state :
     pass
