@@ -65,6 +65,7 @@ with st.sidebar:
 
             if "cf_form_boards" in user.keys():
                 board_dict = get_board_json(user["cf_form_boards"])
+                st.write(board_dict)
                 """for url in user["cf_form_boards"] :
                     board_json = get_board_json(url)
                     board_dict[board_json['name']] = board_json['id']"""
