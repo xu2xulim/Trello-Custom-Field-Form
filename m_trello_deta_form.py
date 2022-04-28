@@ -11,6 +11,15 @@ import base64
 import os
 import streamlit_authenticator as stauth
 
+@st.cache(suppress_st_warning=True)
+def get_board_json (url):
+    data = {'key' : st.secrets['TRELLO_API_KEY'], 'token' : st.secrets['TRELLO_TOKEN']}
+    url_values = urllib.parse.urlencode(data)
+    url = "{}.json?{}".format(url, url_values)
+    result = urllib.request.urlopen(url)
+    board_json = json.loads(result.read().decode('utf-8'))
+    return board_json
+
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
 res = Users.fetch(query=None, limit=100, last=None)
@@ -36,14 +45,14 @@ with st.sidebar:
         res = Users.fetch(query={"name" : name, "username" : username}, limit=None, last=None)
         if len(res.items) == 1:
             user = Users.get(res.items[0]["key"])
-            card_dict = {}
-            for url in user["shared_cards"] :
-                card_json = get_card_json(url)
-                card_dict[card_json['name']] = card_json['id']
+            board_dict = {}
+            for url in user["cf_form_boards"] :
+                board_json = get_board_json(url)
+                board_dict[board_json['name']] = board_json['id']
 
         option = st.selectbox(
-            'Select the card you like to see',
-            options=list(card_dict.keys()))
+            'Select the board you are using',
+            options=list(board_dict.keys()))
 
         st.write('You selected:', option)
         st.session_state['card_id'] = card_dict[option]
@@ -87,15 +96,15 @@ with st.sidebar:
                         st.write(users.items[0]["key"])
                         user = Users.get(users.items[0]["key"])
                         try :
-                            shared_cards = user['shared_cards']
+                            form_boards = user['cf_form_boards']
                         except:
-                            shared_cards = []
-                        if url in shared_cards :
-                            st.write("Card with url {} is already shared with {}".format(url, username))
+                            form_boards = []
+                        if url in form_boards :
+                            st.write("Board with url {} can be used by this app by {}".format(url, username))
                         else:
                             shared_cards.append(url)
                             Users.update({"shared_cards" : shared_cards }, user["key"])
-                            st.write("Card with url {} is shared with {}".format(url, username))
+                            st.write("Board with url {} can now be used by this app by {}".format(url, username))
 
 
 
