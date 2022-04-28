@@ -16,12 +16,19 @@ import streamlit_authenticator as stauth
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
 #@st.cache(suppress_st_warning=True)
-def get_board_json (url):
-    data = {'key' : st.secrets['TRELLO_API_KEY'], 'token' : st.secrets['TRELLO_TOKEN']}
+def get_board_json (urls):
+    payload = {"board_urls" : urls }
+    res_options = requests.get('https://bpqc1s.deta.dev/get_options', data=payload))
+    if res_options.status_code == 200 :
+        return res_options.json()
+    else:
+        return {}
+
+    """data = {'key' : st.secrets['TRELLO_API_KEY'], 'token' : st.secrets['TRELLO_TOKEN']}
     url_values = urllib.parse.urlencode(data)
     url = "{}.json?{}".format(url, url_values)
     result = urllib.request.urlopen(url)
-    board_json = json.loads(result.read().decode('utf-8'))
+    board_json = json.loads(result.read().decode('utf-8'))"""
     return board_json
 
 @st.cache(suppress_st_warning=True)
@@ -55,11 +62,12 @@ with st.sidebar:
         res = Users.fetch(query={"name" : name, "username" : username}, limit=None, last=None)
         if len(res.items) == 1:
             user = Users.get(res.items[0]["key"])
-            board_dict = {}
+            
             if "cf_form_boards" in user.keys():
-                for url in user["cf_form_boards"] :
+                board_dict = get_board_json(user["cf_form_boards"])
+                """for url in user["cf_form_boards"] :
                     board_json = get_board_json(url)
-                    board_dict[board_json['name']] = board_json['id']
+                    board_dict[board_json['name']] = board_json['id']"""
 
         option = st.selectbox(
             'Select the board you are using',
