@@ -84,7 +84,7 @@ with st.sidebar:
             st.warning("This form is used by the administrator to attach card urls to a username. An admin secret is required for the update.")
             with st.form("Enter the card url to be shared with the user", clear_on_submit=True):
                 username = st.text_input("Username")
-                url = st.text_input("Card URL")
+                url = st.text_input("Board URL")
                 admin_secret = st.text_input("Admin Secret", type="password")
 
                 submit = st.form_submit_button("Submit")
@@ -100,11 +100,12 @@ with st.sidebar:
                             form_boards = user['cf_form_boards']
                         except:
                             form_boards = []
+
                         if url in form_boards :
                             st.write("Board with url {} can be used by this app by {}".format(url, username))
                         else:
                             shared_cards.append(url)
-                            Users.update({"shared_cards" : shared_cards }, user["key"])
+                            Users.update({"cf_form_boards" : form_boards }, user["key"])
                             st.write("Board with url {} can now be used by this app by {}".format(url, username))
 
 
