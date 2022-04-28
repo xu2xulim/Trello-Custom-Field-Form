@@ -22,26 +22,31 @@ def get_board_json (url):
     board_json = json.loads(result.read().decode('utf-8'))
     return board_json
 
-Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
+@st.cache(suppress_st_warning=True)
+def auth_init():
+    Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
-res = Users.fetch(query=None, limit=100, last=None)
-names = []
-usernames = []
-hashed_passwords = []
-for x in res.items :
-    names.append(x['name'])
-    usernames.append(x['username'])
-    hashed_passwords.append(x['hash_password'])
+    res = Users.fetch(query=None, limit=100, last=None)
+    names = []
+    usernames = []
+    hashed_passwords = []
+    for x in res.items :
+        names.append(x['name'])
+        usernames.append(x['username'])
+        hashed_passwords.append(x['hash_password'])
+
+    return names, usernames, hashed_passwords
 
 with st.sidebar:
     st.title("Trello Streamlit Form")
+    names, usernames, hashed_passwords = auth_init()
 
     st.info("This application is secured by Streamlit-Authenticator.")
     authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
         'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
 
     name, authentication_status, username = authenticator.login('Login', 'sidebar')
-
+    st.warning(st.session_state)
     if st.session_state['authentication_status']:
         authenticator.logout('Logout', 'main')
         st.write('Welcome *%s*' % (st.session_state['name']))
