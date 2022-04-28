@@ -46,9 +46,10 @@ with st.sidebar:
         if len(res.items) == 1:
             user = Users.get(res.items[0]["key"])
             board_dict = {}
-            for url in user["cf_form_boards"] :
-                board_json = get_board_json(url)
-                board_dict[board_json['name']] = board_json['id']
+            if "cf_form_boards" in user.keys():
+                for url in user["cf_form_boards"] :
+                    board_json = get_board_json(url)
+                    board_dict[board_json['name']] = board_json['id']
 
         option = st.selectbox(
             'Select the board you are using',
