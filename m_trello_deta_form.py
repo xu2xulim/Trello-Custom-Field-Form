@@ -284,6 +284,7 @@ if st.session_state['focus'] == 4 :
                 if res_update.status_code == 200:
                     del st.session_state['more']
                     del st.session_state['items']
+                    del st.session_state['card_id']
                     st.session_state['focus'] = 1
 
                     st.experimental_rerun()
