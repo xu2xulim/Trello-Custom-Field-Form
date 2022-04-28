@@ -13,7 +13,7 @@ import urllib.parse
 import os
 import streamlit_authenticator as stauth
 
-@st.cache(suppress_st_warning=True)
+#@st.cache(suppress_st_warning=True)
 def get_board_json (url):
     data = {'key' : st.secrets['TRELLO_API_KEY'], 'token' : st.secrets['TRELLO_TOKEN']}
     url_values = urllib.parse.urlencode(data)
@@ -35,7 +35,7 @@ for x in res.items :
 
 with st.sidebar:
     st.title("Trello Streamlit Form")
-    
+
     st.info("This application is secured by Streamlit-Authenticator.")
     authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
         'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
