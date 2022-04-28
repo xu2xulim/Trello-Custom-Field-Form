@@ -104,7 +104,7 @@ with st.sidebar:
                         if url in form_boards :
                             st.write("Board with url {} can be used by this app by {}".format(url, username))
                         else:
-                            shared_cards.append(url)
+                            form_boards.append(url)
                             Users.update({"cf_form_boards" : form_boards }, user["key"])
                             st.write("Board with url {} can now be used by this app by {}".format(url, username))
 
