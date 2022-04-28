@@ -282,12 +282,8 @@ if st.session_state['focus'] == 4 :
                 res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
 
                 if res_update.status_code == 200:
-                    for key in st.session_state :
-                        if key == 'authentication_status' :
-                            pass
-                        else:
-                            del st.session_state[key]
-                    st.write(st.session_state)
+                    del st.session_state['more']
+                    del st.session_state['items']
                     st.session_state['focus'] = 1
 
                     st.experimental_rerun()
