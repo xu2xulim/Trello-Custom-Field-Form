@@ -60,7 +60,7 @@ with st.sidebar:
             options=list(board_dict.keys()))
 
         st.write('You selected:', option)
-        st.session_state['card_id'] = card_dict[option]
+        st.session_state['board_id'] = board_dict[option]
     elif st.session_state['authentication_status'] == False:
         st.error('Username/password is incorrect')
     elif st.session_state['authentication_status'] == None:
@@ -196,7 +196,7 @@ if st.session_state['focus'] == 2 :
         with st.form("Create Order Card", clear_on_submit=True):
             st.subheader("Create an Order Card")
             cfd = {}
-            res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format("61120a2d004a725ed3f7f0db")) #st.write("slider", slider_val, "checkbox", checkbox_val)
+            res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(st.session_state['board_id'])) #st.write("slider", slider_val, "checkbox", checkbox_val)
             cfd = res_get.json()['cfd']
             collect = {}
             collect['board_id'] ="61120a2d004a725ed3f7f0db"
