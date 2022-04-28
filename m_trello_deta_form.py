@@ -8,6 +8,7 @@ import json
 import requests
 import base64
 ### Authentication Starts Here....
+import os
 import streamlit_authenticator as stauth
 
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
