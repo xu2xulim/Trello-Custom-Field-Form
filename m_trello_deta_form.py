@@ -47,7 +47,7 @@ with st.sidebar:
         'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
 
     name, authentication_status, username = authenticator.login('Login', 'sidebar')
-    st.warning(st.session_state)
+    #st.info(st.session_state)
     if st.session_state['authentication_status']:
         authenticator.logout('Logout', 'main')
         st.write('Welcome *%s*' % (st.session_state['name']))
@@ -70,6 +70,8 @@ with st.sidebar:
     elif st.session_state['authentication_status'] == False:
         st.error('Username/password is incorrect')
     elif st.session_state['authentication_status'] == None:
+        if 'board_id' in st.session_state:
+            del st.session_state['board_id']
         st.warning('Please enter your username and password')
 
     if not st.session_state['authentication_status']:
