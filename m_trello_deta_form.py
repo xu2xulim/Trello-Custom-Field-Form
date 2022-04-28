@@ -8,6 +8,8 @@ import json
 import requests
 import base64
 ### Authentication Starts Here....
+import urllib.request
+import urllib.parse
 import os
 import streamlit_authenticator as stauth
 
