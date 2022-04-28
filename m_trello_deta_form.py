@@ -18,7 +18,7 @@ Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_U
 #@st.cache(suppress_st_warning=True)
 def get_board_json (urls):
     payload = {"board_urls" : urls }
-    res_options = requests.post('https://bpqc1s.deta.dev/get_options', data=payload))
+    res_options = requests.post('https://bpqc1s.deta.dev/get_options', data=payload)
     if res_options.status_code == 200 :
         return res_options.json()
     else:
