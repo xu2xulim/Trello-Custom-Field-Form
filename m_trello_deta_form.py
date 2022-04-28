@@ -281,7 +281,10 @@ if st.session_state['focus'] == 4 :
                     #del st.session_state[key]
                 if res_update.status_code == 200:
                     for key in st.session_state :
-                        del st.session_state[key]
+                        if key == 'authentication_status' :
+                            pass
+                        else:
+                            del st.session_state[key]
                     st.session_state['focus'] = 1
                     st.experimental_rerun()
                 else:
