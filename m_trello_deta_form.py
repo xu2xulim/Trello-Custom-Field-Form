@@ -34,6 +34,8 @@ for x in res.items :
     hashed_passwords.append(x['hash_password'])
 
 with st.sidebar:
+    st.title("Trello Streamlit Form")
+    
     st.info("This application is secured by Streamlit-Authenticator.")
     authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
         'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
