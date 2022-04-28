@@ -35,11 +35,11 @@ def auth_init():
         usernames.append(x['username'])
         hashed_passwords.append(x['hash_password'])
 
-    return names, usernames, hashed_passwords
+    return Users, names, usernames, hashed_passwords
 
 with st.sidebar:
     st.title("Trello Streamlit Form")
-    names, usernames, hashed_passwords = auth_init()
+    Users, names, usernames, hashed_passwords = auth_init()
 
     st.info("This application is secured by Streamlit-Authenticator.")
     authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
