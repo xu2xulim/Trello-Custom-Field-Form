@@ -13,6 +13,8 @@ import urllib.parse
 import os
 import streamlit_authenticator as stauth
 
+Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
+
 @st.cache(suppress_st_warning=True)
 def get_board_json (url):
     data = {'key' : st.secrets['TRELLO_API_KEY'], 'token' : st.secrets['TRELLO_TOKEN']}
@@ -24,7 +26,6 @@ def get_board_json (url):
 
 @st.cache(suppress_st_warning=True)
 def auth_init():
-    Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
     res = Users.fetch(query=None, limit=100, last=None)
     names = []
@@ -35,11 +36,11 @@ def auth_init():
         usernames.append(x['username'])
         hashed_passwords.append(x['hash_password'])
 
-    return Users, names, usernames, hashed_passwords
+    return names, usernames, hashed_passwords
 
 with st.sidebar:
     st.title("Trello Streamlit Form")
-    Users, names, usernames, hashed_passwords = auth_init()
+    names, usernames, hashed_passwords = auth_init()
 
     st.info("This application is secured by Streamlit-Authenticator.")
     authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
