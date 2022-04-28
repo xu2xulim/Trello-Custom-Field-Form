@@ -120,7 +120,6 @@ if not st.session_state['authentication_status']  :
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
 
-
 if 'more' in st.session_state :
     pass
 else:
@@ -242,8 +241,6 @@ if st.session_state['focus'] == 3 :
         finished = st.button("Done")
         attach = {}
         if finished :
-            #for key in st.session_state :
-                #del st.session_state[key]
             st.session_state['focus'] = 4
             st.experimental_rerun()
         else:
@@ -277,8 +274,7 @@ if st.session_state['focus'] == 4 :
                     return_struct['move'] = cfd['lists'][column]
                 st.write('Updating card....')
                 res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
-                #for key in st.session_state :
-                    #del st.session_state[key]
+
                 if res_update.status_code == 200:
                     for key in st.session_state :
                         if key == 'authentication_status' :
