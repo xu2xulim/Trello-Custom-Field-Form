@@ -13,7 +13,7 @@ import urllib.parse
 import os
 import streamlit_authenticator as stauth
 
-#@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True)
 def get_board_json (url):
     data = {'key' : st.secrets['TRELLO_API_KEY'], 'token' : st.secrets['TRELLO_TOKEN']}
     url_values = urllib.parse.urlencode(data)
@@ -283,7 +283,7 @@ if st.session_state['focus'] == 4 :
                             del st.session_state[key]
                     st.write(st.session_state)
                     st.session_state['focus'] = 1
-                    st.stop()
-                    #st.experimental_rerun()
+
+                    st.experimental_rerun()
                 else:
                     st.write(res_update.text)
