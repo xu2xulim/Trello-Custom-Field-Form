@@ -18,7 +18,7 @@ Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_U
 #@st.cache(suppress_st_warning=True)
 def get_board_json (urls):
     payload = {"board_urls" : urls }
-    res_options = requests.post('https://bpqc1s.deta.dev/get_options', data=payload)
+    res_options = requests.post('https://bpqc1s.deta.dev/get_options', json=payload)
     if res_options.status_code == 200 :
         return res_options.json()
     else:
@@ -64,6 +64,7 @@ with st.sidebar:
             user = Users.get(res.items[0]["key"])
 
             if "cf_form_boards" in user.keys():
+                st.write(user["cf_form_boards"])
                 board_dict = get_board_json(user["cf_form_boards"])
                 st.write(board_dict)
                 """for url in user["cf_form_boards"] :
