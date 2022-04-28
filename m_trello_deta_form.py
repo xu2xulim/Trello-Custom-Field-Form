@@ -281,7 +281,9 @@ if st.session_state['focus'] == 4 :
                             pass
                         else:
                             del st.session_state[key]
+                    st.write(st.session_state)
                     st.session_state['focus'] = 1
-                    st.experimental_rerun()
+                    st.stop()
+                    #st.experimental_rerun()
                 else:
                     st.write(res_update.text)
