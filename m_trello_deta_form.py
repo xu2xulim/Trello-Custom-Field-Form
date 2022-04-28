@@ -15,7 +15,7 @@ import streamlit_authenticator as stauth
 
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
-#@st.cache(suppress_st_warning=True)
+@st.cache(suppress_st_warning=True)
 def get_board_json (url):
     data = {'key' : st.secrets['TRELLO_API_KEY'], 'token' : st.secrets['TRELLO_TOKEN']}
     url_values = urllib.parse.urlencode(data)
