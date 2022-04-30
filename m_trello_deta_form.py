@@ -11,6 +11,7 @@ import base64
 import urllib.request
 import urllib.parse
 import os
+import streamlit.components.v1 as components
 import streamlit_authenticator as stauth
 
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
@@ -235,6 +236,7 @@ if st.session_state['focus'] == 2 :
                 if res_update.status_code == 200:
                     st.write("Creating a order lines in Deta....")
                     st.session_state['card_id'] = res_update.json()['card_id']
+                    card_url = res_update.json()['url']
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     st.write("Finishing cleaning up.....")
                     st.session_state['focus'] = 3
@@ -283,11 +285,22 @@ if st.session_state['focus'] == 4 :
                 res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
 
                 if res_update.status_code == 200:
-                    del st.session_state['more']
-                    del st.session_state['items']
-                    del st.session_state['card_id']
-                    st.session_state['focus'] = 1
-
+                    st.session_state['focus'] = 5
                     st.experimental_rerun()
                 else:
                     st.write(res_update.text)
+
+if st.session_state['focus'] == 5 :
+    with st.expander("Open to a compact non interactive version of the card."):
+        compact_card_html ='''<blockquote class="trello-card-compact">
+            <a href="{}">Trello Card</a>
+            </blockquote>
+            <script src="https://p.trellocdn.com/embed.min.js"></script>'''.format(card_url)
+        components.html(compact_card_html)
+        new_card = st.button("New Card")
+        if new_card:
+            del st.session_state['more']
+            del st.session_state['items']
+            del st.session_state['card_id']
+            st.session_state['focus'] = 1
+            st.experimental_rerun()
