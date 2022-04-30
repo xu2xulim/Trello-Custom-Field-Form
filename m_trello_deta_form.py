@@ -236,8 +236,7 @@ if st.session_state['focus'] == 2 :
                 if res_update.status_code == 200:
                     st.write("Creating a order lines in Deta....")
                     st.session_state['card_id'] = res_update.json()['card_id']
-                    st.write(res_update.json())
-                    #card_url = res_update.json()['shortUrl']
+                    card_url = res_update.json()['card_shortUrl']
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     st.write("Finishing cleaning up.....")
                     st.session_state['focus'] = 3
