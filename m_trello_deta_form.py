@@ -11,7 +11,7 @@ import base64
 import urllib.request
 import urllib.parse
 import os
-#import streamlit.components.v1 as components
+import streamlit.components.v1 as components
 import streamlit_authenticator as stauth
 
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
@@ -259,7 +259,8 @@ if st.session_state['focus'] == 3 :
                 attach['filename'] = uploaded_file.name
                 res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
 
-if st.session_state['focus'] == 4 :
+if st.session_state['focus'] == 4
+    component.html('''<blockquote class="trello-card-compact"><a href="'''+st.session_state['card_url']+'''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>)''')
     with st.expander("Open to add labels, members or move to another list"):
         res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res_get.json()['more']
