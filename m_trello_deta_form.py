@@ -236,7 +236,7 @@ if st.session_state['focus'] == 2 :
                 if res_update.status_code == 200:
                     st.write("Creating a order lines in Deta....")
                     st.session_state['card_id'] = res_update.json()['card_id']
-                    card_url = res_update.json()['card_shortUrl']
+                    st.session_state['card_url'] = res_update.json()['card_shortUrl']
                     order.put({"line_items" : items}, res_update.json()['card_id'])
                     st.write("Finishing cleaning up.....")
                     st.session_state['focus'] = 3
@@ -292,7 +292,7 @@ if st.session_state['focus'] == 4 :
 
 if st.session_state['focus'] == 5 :
     with st.expander("Open to a compact non interactive version of the card."):
-        compact_card_html ='''<blockquote class="trello-card-compact"><a href="'''+ card_url + '''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>'''
+        compact_card_html ='''<blockquote class="trello-card-compact"><a href="'''+ st.session_state['card_url'] + '''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>'''
         components.html(compact_card_html)
         new_card = st.button("New Card")
         if new_card:
