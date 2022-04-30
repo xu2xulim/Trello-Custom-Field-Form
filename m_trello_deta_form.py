@@ -292,7 +292,7 @@ if st.session_state['focus'] == 4 :
 
 if st.session_state['focus'] == 5 :
     with st.expander("Open to a compact non interactive version of the card."):
-        compact_card_html ='''<blockquote class="trello-card-compact"><a href="'''+ st.session_state['card_url'] + '''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>'''
+        compact_card_html ='''<body><blockquote class="trello-card-compact"><a href="'''+ st.session_state['card_url'] + '''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script></body>'''
         components.html(compact_card_html)
         new_card = st.button("New Card")
         if new_card:
