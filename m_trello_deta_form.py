@@ -285,19 +285,11 @@ if st.session_state['focus'] == 4 :
                 res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
 
                 if res_update.status_code == 200:
-                    st.session_state['focus'] = 5
+                    del st.session_state['more']
+                    del st.session_state['items']
+                    del st.session_state['card_id']
+                    del st.session_state['card_url']
+                    st.session_state['focus'] = 1
                     st.experimental_rerun()
                 else:
                     st.write(res_update.text)
-
-if st.session_state['focus'] == 5 :
-    with st.expander("Open to a compact non interactive version of the card."):
-        compact_card_html ='''<body><blockquote class="trello-card-compact"><a href="'''+ st.session_state['card_url'] + '''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script></body>'''
-        components.html(compact_card_html)
-        new_card = st.button("New Card")
-        if new_card:
-            del st.session_state['more']
-            del st.session_state['items']
-            del st.session_state['card_id']
-            st.session_state['focus'] = 1
-            st.experimental_rerun()

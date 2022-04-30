@@ -3,3 +3,4 @@ deta
 pandas
 numpy
 streamlit_authenticator
+#components
