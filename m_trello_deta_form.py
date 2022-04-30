@@ -11,7 +11,7 @@ import base64
 import urllib.request
 import urllib.parse
 import os
-import streamlit.components.v1 as components
+#import streamlit.components.v1 as components
 import streamlit_authenticator as stauth
 
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
