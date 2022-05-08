@@ -177,7 +177,13 @@ if st.session_state['focus'] == 1 :
 
     with st.expander("Open to create order card"):
         finished = st.button("Finished")
-        if 'Description with Markdown' in st.session_state['sections'] and not finished:
+        if finished:
+            st.session_state['md_done'] = True
+            st.session_state['focus'] = 2
+        else:
+            st.session_state['md_done'] = False
+
+        if 'Description with Markdown' in st.session_state['sections'] and not st.session_state['md_done']:
             st.warning("You have indicated that you will be using Markdown in your card description.")
             st.info("When you are satisfied pressed the Finished button to create the card.")
             with st.empty():
@@ -194,7 +200,7 @@ if st.session_state['focus'] == 1 :
                     st.experimental_rerun()
 
 
-        if finished or 'Description with Markdown' not in st.session_state['sections']:
+        if st.session_state['md_done'] or 'Description with Markdown' not in st.session_state['sections']:
 
             with st.form("Create Card", clear_on_submit=True):
                 collect = {}
