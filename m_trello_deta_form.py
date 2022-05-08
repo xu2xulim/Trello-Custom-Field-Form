@@ -296,20 +296,22 @@ if st.session_state['focus'] == 4 :
 
 if st.session_state['focus'] == 5 :
     if 'Checklists' in st.session_state['sections']:
-        st.warning("Use the done button when you have no more items to add.")
-        done = st.button("Done")
-        if done:
-            st.session_state['focus'] = 6
-            st.experimental_rerun()
 
-        st.warning("Use the Finished button when you have no more items to add.")
-        finished = st.button("Finished")
-        if finished:
-            st.session_state['focus'] = 5.5
-            st.session_state['more'] = "No"
-            st.experimental_rerun()
 
         with st.expander("Open to create your checklist items."):
+            st.warning("Use the done button when you have no more items to add.")
+            done = st.button("Done")
+            if done:
+                st.session_state['focus'] = 6
+                st.experimental_rerun()
+
+            st.warning("Use the Finished button when you have no more items to add.")
+            finished = st.button("Finished")
+            if finished:
+                st.session_state['focus'] = 5.5
+                st.session_state['more'] = "No"
+                st.experimental_rerun()
+                
             items = st.session_state['items']
             if st.session_state['more'] == "Yes" :
                 st.subheader("Your items :")
