@@ -126,9 +126,11 @@ if not st.session_state['authentication_status']  :
     st.stop()
 
 ### Authentication Ends Here....
-st.seesion_state['sections'] = ['All']
+st.write("Start by customising the sections you need for your form. The default is All sections.")
+
 skip = st.button("Skip")
 if skip:
+    st.seesion_state['sections'] = ['All']
     st.session_state['focus'] == 1
     st.experimental_rerun()
 
