@@ -306,14 +306,11 @@ if st.session_state['focus'] == 5 :
         finished = st.button("Finished")
         if finished:
             st.session_state['focus'] = 5.5
+            st.session_state['more'] = "No"
             st.experimental_rerun()
 
-        st.dataframe(st.session_state['items'])
-
-
-        with st.expander("Open to enter order details"):
+        with st.expander("Open to create your checklist items."):
             items = st.session_state['items']
-            last = "No"
             if st.session_state['more'] == "Yes" :
                 st.subheader("Your items :")
                 st.dataframe(items)
@@ -329,7 +326,7 @@ if st.session_state['focus'] == 5 :
                     if enter :
                         items.append(line)
                         st.session_state['items'] = items
-                        st.experimental_rerun()            
+                        st.experimental_rerun()
     else:
         st.session_state['focus'] = 6
         st.experimental_rerun()
