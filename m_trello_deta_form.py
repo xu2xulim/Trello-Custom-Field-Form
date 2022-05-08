@@ -178,7 +178,7 @@ if st.session_state['focus'] == 1 :
     with st.expander("Open to create order card"):
         finished = st.button("Finished")
         if finished:
-            st.session_state['focus'] = 99
+            st.session_state['focus'] = 1.5
 
         if 'Description with Markdown' in st.session_state['sections']:
             st.warning("You have indicated that you will be using Markdown in your card description.")
@@ -196,10 +196,10 @@ if st.session_state['focus'] == 1 :
                     st.session_state['desc'] = desc
                     st.experimental_rerun()
         else:
-            st.session_state['focus'] = 99
+            st.session_state['focus'] = 1.5
 
 
-if st.session_state['focus'] ==99:
+if st.session_state['focus'] ==1.5:
     with st.form("Create Card", clear_on_submit=True):
         collect = {}
         collect['board_id'] =st.session_state['board_id']
@@ -210,9 +210,9 @@ if st.session_state['focus'] ==99:
         if create_trello_card:
             res_create_card = requests.post('https://bpqc1s.deta.dev/add_card', json=collect)
             if res_create_card.status_code == 200:
-                st.session_state['focus'] = 2
                 st.session_state['card_id'] = res_create_card.json()['id']
                 st.write(res_create_card.json()['card_shortUrl'])
+                st.session_state['focus'] = 2
                 st.experimental_rerun()
 
 if st.session_state['focus'] == 2:
