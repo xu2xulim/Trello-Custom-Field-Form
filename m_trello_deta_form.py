@@ -216,7 +216,7 @@ if st.session_state['focus'] ==1.5:
             res_create_card = requests.post('https://bpqc1s.deta.dev/add_card', json=collect)
             if res_create_card.status_code == 200:
                 st.session_state['card_id'] = res_create_card.json()['card_id']
-                if ('Labels and more' in st.session_state['sections'] or 'Checklists' in st.session_state['sections']):
+                if 'Labels and more' in st.session_state['sections'] or 'Checklists' in st.session_state['sections']:
                     res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
                     more_cfd = res_get.json()['more']
                 st.session_state['focus'] = 2
