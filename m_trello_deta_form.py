@@ -207,7 +207,7 @@ if st.session_state['focus'] == 1 :
                     st.session_state['focus'] == 1.1
                     st.session_state['collect'] = collect
 
-if st.session_state['focus'] = 1.1:
+if st.session_state['focus'] == 1.1:
     res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=st.session_state['collect'])
     if res_create_card.status_code == 200:
         st.session_state['card_id'] = res_create_card.json()['id']
