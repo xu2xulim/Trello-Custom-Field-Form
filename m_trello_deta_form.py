@@ -71,15 +71,18 @@ with st.sidebar:
             skip = st.button("Skip")
             if skip:
                 st.session_state['sections'] = ['All']
+            if 'sections' not in st.session_state:
 
-            with st.expander("Customise the form sections you need. The default is ALL."):
+                with st.expander("Customise the form sections you need. The default is ALL."):
 
-                with st.form("Form Sections", clear_on_submit=True):
-                    sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Custom Fields'])
-                    create = st.form_submit_button("Create Form")
+                    with st.form("Form Sections", clear_on_submit=True):
+                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Custom Fields'])
+                        create = st.form_submit_button("Create Form")
 
-                    if create:
-                        st.session_state['sections'] = sections
+                        if create:
+                            st.session_state['sections'] = sections
+            else:
+                st.write("The following sections had been selected: {}".format(st.session_state['sections']))
 
 
 
