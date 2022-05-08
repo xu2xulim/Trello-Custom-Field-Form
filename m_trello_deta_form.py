@@ -311,7 +311,7 @@ if st.session_state['focus'] == 5 :
                 st.session_state['focus'] = 5.5
                 st.session_state['more'] = "No"
                 st.experimental_rerun()
-                
+
             items = st.session_state['items']
             if st.session_state['more'] == "Yes" :
                 st.subheader("Your items :")
@@ -337,6 +337,8 @@ if st.session_state['focus'] ==5.5:
     with st.expander("Open if you need to remove any line items"):
         items = st.session_state['items']
         max_index = len(items) - 1
+        st.subheader("Your items :")
+        st.dataframe(items)
         with st.form("Pick the record by its index to remove",clear_on_submit=True):
             st.number_input("Index", min_value=0, max_value=max_index, step=1)
             del_index = st.form_submit_button("Delete")
