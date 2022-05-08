@@ -171,12 +171,16 @@ if st.session_state['focus'] == 2 :
     st.dataframe(st.session_state['items'])
 
 if st.session_state['focus'] == 1 :
+    st.session_state['desc'] = ""
     with st.expander("Open to create order card"):
         #items = st.session_state['items']
         finished = st.button("Finished")
         if 'Description with Markdown' in st.session_state['sections']:
             with st.form("Create and review your markdown for the card description", clear_on_submit=True):
-                desc = st.text_area('Card Description')
+                if st.session_state['desc'] != "":
+                    desc = st.text_area('Card Description', value = st.session_state['desc'])
+                else:
+                    desc = st.text_area('Card Description')
                 review = st.form_submit_button("Review Markdown")
 
                 if review :
@@ -184,7 +188,8 @@ if st.session_state['focus'] == 1 :
                     st.experimental_rerun()
 
 
-        else:
+        if finished or 'Description with Markdown' not in st.session_state['sections']:
+
             with st.form("Create Card", clear_on_submit=True):
                 #
                 #cfd = {}
@@ -193,7 +198,7 @@ if st.session_state['focus'] == 1 :
                 collect = {}
                 collect['board_id'] =st.session_state['board_id']
                 collect['cardname'] = st.text_input('Card Name')
-                collect['carddescription'] = st.text_area('Card Description')
+                collect['carddescription'] = st.text_area('Card Description', value = st.session_state['desc'])
                 create = st.form_submit_button("Create Card")
 
                 if create:
