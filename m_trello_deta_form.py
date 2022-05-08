@@ -73,7 +73,7 @@ with st.sidebar:
             if 'sections' not in st.session_state:
                 skip = st.button("Skip")
                 if skip:
-                    st.session_state['sections'] = ['All']
+                    st.session_state['sections'] = ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments']
 
                 with st.expander("Customise the form sections you need. The default is ALL."):
 
@@ -145,7 +145,7 @@ with st.sidebar:
 
 
 
-if not st.session_state['authentication_status'] or not st.session_state['board_id'] or not st.session_state['sections'] :
+if not st.session_state['authentication_status'] or 'sections' not st.session_state :
     st.stop()
 
 ### Authentication Ends Here....
