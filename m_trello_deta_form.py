@@ -126,30 +126,9 @@ if not st.session_state['authentication_status']  :
     st.stop()
 
 ### Authentication Ends Here....
-st.write("Start by customising the sections you need for your form. The default is All sections.")
-
-skip = st.button("Skip")
-if skip:
-    st.session_state['sections'] = ['All']
-    st.session_state['focus'] == 1
-    st.experimental_rerun()
-
-with st.expander("Customise the form sections you need. The default is ALL."):
-
-    with st.form("Form Sections", clear_on_submit=True):
-        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Custom Fields'])
-        create = st.form_submit_button("Create Form")
-
-        if create:
-            st.seesion_state['sections'] = sections
-            st.session_state['focus'] == 1
-            st.experimental_rerun()
-
-
-
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Form With Streamlit")
-
+st.write("Start by customising the sections you need for your form. The default is All sections.")
 if 'more' in st.session_state :
     pass
 else:
@@ -164,6 +143,25 @@ if 'focus' in st.session_state:
     pass
 else:
     st.session_state['focus'] = 0
+
+if st.session_state['focus'] = 0:
+    skip = st.button("Skip")
+    if skip:
+        st.session_state['sections'] = ['All']
+        st.session_state['focus'] == 1
+        st.experimental_rerun()
+
+    with st.expander("Customise the form sections you need. The default is ALL."):
+
+        with st.form("Form Sections", clear_on_submit=True):
+            sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Custom Fields'])
+            create = st.form_submit_button("Create Form")
+
+            if create:
+                st.seesion_state['sections'] = sections
+                st.session_state['focus'] == 1
+                st.experimental_rerun()
+
 
 if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
