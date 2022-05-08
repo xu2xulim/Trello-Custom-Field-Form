@@ -146,11 +146,6 @@ if not st.session_state['authentication_status']  :
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Your custom Trello Form is now ready.")
 
-
-
-if st.session_state['focus'] != 1:
-
-
 if 'more' in st.session_state :
     pass
 else:
@@ -164,7 +159,7 @@ else:
 if 'focus' in st.session_state:
     pass
 else:
-    st.session_state['focus'] = 0
+    st.session_state['focus'] = 1
 if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
     st.dataframe(st.session_state['items'])
