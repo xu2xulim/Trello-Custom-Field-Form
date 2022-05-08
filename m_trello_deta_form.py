@@ -158,7 +158,7 @@ if st.session_state['focus'] == 0:
             create = st.form_submit_button("Create Form")
 
             if create:
-                st.seesion_state['sections'] = sections
+                st.session_state['sections'] = sections
                 st.session_state['focus'] == 1
                 st.experimental_rerun()
 
