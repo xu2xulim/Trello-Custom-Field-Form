@@ -167,13 +167,6 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 1
 
-
-
-
-#if st.session_state['focus'] == 2 :
-    #st.subheader("Your items :")
-    #st.dataframe(st.session_state['items'])
-
 if st.session_state['focus'] == 1 :
     if 'desc' not in st.session_state:
         st.session_state['desc'] = ""
@@ -213,12 +206,13 @@ if st.session_state['focus'] ==1.5:
         create_trello_card = st.form_submit_button("Create Card")
 
         if create_trello_card:
+            st.write("Creating card...")
             res_create_card = requests.post('https://bpqc1s.deta.dev/add_card', json=collect)
             if res_create_card.status_code == 200:
                 st.session_state['card_id'] = res_create_card.json()['card_id']
                 if 'Labels and more' in st.session_state['sections'] or 'Checklists' in st.session_state['sections']:
                     res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
-                    more_cfd = res_get.json()['more']
+                    st.session_state['more_cfd'] = res_get.json()['more']
                 st.session_state['focus'] = 2
                 st.experimental_rerun()
             else:
@@ -331,7 +325,7 @@ if st.session_state['focus'] == 5 :
                     line = {}
                     line['name'] = st.text_input("Item Name")
                     line['due'] = st.date_input("Enter Item Due Date")
-                    line['member'] = st.selectbox("Select Assigned Member", options=list(more_cfd['members'].keys()))
+                    line['member'] = st.selectbox("Select Assigned Member", options=list(st.session['more_cfd']['members'].keys()))
 
                     enter = st.form_submit_button("Enter")
                     if enter :
@@ -387,9 +381,9 @@ if st.session_state['focus'] == 6 :
             #cfd = res_get.json()['more']
             with st.form("Add more stuff", clear_on_submit=True):
                 st.subheader("Add labels, members to card")
-                labels = st.multiselect("Pick the labels to add to the card", list(more_cfd['labels'].keys()))
-                members = st.multiselect("Pick the members to add to the card",list(more_cfd['members'].keys()))
-                column = st.selectbox("Select the list to move the card",list(more_cfd['lists'].keys()))
+                labels = st.multiselect("Pick the labels to add to the card", list(st.session['more_cfd']['labels'].keys()))
+                members = st.multiselect("Pick the members to add to the card",list(st.session['more_cfd']['members'].keys()))
+                column = st.selectbox("Select the list to move the card",list(st.session['more_cfd']['lists'].keys()))
 
                 no_more = st.form_submit_button("Submit")
 
@@ -397,12 +391,12 @@ if st.session_state['focus'] == 6 :
                     return_struct = {}
                     return_struct['labels'] = []
                     for lbl in labels :
-                        return_struct['labels'].append(cfd['labels'][lbl])
+                        return_struct['labels'].append(st.session['more_cfd']['labels'][lbl])
                     return_struct['members'] = []
                     for mbr in members :
-                        return_struct['members'].append(cfd['members'][mbr])
+                        return_struct['members'].append(st.session['more_cfd']['members'][mbr])
                     if column :
-                        return_struct['move'] = cfd['lists'][column]
+                        return_struct['move'] = st.session['more_cfd']['lists'][column]
                     st.write('Updating card....')
                     res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
 
