@@ -150,7 +150,7 @@ if not st.session_state['authentication_status'] or 'sections' not in st.session
 
 ### Authentication Ends Here....
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
-st.header("Your custom Trello Form is now ready.")
+st.header("Trello Form with Streamlit(Personalised)")
 st.write(st.session_state)
 if 'more' in st.session_state :
     pass
@@ -171,7 +171,7 @@ if st.session_state['focus'] == 1 :
     if 'desc' not in st.session_state:
         st.session_state['desc'] = ""
 
-    with st.expander("Open to create order card"):
+    with st.expander("Open to create your card."):
         st.info("You have indicated that you will be using Markdown in your card description.")
         st.warning("When you are satisfied pressed the Finished button to create the card.")
         finished = st.button("Finished")
@@ -235,6 +235,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             submit = st.form_submit_button("Submit")
 
             if submit:
+                st.write('Updating card....')
                 st.json(collect)
                 st.session_state['focus'] = 3
                 st.experimental_rerun()
@@ -272,6 +273,7 @@ if st.session_state['focus'] == 3 :
                 submit = st.form_submit_button("Submit")
 
                 if submit:
+                    st.write('Updating card....')
                     st.json(collect)
                     st.session_state['focus'] = 4
                     st.experimental_rerun()
@@ -290,6 +292,7 @@ if st.session_state['focus'] == 4 :
                 st.experimental_rerun()
             else:
                 if uploaded_file is not None:
+                    st.write('Updating card....')
                     bytes_data = uploaded_file.getvalue()
                     attach['card_id'] = st.session_state['card_id']
                     attach['filename'] = uploaded_file.name
@@ -320,7 +323,7 @@ if st.session_state['focus'] == 5 :
                 st.subheader("Your items :")
                 st.dataframe(items)
                 st.subheader("Create Line Items")
-                form_name = "Order Line Items {}".format(len(items))
+                form_name = "Line Items {}".format(len(items))
                 with st.form(form_name, clear_on_submit=True):
                     line = {}
                     line['name'] = st.text_input("Item Name")
@@ -369,6 +372,7 @@ if st.session_state['focus'] ==5.5:
             submit = st.form_submit_button("Submit")
 
             if submit:
+                st.write('Updating card....')
                 st.session_state['items'] = []
                 st.session_state['focus'] = 5
                 st.session_state['more'] = "Yes"
