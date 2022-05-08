@@ -142,7 +142,7 @@ else:
 if 'focus' in st.session_state:
     pass
 else:
-    st.session_state['focus'] = 1
+    st.session_state['focus'] = 0
 
 if st.session_state['focus'] == 0:
     skip = st.button("Skip")
