@@ -204,19 +204,18 @@ if st.session_state['focus'] == 1 :
                 create = st.form_submit_button("Create Card")
                 st.write(create)
                 if create:
+                    st.session_state['focus'] == 2
                     st.write('A')
                     res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                     st.write('B')
                     if res_create_card.status_code == 200:
                         st.write('C')
                         st.session_state['card_id'] = res_create_card.json()['id']
-                        st.write(res_create_card.json()['card_shortUrl'])
-                        st.session_state['focus'] == 2
-                        st.write(st.session_state)
-                        st.stop()
+                        st.write(res_create_card.json()['card_shortUrl']
                     else:
                         st.write('D')
                         #st.experimental_rerun()
+
 
 
 
