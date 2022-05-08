@@ -73,12 +73,12 @@ with st.sidebar:
             if 'sections' not in st.session_state:
                 skip = st.button("Skip")
                 if skip:
-                    st.session_state['sections'] = ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments']
+                    st.session_state['sections'] = ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments']
 
                 with st.expander("Customise the form sections you need. The default is ALL."):
 
                     with st.form("Form Sections", clear_on_submit=True):
-                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'])
+                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments'])
                         create = st.form_submit_button("Create Form")
 
                         if create:
@@ -166,6 +166,11 @@ if 'focus' in st.session_state:
     pass
 else:
     st.session_state['focus'] = 1
+
+
+if 'Labels and more' in st.session_state or 'Checklists' in st.session_state:
+    res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
+    more_cfd = res_get.json()['more']
 
 #if st.session_state['focus'] == 2 :
     #st.subheader("Your items :")
@@ -320,9 +325,9 @@ if st.session_state['focus'] == 5 :
                 form_name = "Order Line Items {}".format(len(items))
                 with st.form(form_name, clear_on_submit=True):
                     line = {}
-                    line['name'] = st.text_input("Item Name", ("Round", "V-shaped"))
+                    line['name'] = st.text_input("Item Name")
                     line['due'] = st.date_input("Enter Item Due Date")
-                    line['member'] = st.selectbox("Select Assigned Member", options=['A', 'B'])
+                    line['member'] = st.selectbox("Select Assigned Member", options=list(more_cfd['members'].keys()))
 
                     enter = st.form_submit_button("Enter")
                     if enter :
@@ -374,13 +379,13 @@ if st.session_state['focus'] ==5.5:
 if st.session_state['focus'] == 6 :
     if 'Labels and more' in st.session_state['sections']:
         with st.expander("Open to add labels, members or move to another list"):
-            res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
-            cfd = res_get.json()['more']
+            #res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
+            #cfd = res_get.json()['more']
             with st.form("Add more stuff", clear_on_submit=True):
                 st.subheader("Add labels, members to card")
-                labels = st.multiselect("Pick the labels to add to the card", list(cfd['labels'].keys()))
-                members = st.multiselect("Pick the members to add to the card",list(cfd['members'].keys()))
-                column = st.selectbox("Select the list to move the card",list(cfd['lists'].keys()))
+                labels = st.multiselect("Pick the labels to add to the card", list(more_cfd['labels'].keys()))
+                members = st.multiselect("Pick the members to add to the card",list(more_cfd['members'].keys()))
+                column = st.selectbox("Select the list to move the card",list(more_cfd['lists'].keys()))
 
                 no_more = st.form_submit_button("Submit")
 
@@ -401,6 +406,7 @@ if st.session_state['focus'] == 6 :
                         del st.session_state['more']
                         del st.session_state['items']
                         del st.session_state['card_id']
+                        del st.session_state['more_cfd']
                         st.session_state['focus'] = 1
                         st.experimental_rerun()
                     else:
@@ -409,6 +415,7 @@ if st.session_state['focus'] == 6 :
         del st.session_state['more']
         del st.session_state['items']
         del st.session_state['card_id']
+        del st.session_state['more_cfd']
         st.session_state['focus'] = 1
         st.experimental_rerun()
 
