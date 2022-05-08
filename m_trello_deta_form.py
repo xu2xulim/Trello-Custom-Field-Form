@@ -201,27 +201,17 @@ if st.session_state['focus'] == 1 :
                 collect['board_id'] =st.session_state['board_id']
                 collect['cardname'] = st.text_input('Card Name')
                 collect['carddescription'] = st.text_area('Card Description', value = st.session_state['desc'])
-                create_trello_card = st.form_submit_button("Create CardX")
+                create_trello_card = st.form_submit_button("Create Card")
 
                 if create_trello_card:
-                    st.session_state['focus'] = 1.1
-                    st.session_state['collect'] = collect
-                    st.experimental_rerun()
-
-if st.session_state['focus'] == 1.1:
-    res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=st.session_state['collect'])
-    if res_create_card.status_code == 200:
-        st.session_state['card_id'] = res_create_card.json()['id']
-        st.write(res_create_card.json()['card_shortUrl'])
-        st.session_state['focus'] = 2
-        st.experimental_rerun()
+                    res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+                    if res_create_card.status_code == 200:
+                        st.session_state['focus'] = 2
+                        st.session_state['card_id'] = res_create_card.json()['id']
+                        st.write(res_create_card.json()['card_shortUrl'])
 
 
-
-
-
-st.stop()
-if st.session_state['focus'] == 1:
+if st.session_state['focus'] == 2:
     with st.expander("Open to enter order details"):
         #last_line = 0
         items = st.session_state['items']
