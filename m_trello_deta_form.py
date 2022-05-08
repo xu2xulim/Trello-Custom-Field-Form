@@ -177,7 +177,7 @@ if st.session_state['focus'] == 1 :
             with st.form("Create Card", clear_on_submit=True):
                 desc = st.text_area('Card Description')
                 review = st.form_submit_button("Review Markdown")
-                finished = st.button("Done Reviewing")
+                finished = st.button("Finished")
                 if review :
                     desc_md = st.markdown(desc)
                     st.experimental_rerun()
