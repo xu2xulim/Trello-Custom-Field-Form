@@ -202,7 +202,7 @@ if st.session_state['focus'] == 1 :
                 collect['cardname'] = st.text_input('Card Name')
                 collect['carddescription'] = st.text_area('Card Description', value = st.session_state['desc'])
                 create = st.form_submit_button("Create Card")
-
+                st.write(create)
                 if create:
                     st.write('A')
                     res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
