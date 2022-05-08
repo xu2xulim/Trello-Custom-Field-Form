@@ -83,6 +83,7 @@ with st.sidebar:
 
                         if create:
                             st.session_state['sections'] = sections
+                            st.experimental_rerun()
             else:
                 st.write("The following sections had been selected: {}".format(st.session_state['sections']))
 
