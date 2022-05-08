@@ -204,18 +204,16 @@ if st.session_state['focus'] == 1 :
                 create_trello_card = st.form_submit_button("Create Card")
                 st.write(create_trello_card)
                 if create_trello_card:
-                    
-                    st.json(collect)
-                    res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
-                    st.write('B')
-                    if res_create_card.status_code == 200:
-                        st.write('C')
-                        st.session_state['card_id'] = res_create_card.json()['id']
-                        st.write(res_create_card.json()['card_shortUrl'])
-                        st.session_state['focus'] == 2
-                    else:
-                        st.write('D')
-                        #st.experimental_rerun()
+                    st.session_state['focus'] == 1.1
+                    st.session_state['collect'] = collect
+
+if st.session_state['focus'] = 1.1:
+    res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=st.session_state['collect'])
+    if res_create_card.status_code == 200:
+        st.session_state['card_id'] = res_create_card.json()['id']
+        st.write(res_create_card.json()['card_shortUrl'])
+        st.session_state['focus'] = 2
+        st.experimental_rerun()
 
 
 
