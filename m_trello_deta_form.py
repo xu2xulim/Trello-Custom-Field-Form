@@ -179,6 +179,7 @@ if st.session_state['focus'] == 1 :
         finished = st.button("Finished")
         if finished:
             st.session_state['md_done'] = True
+
         else:
             st.session_state['md_done'] = False
 
@@ -199,23 +200,21 @@ if st.session_state['focus'] == 1 :
                     st.experimental_rerun()
 
 
-        if st.session_state['md_done'] or 'Description with Markdown' not in st.session_state['sections']:
+if (st.session_state['md_done'] or 'Description with Markdown' not in st.session_state['sections']) and st.session_state['focus'] == 1 :
+    with st.form("Create Card", clear_on_submit=True):
+        collect = {}
+        collect['board_id'] =st.session_state['board_id']
+        collect['cardname'] = st.text_input('Card Name')
+        collect['carddescription'] = st.text_area('Card Description', value = st.session_state['desc'])
+        create_trello_card = st.form_submit_button("Create Card")
 
-            with st.form("Create Card", clear_on_submit=True):
-                collect = {}
-                collect['board_id'] =st.session_state['board_id']
-                collect['cardname'] = st.text_input('Card Name')
-                collect['carddescription'] = st.text_area('Card Description', value = st.session_state['desc'])
-                create_trello_card = st.form_submit_button("Create Card")
-
-                if create_trello_card:
-                    res_create_card = requests.post('https://bpqc1s.deta.dev/add_card', json=collect)
-                    if res_create_card.status_code == 200:
-                        st.session_state['focus'] = 2
-                        st.session_state['card_id'] = res_create_card.json()['id']
-                        st.write(res_create_card.json()['card_shortUrl'])
-                        st.experimental_rerun()
-
+        if create_trello_card:
+            res_create_card = requests.post('https://bpqc1s.deta.dev/add_card', json=collect)
+            if res_create_card.status_code == 200:
+                st.session_state['focus'] = 2
+                st.session_state['card_id'] = res_create_card.json()['id']
+                st.write(res_create_card.json()['card_shortUrl'])
+                st.experimental_rerun()
 
 if st.session_state['focus'] == 2:
     st.write(st.session_state['card_id'])
