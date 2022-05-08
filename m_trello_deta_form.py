@@ -272,6 +272,20 @@ if st.session_state['focus'] == 3 and 'Custom Fields' in st.session_state['secti
                 st.session_state['focus'] = 4
                 st.experimental_rerun()
 
+if st.session_state['focus'] == 4 and  'Attachments' in st.session_state['sections']:
+    with st.expander("Open to upload attachments"):
+        uploaded_file = st.file_uploader('Upload any file up to 200MB')
+        finished = st.button("Done")
+        attach = {}
+        if finished :
+            st.session_state['focus'] = 5
+            st.experimental_rerun()
+        else:
+            if uploaded_file is not None:
+                bytes_data = uploaded_file.getvalue()
+                attach['card_id'] = st.session_state['card_id']
+                attach['filename'] = uploaded_file.name
+                res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
 
 """    with st.expander("Open to create order card"):
         items = st.session_state['items']
@@ -417,20 +431,7 @@ if st.session_state['focus'] == 999 :
                 else:
                     st.error(res_update.text)
 
-if st.session_state['focus'] == 999 :
-    with st.expander("Open to upload samples"):
-        uploaded_file = st.file_uploader('Upload any file up to 200MB')
-        finished = st.button("Done")
-        attach = {}
-        if finished :
-            st.session_state['focus'] = 4
-            st.experimental_rerun()
-        else:
-            if uploaded_file is not None:
-                bytes_data = uploaded_file.getvalue()
-                attach['card_id'] = st.session_state['card_id']
-                attach['filename'] = uploaded_file.name
-                res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
+
 
 if st.session_state['focus'] == 999 :
     components.html('''<blockquote class="trello-card-compact"><a href="'''+st.session_state['card_url']+'''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>)''')
