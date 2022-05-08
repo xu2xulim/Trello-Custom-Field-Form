@@ -214,7 +214,7 @@ if st.session_state['focus'] ==1.5:
         if create_trello_card:
             res_create_card = requests.post('https://bpqc1s.deta.dev/add_card', json=collect)
             if res_create_card.status_code == 200:
-                st.session_state['card_id'] = res_create_card.json()['id']
+                st.session_state['card_id'] = res_create_card.json()['card_id']
                 st.write(res_create_card.json()['card_shortUrl'])
                 st.session_state['focus'] = 2
             else:
