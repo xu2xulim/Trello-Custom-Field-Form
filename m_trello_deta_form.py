@@ -214,7 +214,7 @@ if st.session_state['focus'] == 1 :
                     if res_update.status_code == 200:
                         st.session_state['card_id'] = res_create_card.json()['id']
                         st.write(res_create_card.json()['shortUrl'])
-                        if st.session_state['focus'] == 2:
+                        st.session_state['focus'] == 2
                         st.experimental_rerun()
 
 
