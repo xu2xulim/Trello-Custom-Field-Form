@@ -217,7 +217,7 @@ if st.session_state['focus'] ==1.5:
                 st.write("Failed to Create Card")
                 st.stop()
 
-if st.session_state['focus'] == 2 and 'Start and Due Dates' in st.session_state['sections'] :
+if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_state['sections'] :
 
     with st.expander("Open to enter Start and or Due Dates."):
 
