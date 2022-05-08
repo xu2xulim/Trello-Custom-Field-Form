@@ -193,7 +193,7 @@ if st.session_state['focus'] == 1 :
                 collect['board_id'] =st.session_state['board_id']
                 collect['cardname'] = st.text_input('Card Name')
                 collect['carddescription'] = st.text_area('Card Description')
-
+                create = st.form_submit_button("Create Card")
 
                 if create:
                     st.stop()
