@@ -371,7 +371,7 @@ if st.session_state['focus'] ==5.5:
                 st.experimental_rerun()
 
 if st.session_state['focus'] == 6 :
-    components.html('''<blockquote class="trello-card-compact"><a href="'''+st.session_state['card_url']+'''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>)''')
+    #components.html('''<blockquote class="trello-card-compact"><a href="'''+st.session_state['card_url']+'''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>)''')
     with st.expander("Open to add labels, members or move to another list"):
         res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
         cfd = res_get.json()['more']
