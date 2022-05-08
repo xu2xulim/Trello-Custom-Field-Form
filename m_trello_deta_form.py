@@ -41,7 +41,7 @@ def auth_init():
     return names, usernames, hashed_passwords
 
 with st.sidebar:
-    st.title("Trello Streamlit Form")
+    st.title("Trello Form With Streamlit")
     names, usernames, hashed_passwords = auth_init()
 
     st.info("This application is secured by Streamlit-Authenticator.")
@@ -148,7 +148,7 @@ with st.expander("Customise the form sections you need. The default is ALL."):
 
 
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
-st.header("Trello Order with Deta")
+st.header("Trello Form With Streamlit")
 
 if 'more' in st.session_state :
     pass
@@ -163,7 +163,7 @@ else:
 if 'focus' in st.session_state:
     pass
 else:
-    st.session_state['focus'] = 1
+    st.session_state['focus'] = 0
 
 if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
