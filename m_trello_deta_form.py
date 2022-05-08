@@ -78,7 +78,7 @@ with st.sidebar:
                 with st.expander("Customise the form sections you need. The default is ALL."):
 
                     with st.form("Form Sections", clear_on_submit=True):
-                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments'])
+                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments'], ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments'])
                         create = st.form_submit_button("Create Form")
 
                         if create:
