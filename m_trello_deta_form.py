@@ -171,7 +171,9 @@ if st.session_state['focus'] == 2 :
     st.dataframe(st.session_state['items'])
 
 if st.session_state['focus'] == 1 :
-    st.session_state['desc'] = ""
+    if 'desc' not in st.session_state:
+        st.session_state['desc'] = ""
+
     with st.expander("Open to create order card"):
         #items = st.session_state['items']
         st.write(st.session_state)
