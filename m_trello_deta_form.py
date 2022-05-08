@@ -126,7 +126,7 @@ if not st.session_state['authentication_status']  :
     st.stop()
 else:
     st.session_state['focus'] == 0
-    
+
 ### Authentication Ends Here....
 if st.session_state['focus'] == 0:
     st.seesion_state['sections'] = ['All']
