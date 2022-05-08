@@ -124,7 +124,30 @@ with st.sidebar:
 
 if not st.session_state['authentication_status']  :
     st.stop()
+else:
+    st.session_state['focus'] == 0
+    
 ### Authentication Ends Here....
+if st.session_state['focus'] == 0:
+    st.seesion_state['sections'] = ['All']
+    skip = st.button("Skip")
+    if skip:
+        st.session_state['focus'] == 1
+        st.experimental_rerun()
+
+    with st.expander("Customise the form sections you need. The default is ALL."):
+
+        with st.form("Form Sections", clear_on_submit=True):
+            sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Custom Fields'])
+            create = st.form_submit_button("Create Form")
+
+            if create:
+                st.seesion_state['sections'] = sections
+                st.session_state['focus'] == 1
+                st.experimental_rerun()
+
+
+
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Order with Deta")
 
