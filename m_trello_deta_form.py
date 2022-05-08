@@ -64,6 +64,20 @@ with st.sidebar:
         option = st.selectbox(
             'Select the board you are using',
             options=list(board_dict.keys()))
+            st.write("Also what section do you need for your form. The default is All sections.")
+            skip = st.button("Skip")
+            if skip:
+                st.session_state['sections'] = ['All']
+
+            with st.expander("Customise the form sections you need. The default is ALL."):
+
+                with st.form("Form Sections", clear_on_submit=True):
+                    sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Custom Fields'])
+                    create = st.form_submit_button("Create Form")
+
+                    if create:
+                        st.session_state['sections'] = sections
+
 
         st.write('You selected:', option)
         st.session_state['board_id'] = board_dict[option]
@@ -127,8 +141,13 @@ if not st.session_state['authentication_status']  :
 
 ### Authentication Ends Here....
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
-st.header("Trello Form With Streamlit")
-st.write("Start by customising the sections you need for your form. The default is All sections.")
+st.header("Your custom Trello Form is now ready.")
+
+
+
+if st.session_state['focus'] != 1:
+
+
 if 'more' in st.session_state :
     pass
 else:
@@ -143,26 +162,6 @@ if 'focus' in st.session_state:
     pass
 else:
     st.session_state['focus'] = 0
-
-if st.session_state['focus'] == 0:
-    skip = st.button("Skip")
-    if skip:
-        st.session_state['sections'] = ['All']
-        st.session_state['focus'] == 1
-        st.experimental_rerun()
-
-    with st.expander("Customise the form sections you need. The default is ALL."):
-
-        with st.form("Form Sections", clear_on_submit=True):
-            sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels', 'Checklists', 'Custom Fields', 'Attachments'], ['Custom Fields'])
-            create = st.form_submit_button("Create Form")
-
-            if create:
-                st.session_state['sections'] = sections
-                st.session_state['focus'] == 1
-                st.experimental_rerun()
-
-
 if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
     st.dataframe(st.session_state['items'])
