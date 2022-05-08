@@ -210,13 +210,14 @@ if st.session_state['focus'] == 1 :
                 create_trello_card = st.form_submit_button("Create Card")
 
                 if create_trello_card:
-                    res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+                    res_create_card = requests.post('https://bpqc1s.deta.dev/add_card', json=collect)
                     if res_create_card.status_code == 200:
                         st.session_state['focus'] = 2
                         st.session_state['card_id'] = res_create_card.json()['id']
                         st.write(res_create_card.json()['card_shortUrl'])
+                        st.experimental_rerun()
 
-
+st.write(st.session_state['card_id'])
 if st.session_state['focus'] == 2:
     st.stop()
     with st.expander("Open to enter order details"):
