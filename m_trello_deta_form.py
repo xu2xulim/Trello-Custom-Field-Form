@@ -187,6 +187,7 @@ if st.session_state['focus'] == 1 :
                 review = st.form_submit_button("Review Markdown")
 
                 if review :
+                    st.session_state['desc'] = desc
                     st.experimental_rerun()
 
 
