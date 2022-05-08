@@ -217,8 +217,9 @@ if st.session_state['focus'] == 1 :
                         st.write(res_create_card.json()['card_shortUrl'])
                         st.experimental_rerun()
 
-st.write(st.session_state['card_id'])
+
 if st.session_state['focus'] == 2:
+    st.write(st.session_state['card_id'])
     st.stop()
     with st.expander("Open to enter order details"):
         #last_line = 0
