@@ -322,7 +322,7 @@ if st.session_state['focus'] == 5 :
                     with st.form(form_name, clear_on_submit=True):
                         line = {}
                         line['name'] = st.text_input("Item Name", ("Round", "V-shaped"))
-                        line['due'] = st.date_input("Enter Item Due Date)
+                        line['due'] = st.date_input("Enter Item Due Date")
                         line['member'] = st.selectbox("Select Assigned Member", options=['A', 'B'])
 
                         enter = st.form_submit_button("Enter")
