@@ -235,7 +235,6 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
                 st.session_state['focus'] = 3
                 st.experimental_rerun()
 
-
 if st.session_state['focus'] == 3 :
 
     if 'Custom Fields' in st.session_state['sections'] :
