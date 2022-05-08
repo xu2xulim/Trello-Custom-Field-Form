@@ -418,10 +418,6 @@ if st.session_state['focus'] ==5.5:
                 else:
                     st.error(res_update.text)"""
 
-if st.session_state['focus'] == 999:
-
-
-
 if st.session_state['focus'] == 999 :
     with st.expander("Open if you need to remove any line items"):
         items = st.session_state['items']
