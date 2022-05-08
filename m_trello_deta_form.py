@@ -400,7 +400,7 @@ if st.session_state['focus'] == 6 :
                     del st.session_state['more']
                     del st.session_state['items']
                     del st.session_state['card_id']
-                    del st.session_state['card_url']
+                    #del st.session_state['card_url']
                     st.session_state['focus'] = 1
                     st.experimental_rerun()
                 else:
