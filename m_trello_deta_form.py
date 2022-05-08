@@ -64,6 +64,9 @@ with st.sidebar:
         option = st.selectbox(
             'Select the board you are using',
             options=list(board_dict.keys()))
+
+        if option:
+            st.write('You selected:', option)
             st.write("Also what section do you need for your form. The default is All sections.")
             skip = st.button("Skip")
             if skip:
@@ -79,7 +82,7 @@ with st.sidebar:
                         st.session_state['sections'] = sections
 
 
-        st.write('You selected:', option)
+
         st.session_state['board_id'] = board_dict[option]
     elif st.session_state['authentication_status'] == False:
         st.error('Username/password is incorrect')
