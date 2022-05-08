@@ -206,6 +206,7 @@ if st.session_state['focus'] == 1 :
                 if create_trello_card:
                     st.session_state['focus'] == 1.1
                     st.session_state['collect'] = collect
+                    st.experimental_rerun()
 
 if st.session_state['focus'] == 1.1:
     res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=st.session_state['collect'])
