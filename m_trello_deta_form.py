@@ -236,56 +236,141 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
                 st.experimental_rerun()
 
 
-if st.session_state['focus'] == 3 and 'Custom Fields' in st.session_state['sections'] :
+if st.session_state['focus'] == 3 :
 
-    with st.expander("Open to enter the data for the custom fields on the card."):
+    if 'Custom Fields' in st.session_state['sections'] :
+        with st.expander("Open to enter the data for the custom fields on the card."):
 
-        cfd = {}
-        res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(st.session_state['board_id'])) #st.write("slider", slider_val, "checkbox", checkbox_val)
-        cfd = res_get.json()['cfd']
-        with st.form("Enter the custom field data", clear_on_submit=True):
-            collect = {}
-            collect['board_id'] =st.session_state['board_id']
-            #collect['cardname'] = st.text_input('Card Name')
-            #collect['carddescription'] = st.text_area('Card Description')
-            st.warning("This section of the form is automatically generated.")
-            for df in cfd:
-                if df['type'] == 'text' :
-                    collect[df['name']] = st.text_input(df['name'])
-                elif df['type'] == 'checkbox' :
-                    collect[df['name']] = st.checkbox(df['name'], value=False)
-                elif df['type'] == 'date' :
-                    date = st.date_input("Enter date for {}".format(df['name']))
-                    time = st.time_input("Enter time for {}".format(df['name']))
-                    collect[df['name']] = "{}T{}".format(date, time)
-                elif df['type'] == 'list' :
-                    options = [choice['value']['text'] for choice in df['options']]
-                    collect[df['name']] = st.selectbox(df['name'], options=options)
-                elif df['type'] == 'number' :
-                    collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
+            cfd = {}
+            res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(st.session_state['board_id'])) #st.write("slider", slider_val, "checkbox", checkbox_val)
+            cfd = res_get.json()['cfd']
+            with st.form("Enter the custom field data", clear_on_submit=True):
+                collect = {}
+                collect['board_id'] =st.session_state['board_id']
+                #collect['cardname'] = st.text_input('Card Name')
+                #collect['carddescription'] = st.text_area('Card Description')
+                st.warning("This section of the form is automatically generated.")
+                for df in cfd:
+                    if df['type'] == 'text' :
+                        collect[df['name']] = st.text_input(df['name'])
+                    elif df['type'] == 'checkbox' :
+                        collect[df['name']] = st.checkbox(df['name'], value=False)
+                    elif df['type'] == 'date' :
+                        date = st.date_input("Enter date for {}".format(df['name']))
+                        time = st.time_input("Enter time for {}".format(df['name']))
+                        collect[df['name']] = "{}T{}".format(date, time)
+                    elif df['type'] == 'list' :
+                        options = [choice['value']['text'] for choice in df['options']]
+                        collect[df['name']] = st.selectbox(df['name'], options=options)
+                    elif df['type'] == 'number' :
+                        collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
 
 
+                submit = st.form_submit_button("Submit")
+
+                if submit:
+                    st.json(collect)
+                    st.session_state['focus'] = 4
+                    st.experimental_rerun()
+    else:
+        st.session_state['focus'] = 4
+        st.experimental_rerun()
+
+if st.session_state['focus'] == 4 :
+    if 'Attachments' in st.session_state['sections']:
+        with st.expander("Open to upload attachments"):
+            uploaded_file = st.file_uploader('Upload any file up to 200MB')
+            finished = st.button("Done")
+            attach = {}
+            if finished :
+
+            else:
+                if uploaded_file is not None:
+                    bytes_data = uploaded_file.getvalue()
+                    attach['card_id'] = st.session_state['card_id']
+                    attach['filename'] = uploaded_file.name
+                    res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
+    else:
+        st.session_state['focus'] = 5
+        st.experimental_rerun()
+
+if st.session_state['focus'] == 5 :
+    if 'Checklists' in st.session_state['sections']:
+        st.warning("Use the done button when you have no more items to add.")
+        done = st.button("Done")
+        if done:
+            st.session_state['focus'] = 6
+            st.experimental_rerun()
+
+        st.warning("Use the Finished button when you have no more items to add.")
+        finished = st.button("Finished")
+        if finished:
+            st.session_state['focus'] = 5.5
+            st.experimental_rerun()
+
+        st.dataframe(st.session_state['items'])
+
+        with st.expander("Open to upload attachments"):
+            with st.expander("Open to enter order details"):
+                items = st.session_state['items']
+                last = "No"
+                if st.session_state['more'] == "Yes" :
+                    st.subheader("Your items :")
+                    st.dataframe(items)
+                    st.subheader("Create Line Items")
+                    form_name = "Order Line Items {}".format(len(items))
+                    with st.form(form_name, clear_on_submit=True):
+                        line = {}
+                        line['name'] = st.text_input("Item Name", ("Round", "V-shaped"))
+                        line['due'] = st.date_input("Enter Item Due Date)
+                        line['member'] = st.selectbox("Select Assigned Member", options=['A', 'B'])
+
+                        enter = st.form_submit_button("Enter")
+                        if enter :
+                            items.append(line)
+                            st.session_state['items'] = items
+                            st.experimental_rerun()
+    else:
+        st.session_state['focus'] = 6
+        st.experimental_rerun()
+
+if st.session_state['focus'] ==5.5:
+    with st.expander("Open if you need to remove any line items"):
+        items = st.session_state['items']
+        max_index = len(items) - 1
+        with st.form("Pick the record by its index to remove",clear_on_submit=True):
+            st.number_input("Index", min_value=0, max_value=max_index, step=1)
+            del_index = st.form_submit_button("Delete")
+            add_more = st.form_submit_button("Add More")
+
+            if del_index :
+                del items[del_index]
+                st.session_state['items'] = items
+                st.experimental_rerun()
+
+            if add_more:
+                st.session_state['focus'] = 5
+                st.session_state['more'] = "Yes"
+                st.experimental_rerun()
+
+    with st.expander("Create Checklist"):
+
+        with st.form("Review and create checklist",clear_on_submit=True):
+            st.dataframe(st.session_state['items'])
+
+            collect= {}
+            collect['card_id'] = st.session_state['card_id']
+            collect['checklistname'] = st.text_input("Enter checklist name")
+            collect['items'] = st.session_state['items']
             submit = st.form_submit_button("Submit")
 
             if submit:
-                st.json(collect)
-                st.session_state['focus'] = 4
+                st.session_state['items'] = []
+                st.session_state['focus'] = 5
+                st.session_state['more'] = "Yes"
                 st.experimental_rerun()
 
-if st.session_state['focus'] == 4 and  'Attachments' in st.session_state['sections']:
-    with st.expander("Open to upload attachments"):
-        uploaded_file = st.file_uploader('Upload any file up to 200MB')
-        finished = st.button("Done")
-        attach = {}
-        if finished :
-            st.session_state['focus'] = 5
-            st.experimental_rerun()
-        else:
-            if uploaded_file is not None:
-                bytes_data = uploaded_file.getvalue()
-                attach['card_id'] = st.session_state['card_id']
-                attach['filename'] = uploaded_file.name
-                res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
+
 
 """    with st.expander("Open to create order card"):
         items = st.session_state['items']
@@ -335,35 +420,7 @@ if st.session_state['focus'] == 4 and  'Attachments' in st.session_state['sectio
 
 if st.session_state['focus'] == 999:
 
-    with st.expander("Open to enter order details"):
-        #last_line = 0
-        items = st.session_state['items']
-        last = "No"
-        if st.session_state['more'] == "Yes" :
-            st.subheader("Your items :")
-            st.dataframe(items)
-            st.subheader("Create Line Items")
-            form_name = "Order Line Items {}".format(len(items))
-            with st.form(form_name, clear_on_submit=True):
-                line = {}
-                line['collar'] = st.selectbox("Collar", ("Round", "V-shaped"))
-                line['size'] = st.selectbox("Size", ("Extra Large", "Large", "Medium", "Small"))
-                line['quantity'] = st.number_input("Quantity", min_value=1)
-                line['remarks'] = st.text_input(label="Remarks")
-                last = st.selectbox("Last Item", ("No", "Yes"))
-                #last_line = len(items) + 1
-                enter = st.form_submit_button("Enter")
-                if enter :
-                    items.append(line)
-                    st.session_state['items'] = items
-                    st.write("just before if check")
-                    st.write(last)
-                    if last == "Yes" :
-                        st.write("just after if check")
-                        st.session_state['more'] = "No"
-                        st.write(st.session_state)
-                        st.session_state['focus'] = 2
-                    st.experimental_rerun()
+
 
 if st.session_state['focus'] == 999 :
     with st.expander("Open if you need to remove any line items"):
