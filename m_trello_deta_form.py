@@ -235,7 +235,7 @@ if st.session_state['focus'] == 2 and 'Start and Due Dates' in st.session_state[
                 st.experimental_rerun()
 
 
-"""if st.session_state['focus'] == 3 and 'Labels' in st.session_state['sections'] :
+if st.session_state['focus'] == 999 and 'Labels' in st.session_state['sections'] :
 
     with st.expander("Open to select the labels for the card."):
 
@@ -299,7 +299,7 @@ if st.session_state['focus'] == 2 and 'Start and Due Dates' in st.session_state[
                 else:
                     st.error(res_update.text)
 
-if st.session_state['focus'] == 2:
+if st.session_state['focus'] == 999:
 
     with st.expander("Open to enter order details"):
         #last_line = 0
@@ -331,7 +331,7 @@ if st.session_state['focus'] == 2:
                         st.session_state['focus'] = 2
                     st.experimental_rerun()
 
-if st.session_state['focus'] == 2 :
+if st.session_state['focus'] == 999 :
     with st.expander("Open if you need to remove any line items"):
         items = st.session_state['items']
         max_index = len(items) - 1
@@ -350,7 +350,7 @@ if st.session_state['focus'] == 2 :
                 st.session_state['more'] = "Yes"
                 st.experimental_rerun()
 
-if st.session_state['focus'] == 2 :
+if st.session_state['focus'] == 999 :
     with st.expander("Open to create order card"):
         items = st.session_state['items']
         with st.form("Create Order Card", clear_on_submit=True):
@@ -397,7 +397,7 @@ if st.session_state['focus'] == 2 :
                 else:
                     st.error(res_update.text)
 
-if st.session_state['focus'] == 3 :
+if st.session_state['focus'] == 999 :
     with st.expander("Open to upload samples"):
         uploaded_file = st.file_uploader('Upload any file up to 200MB')
         finished = st.button("Done")
@@ -412,7 +412,7 @@ if st.session_state['focus'] == 3 :
                 attach['filename'] = uploaded_file.name
                 res_attach = requests.post('https://bpqc1s.deta.dev/attach', data=attach, files = {'upload_file': bytes_data})
 
-if st.session_state['focus'] == 4 :
+if st.session_state['focus'] == 999 :
     components.html('''<blockquote class="trello-card-compact"><a href="'''+st.session_state['card_url']+'''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>)''')
     with st.expander("Open to add labels, members or move to another list"):
         res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
@@ -446,4 +446,4 @@ if st.session_state['focus'] == 4 :
                     st.session_state['focus'] = 1
                     st.experimental_rerun()
                 else:
-                    st.write(res_update.text)"""
+                    st.write(res_update.text)
