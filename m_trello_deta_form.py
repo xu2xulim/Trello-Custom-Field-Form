@@ -166,6 +166,7 @@ if 'focus' in st.session_state:
     pass
 else:
     st.session_state['focus'] = 1
+
 if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
     st.dataframe(st.session_state['items'])
@@ -175,8 +176,6 @@ if st.session_state['focus'] == 1 :
         st.session_state['desc'] = ""
 
     with st.expander("Open to create order card"):
-        #items = st.session_state['items']
-        st.write(st.session_state)
         finished = st.button("Finished")
         if 'Description with Markdown' in st.session_state['sections'] and not finished:
             st.warning("You have indicated that you will be using Markdown in your card description.")
@@ -198,10 +197,6 @@ if st.session_state['focus'] == 1 :
         if finished or 'Description with Markdown' not in st.session_state['sections']:
 
             with st.form("Create Card", clear_on_submit=True):
-                #
-                #cfd = {}
-                #res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(st.session_state['board_id'])) #st.write("slider", slider_val, "checkbox", checkbox_val)
-                #cfd = res_get.json()['cfd']
                 collect = {}
                 collect['board_id'] =st.session_state['board_id']
                 collect['cardname'] = st.text_input('Card Name')
@@ -209,13 +204,18 @@ if st.session_state['focus'] == 1 :
                 create = st.form_submit_button("Create Card")
 
                 if create:
+                    st.write('A')
                     res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+                    st.write('B')
                     if res_create_card.status_code == 200:
+                        st.write('C')
                         st.session_state['card_id'] = res_create_card.json()['id']
                         st.write(res_create_card.json()['card_shortUrl'])
                         st.session_state['focus'] == 2
                         st.write(st.session_state)
                         st.stop()
+                    else:
+                        st.write('D')
                         #st.experimental_rerun()
 
 
