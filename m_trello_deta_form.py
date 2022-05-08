@@ -179,7 +179,10 @@ if st.session_state['focus'] == 1 :
         st.write(st.session_state)
         finished = st.button("Finished")
         if 'Description with Markdown' in st.session_state['sections']:
-            desc_md = st.markdown(st.session_state['desc'])
+            st.warning("Review the markdown for your card description and when you are ready press the Finished button."
+            with st.empty():
+                desc_md = st.markdown(st.session_state['desc'])
+
             with st.form("Create and review your markdown for the card description", clear_on_submit=False):
 
                 desc = st.text_area('Card Description', value = st.session_state['desc'])
