@@ -297,15 +297,14 @@ if st.session_state['focus'] == 4 :
 if st.session_state['focus'] == 5 :
     if 'Checklists' in st.session_state['sections']:
 
-
         with st.expander("Open to create your checklist items."):
-            st.warning("Use the done button when you have no more items to add.")
+            st.warning("Use the done button when you have no more Checklist to add.")
             done = st.button("Done")
             if done:
                 st.session_state['focus'] = 6
                 st.experimental_rerun()
 
-            st.warning("Use the Finished button when you have no more items to add.")
+            st.info("Use the Finished button when you have no more items to add.")
             finished = st.button("Finished")
             if finished:
                 st.session_state['focus'] = 5.5
@@ -371,7 +370,41 @@ if st.session_state['focus'] ==5.5:
                 st.session_state['more'] = "Yes"
                 st.experimental_rerun()
 
+ if st.session_state['focus'] == 6 :
+     components.html('''<blockquote class="trello-card-compact"><a href="'''+st.session_state['card_url']+'''">Trello Card</a></blockquote><script src="https://p.trellocdn.com/embed.min.js"></script>)''')
+     with st.expander("Open to add labels, members or move to another list"):
+         res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
+         cfd = res_get.json()['more']
+         with st.form("Add more stuff", clear_on_submit=True):
+             st.subheader("Add labels, members to card")
+             labels = st.multiselect("Pick the labels to add to the card", list(cfd['labels'].keys()))
+             members = st.multiselect("Pick the members to add to the card",list(cfd['members'].keys()))
+             column = st.selectbox("Select the list to move the card",list(cfd['lists'].keys()))
 
+             no_more = st.form_submit_button("Submit")
+
+             if no_more :
+                 return_struct = {}
+                 return_struct['labels'] = []
+                 for lbl in labels :
+                     return_struct['labels'].append(cfd['labels'][lbl])
+                 return_struct['members'] = []
+                 for mbr in members :
+                     return_struct['members'].append(cfd['members'][mbr])
+                 if column :
+                     return_struct['move'] = cfd['lists'][column]
+                 st.write('Updating card....')
+                 res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
+
+                 if res_update.status_code == 200:
+                     del st.session_state['more']
+                     del st.session_state['items']
+                     del st.session_state['card_id']
+                     del st.session_state['card_url']
+                     st.session_state['focus'] = 1
+                     st.experimental_rerun()
+                 else:
+                     st.write(res_update.text)
 
 """    with st.expander("Open to create order card"):
         items = st.session_state['items']
