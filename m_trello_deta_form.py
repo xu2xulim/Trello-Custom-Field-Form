@@ -179,7 +179,6 @@ if st.session_state['focus'] == 1 :
         finished = st.button("Finished")
         if finished:
             st.session_state['md_done'] = True
-            st.session_state['focus'] = 2
         else:
             st.session_state['md_done'] = False
 
