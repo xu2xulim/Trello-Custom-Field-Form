@@ -179,7 +179,8 @@ if st.session_state['focus'] == 1 :
         st.write(st.session_state)
         finished = st.button("Finished")
         if 'Description with Markdown' in st.session_state['sections'] and not finished:
-            st.warning("Review the markdown for your card description and when you are ready press the Finished button.")
+            st.warning("You have indicated that you will be using Markdown in your card description.")
+            st.info("When you are satisfied pressed the Finished button to create the card.")
             with st.empty():
                 desc_md = st.markdown(st.session_state['desc'])
 
@@ -208,7 +209,7 @@ if st.session_state['focus'] == 1 :
                 create = st.form_submit_button("Create Card")
 
                 if create:
-                    st.stop()
+                    
                     res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                     if res_update.status_code == 200:
                         st.session_state['card_id'] = res_create_card.json()['id']
