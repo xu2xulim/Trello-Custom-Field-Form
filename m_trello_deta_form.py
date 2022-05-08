@@ -145,7 +145,7 @@ with st.sidebar:
 
 
 
-if not st.session_state['authentication_status'] and option and sections :
+if not st.session_state['authentication_status'] or not st.session_state['board_id'] or not st.session_state['sections'] :
     st.stop()
 
 ### Authentication Ends Here....
