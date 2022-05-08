@@ -236,25 +236,44 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
                 st.experimental_rerun()
 
 
-if st.session_state['focus'] == 999 and 'Labels' in st.session_state['sections'] :
+if st.session_state['focus'] == 3 and 'Custom Fields' in st.session_state['sections'] :
 
-    with st.expander("Open to select the labels for the card."):
+    with st.expander("Open to enter the data for the custom fields on the card."):
 
-        with st.form("Enter Start and Due Dates", clear_on_submit=True):
-            collect['card_id'] = st.session_state['card_id']
-            collect['start_date'] = st.date_input("Enter Start Date")
-            collect['due_date'] = st.date_input("Enter Due Date")
-            collect['due_time'] = st.time_input("Enter Due Date - time")
+        cfd = {}
+        res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(st.session_state['board_id'])) #st.write("slider", slider_val, "checkbox", checkbox_val)
+        cfd = res_get.json()['cfd']
+        with st.form("Enter the custom field data", clear_on_submit=True):
+            collect = {}
+            collect['board_id'] =st.session_state['board_id']
+            #collect['cardname'] = st.text_input('Card Name')
+            #collect['carddescription'] = st.text_area('Card Description')
+            st.warning("This section of the form is automatically generated.")
+            for df in cfd:
+                if df['type'] == 'text' :
+                    collect[df['name']] = st.text_input(df['name'])
+                elif df['type'] == 'checkbox' :
+                    collect[df['name']] = st.checkbox(df['name'], value=False)
+                elif df['type'] == 'date' :
+                    date = st.date_input("Enter date for {}".format(df['name']))
+                    time = st.time_input("Enter time for {}".format(df['name']))
+                    collect[df['name']] = "{}T{}".format(date, time)
+                elif df['type'] == 'list' :
+                    options = [choice['value']['text'] for choice in df['options']]
+                    collect[df['name']] = st.selectbox(df['name'], options=options)
+                elif df['type'] == 'number' :
+                    collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
+
 
             submit = st.form_submit_button("Submit")
 
             if submit:
                 st.json(collect)
-                st.session_state['focus'] = 3
+                st.session_state['focus'] = 4
                 st.experimental_rerun()
 
 
-    with st.expander("Open to create order card"):
+"""    with st.expander("Open to create order card"):
         items = st.session_state['items']
         with st.form("Create Order Card", clear_on_submit=True):
             st.subheader("Create an Order Card")
@@ -298,7 +317,7 @@ if st.session_state['focus'] == 999 and 'Labels' in st.session_state['sections']
                     st.session_state['focus'] = 3
                     st.experimental_rerun()
                 else:
-                    st.error(res_update.text)
+                    st.error(res_update.text)"""
 
 if st.session_state['focus'] == 999:
 
