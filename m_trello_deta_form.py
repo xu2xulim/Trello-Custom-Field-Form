@@ -217,6 +217,7 @@ if st.session_state['focus'] ==1.5:
                 st.session_state['card_id'] = res_create_card.json()['card_id']
                 st.write(res_create_card.json()['card_shortUrl'])
                 st.session_state['focus'] = 2
+                st.experimental_rerun()
             else:
                 st.write("Failed to Create Card")
                 st.stop()
