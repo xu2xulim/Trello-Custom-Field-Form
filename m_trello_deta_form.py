@@ -151,7 +151,7 @@ if not st.session_state['authentication_status'] or 'sections' not in st.session
 ### Authentication Ends Here....
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Your custom Trello Form is now ready.")
-
+st.write(st.session_state)
 if 'more' in st.session_state :
     pass
 else:
