@@ -409,6 +409,7 @@ if st.session_state['focus'] == 6 :
                         del st.session_state['items']
                         del st.session_state['card_id']
                         del st.session_state['more_cfd']
+                        del st.session_state['desc']
                         st.session_state['focus'] = 1
                         st.experimental_rerun()
                     else:
@@ -418,6 +419,7 @@ if st.session_state['focus'] == 6 :
         del st.session_state['items']
         del st.session_state['card_id']
         del st.session_state['more_cfd']
+        del st.session_state['desc']
         st.session_state['focus'] = 1
         st.experimental_rerun()
 
