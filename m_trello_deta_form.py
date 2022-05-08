@@ -170,11 +170,11 @@ else:
 if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
     st.dataframe(st.session_state['items'])
-override = st.number_input("Focus override", step=1)
+"""override = st.number_input("Focus override", step=1)
 if override == 1:
     st.session_state['focus'] = override
-    st.session_state['card_id'] = "6277ac571aa1fd6017f5f3b3"
-    
+    st.session_state['card_id'] = "6277ac571aa1fd6017f5f3b3""""
+
 if st.session_state['focus'] == 1 :
     if 'desc' not in st.session_state:
         st.session_state['desc'] = ""
