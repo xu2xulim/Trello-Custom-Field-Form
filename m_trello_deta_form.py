@@ -251,7 +251,7 @@ if st.session_state['focus'] == 3 :
             with st.form("Enter the custom field data", clear_on_submit=True):
                 collect = {}
                 collect['board_id'] =st.session_state['board_id']
-                #collect['cardname'] = st.text_input('Card Name')
+                collect['card_id'] = st.session_state['card_id']
                 #collect['carddescription'] = st.text_area('Card Description')
                 st.warning("This section of the form is automatically generated.")
                 for df in cfd:
@@ -269,14 +269,18 @@ if st.session_state['focus'] == 3 :
                     elif df['type'] == 'number' :
                         collect[df['name']] = round(st.number_input(df['name'],step=0.1), 2)
 
-
                 submit = st.form_submit_button("Submit")
 
                 if submit:
                     st.write('Updating card....')
                     st.json(collect)
-                    st.session_state['focus'] = 4
-                    st.experimental_rerun()
+                    res_set = requests.get('https://bpqc1s.deta.dev/set_customfields', json=collect)
+                    if res_set.status_code == 200 :
+                        st.session_state['focus'] = 4
+                        st.experimental_rerun()
+                    else:
+                        st.warning("Something is wrong with setting CFs")
+                        st.stop()
     else:
         st.session_state['focus'] = 4
         st.experimental_rerun()
