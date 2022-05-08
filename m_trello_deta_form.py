@@ -181,14 +181,15 @@ if st.session_state['focus'] == 1 :
         st.session_state['desc'] = ""
 
     with st.expander("Open to create order card"):
+        st.info("You have indicated that you will be using Markdown in your card description.")
+        st.warning("When you are satisfied pressed the Finished button to create the card.")
         finished = st.button("Finished")
         if finished:
             st.session_state['focus'] = 1.5
             st.experimental_rerun()
 
         if 'Description with Markdown' in st.session_state['sections']:
-            st.warning("You have indicated that you will be using Markdown in your card description.")
-            st.info("When you are satisfied pressed the Finished button to create the card.")
+
             with st.empty():
                 desc_md = st.markdown(st.session_state['desc'])
 
