@@ -218,6 +218,7 @@ if st.session_state['focus'] == 1 :
 
 
 if st.session_state['focus'] == 2:
+    st.stop()
     with st.expander("Open to enter order details"):
         #last_line = 0
         items = st.session_state['items']
