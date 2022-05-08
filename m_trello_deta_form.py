@@ -168,7 +168,7 @@ else:
     st.session_state['focus'] = 1
 
 
-if 'Labels and more' in st.session_state or 'Checklists' in st.session_state:
+if ('Labels and more' in st.session_state['sections'] or 'Checklists' in st.session_state['sections']) and st.session_state['focus'] == 1:
     res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
     more_cfd = res_get.json()['more']
 
