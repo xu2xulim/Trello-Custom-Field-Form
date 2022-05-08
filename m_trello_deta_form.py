@@ -179,7 +179,7 @@ if st.session_state['focus'] == 1 :
         st.write(st.session_state)
         finished = st.button("Finished")
         if 'Description with Markdown' in st.session_state['sections']:
-            st.warning("Review the markdown for your card description and when you are ready press the Finished button."
+            st.warning("Review the markdown for your card description and when you are ready press the Finished button.")
             with st.empty():
                 desc_md = st.markdown(st.session_state['desc'])
 
