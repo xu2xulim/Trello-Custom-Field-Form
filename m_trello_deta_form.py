@@ -222,6 +222,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
     with st.expander("Open to enter Start and or Due Dates."):
 
         with st.form("Enter Start and Due Dates", clear_on_submit=True):
+            collect={}
             collect['card_id'] = st.session_state['card_id']
             collect['start_date'] = st.date_input("Enter Start Date")
             collect['due_date'] = st.date_input("Enter Due Date")
