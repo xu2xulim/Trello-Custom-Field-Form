@@ -183,7 +183,7 @@ if st.session_state['focus'] == 1 :
             with st.empty():
                 desc_md = st.markdown(st.session_state['desc'])
 
-            with st.form("Create and review your markdown for the card description", clear_on_submit=False):
+            with st.form("Card Markdown", clear_on_submit=False):
 
                 desc = st.text_area('Card Description', value = st.session_state['desc'])
 
@@ -204,8 +204,8 @@ if st.session_state['focus'] == 1 :
                 create_trello_card = st.form_submit_button("Create Card")
                 st.write(create_trello_card)
                 if create_trello_card:
-
-                    st.write('A')
+                    
+                    st.json(collect)
                     res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
                     st.write('B')
                     if res_create_card.status_code == 200:
