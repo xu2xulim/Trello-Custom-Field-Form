@@ -68,12 +68,13 @@ with st.sidebar:
         if option:
             st.write('You selected:', option)
             st.write("Also what section do you need for your form. The default is All sections.")
-            skip = st.button("Skip")
+
 
             if 'sections' not in st.session_state:
+                skip = st.button("Skip")
                 if skip:
                     st.session_state['sections'] = ['All']
-                    
+
                 with st.expander("Customise the form sections you need. The default is ALL."):
 
                     with st.form("Form Sections", clear_on_submit=True):
