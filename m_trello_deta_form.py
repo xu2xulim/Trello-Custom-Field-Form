@@ -144,7 +144,7 @@ if 'focus' in st.session_state:
 else:
     st.session_state['focus'] = 0
 
-if st.session_state['focus'] = 0:
+if st.session_state['focus'] == 0:
     skip = st.button("Skip")
     if skip:
         st.session_state['sections'] = ['All']
