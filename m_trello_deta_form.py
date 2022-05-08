@@ -310,26 +310,26 @@ if st.session_state['focus'] == 5 :
 
         st.dataframe(st.session_state['items'])
 
-        with st.expander("Open to upload attachments"):
-            with st.expander("Open to enter order details"):
-                items = st.session_state['items']
-                last = "No"
-                if st.session_state['more'] == "Yes" :
-                    st.subheader("Your items :")
-                    st.dataframe(items)
-                    st.subheader("Create Line Items")
-                    form_name = "Order Line Items {}".format(len(items))
-                    with st.form(form_name, clear_on_submit=True):
-                        line = {}
-                        line['name'] = st.text_input("Item Name", ("Round", "V-shaped"))
-                        line['due'] = st.date_input("Enter Item Due Date")
-                        line['member'] = st.selectbox("Select Assigned Member", options=['A', 'B'])
 
-                        enter = st.form_submit_button("Enter")
-                        if enter :
-                            items.append(line)
-                            st.session_state['items'] = items
-                            st.experimental_rerun()
+        with st.expander("Open to enter order details"):
+            items = st.session_state['items']
+            last = "No"
+            if st.session_state['more'] == "Yes" :
+                st.subheader("Your items :")
+                st.dataframe(items)
+                st.subheader("Create Line Items")
+                form_name = "Order Line Items {}".format(len(items))
+                with st.form(form_name, clear_on_submit=True):
+                    line = {}
+                    line['name'] = st.text_input("Item Name", ("Round", "V-shaped"))
+                    line['due'] = st.date_input("Enter Item Due Date")
+                    line['member'] = st.selectbox("Select Assigned Member", options=['A', 'B'])
+
+                    enter = st.form_submit_button("Enter")
+                    if enter :
+                        items.append(line)
+                        st.session_state['items'] = items
+                        st.experimental_rerun()            
     else:
         st.session_state['focus'] = 6
         st.experimental_rerun()
