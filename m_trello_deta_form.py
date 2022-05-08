@@ -170,6 +170,41 @@ if st.session_state['focus'] == 2 :
     st.subheader("Your items :")
     st.dataframe(st.session_state['items'])
 
+if st.session_state['focus'] == 1 :
+    with st.expander("Open to create order card"):
+        #items = st.session_state['items']
+        if 'Description with Markdown' in st.session_state['sections']:
+            with st.form("Create Card", clear_on_submit=True):
+                desc = st.text_area('Card Description')
+                review = st.form_submit_button("Review Markdown")
+                finished = st.button("Done Reviewing")
+                if review :
+                    desc_md = st.markdown(desc)
+                    st.experimental_rerun()
+
+
+        else:
+            with st.form("Create Card", clear_on_submit=True):
+                #
+                #cfd = {}
+                #res_get = requests.get('https://bpqc1s.deta.dev/get_definitions?board_id={}'.format(st.session_state['board_id'])) #st.write("slider", slider_val, "checkbox", checkbox_val)
+                #cfd = res_get.json()['cfd']
+                collect = {}
+                collect['board_id'] =st.session_state['board_id']
+                collect['cardname'] = st.text_input('Card Name')
+                collect['carddescription'] = st.text_area('Card Description')
+
+
+                if create:
+                    res_create_card = requests.post('https://bpqc1s.deta.dev/update', json=collect)
+                    if res_update.status_code == 200:
+                        st.session_state['card_id'] = res_create_card.json()['id']
+                        st.session_state[''] = res_create_card.json()['id']
+                        st.experimental_rerun()
+
+
+
+st.stop()
 if st.session_state['focus'] == 1:
     with st.expander("Open to enter order details"):
         #last_line = 0
