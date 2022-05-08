@@ -283,7 +283,8 @@ if st.session_state['focus'] == 4 :
             finished = st.button("Done")
             attach = {}
             if finished :
-
+                st.session_state['focus'] = 5
+                st.experimental_rerun()
             else:
                 if uploaded_file is not None:
                     bytes_data = uploaded_file.getvalue()
