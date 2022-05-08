@@ -173,11 +173,12 @@ if st.session_state['focus'] == 2 :
 if st.session_state['focus'] == 1 :
     with st.expander("Open to create order card"):
         #items = st.session_state['items']
+        finished = st.button("Finished")
         if 'Description with Markdown' in st.session_state['sections']:
-            with st.form("Create Card", clear_on_submit=True):
+            with st.form("Create and review your markdown for the card description", clear_on_submit=True):
                 desc = st.text_area('Card Description')
                 review = st.form_submit_button("Review Markdown")
-                finished = st.button("Finished")
+
                 if review :
                     desc_md = st.markdown(desc)
                     st.experimental_rerun()
