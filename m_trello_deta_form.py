@@ -274,7 +274,7 @@ if st.session_state['focus'] == 3 :
                 if submit:
                     st.write('Updating card....')
                     st.json(collect)
-                    res_set = requests.get('https://bpqc1s.deta.dev/set_customfields', json=collect)
+                    res_set = requests.post('https://bpqc1s.deta.dev/set_customfields', json=collect)
                     if res_set.status_code == 200 :
                         st.session_state['focus'] = 4
                         st.experimental_rerun()
