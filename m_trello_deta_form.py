@@ -234,8 +234,6 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             due_tm = st.time_input("Enter Due Date Time")
             #due_24hr = st.slider("Time (hour)", 0, 23, 8, 1, "%d")
             #due_min = st.slider("Time (min)", 0, 60, 30, 5, "%d")
-
-
             submit = st.form_submit_button("Submit")
 
             if submit:
