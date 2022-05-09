@@ -14,7 +14,7 @@ import os
 import streamlit.components.v1 as components
 import streamlit_authenticator as stauth
 
-#Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
+Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
 @st.cache(suppress_st_warning=True)
 def get_board_json (urls):
