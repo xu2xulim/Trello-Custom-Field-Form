@@ -15,6 +15,8 @@ import urllib.parse
 import os
 import streamlit.components.v1 as components
 import streamlit_authenticator as stauth
+from streamlit_folium import folium_static
+import folium
 
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
@@ -430,7 +432,7 @@ if st.session_state['focus'] == 6 :
                         del st.session_state['card_id']
                         del st.session_state['more_cfd']
                         del st.session_state['desc']
-                        st.session_state['focus'] = 1
+                        st.session_state['focus'] = 7
                         st.experimental_rerun()
                     else:
                         st.write(res_update.text)
@@ -440,5 +442,43 @@ if st.session_state['focus'] == 6 :
         del st.session_state['card_id']
         del st.session_state['more_cfd']
         del st.session_state['desc']
-        st.session_state['focus'] = 1
+        st.session_state['focus'] = 7
         st.experimental_rerun()
+
+if st.session_state['focus'] == 7 :
+    if 'Location' in st.session_state['sections']:
+        with st.expander("Open to add location attributes to your card."):
+            #res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
+            #cfd = res_get.json()['more']
+            with st.form("Enter location attributes and review map", clear_on_submit=False):
+                locationName = st.text_input("Location Name")
+                locationAddress = st.tex_input("Location Address")
+
+                review = st.form_submit_button("Review Map")
+
+                update = st.form_submit_button("Update Location Map")
+
+                if review:
+                    url = "https://geocode.search.hereapi.com/v1/geocode?apiKey={}&q={}".format(os.environ.get('HERE_API'), locationAddress)
+                    res_map = requests.get(url)
+
+                    if res_map.status_code == 200:
+                        collect = {}
+                        collect['card_id'] = st.session_state['card_id']
+                        collect['locationName'] = locationName
+                        collect['address'] = locationAddress
+                        position = json.loads(res.text)['items'][0]['position']
+                        coordinates = {'latitude': position['lat'], 'longitude' : position['lng']}
+                        collect['coordinates'] = coordinates
+                        m = folium.Map(location=[position['lat'], position['lng']], zoom_start=16)
+                        # add marker for Liberty Bell
+                        tooltip = locationAddress
+                        folium.Marker(
+                                [lat, lon], popup=locationName, tooltip=tooltip
+                            ).add_to(m)
+
+                        # call to render Folium map in Streamlit
+                        folium_static(m, width=660, height=385)
+                    else:
+                        st.warning("Geocoding as not successful")
+                        st.stop()
