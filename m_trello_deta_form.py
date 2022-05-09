@@ -444,8 +444,9 @@ if st.session_state['focus'] == 6 :
         del st.session_state['desc']
         st.session_state['focus'] = 7
         st.experimental_rerun()
-
+st.session_state['sections'].append('Location')
 if st.session_state['focus'] == 7 :
+
     if 'Location' in st.session_state['sections']:
         with st.expander("Open to add location attributes to your card."):
             #res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
