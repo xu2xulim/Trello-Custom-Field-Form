@@ -468,7 +468,7 @@ if st.session_state['focus'] == 7 :
                         #collect['card_id'] = st.session_state['card_id']
                         collect['locationName'] = locationName
                         collect['address'] = locationAddress
-                        position = json.loads(res.text)['items'][0]['position']
+                        position = res_map.json()['items'][0]['position']
                         coordinates = {'latitude': position['lat'], 'longitude' : position['lng']}
                         collect['coordinates'] = coordinates
                         m = folium.Map(location=[position['lat'], position['lng']], zoom_start=16)
