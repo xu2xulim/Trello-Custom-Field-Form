@@ -234,8 +234,6 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
             due_tm = st.time_input("Enter Due Date Time")
-            #due_24hr = st.slider("Time (hour)", 0, 23, 8, 1, "%d")
-            #due_min = st.slider("Time (min)", 0, 60, 30, 5, "%d")
             submit = st.form_submit_button("Submit")
 
             if submit:
@@ -243,8 +241,6 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
                 naive_datetime = datetime.combine(due_dt, due_tm)
                 timezone = pytz.timezone(st.session_state['timezone'])
                 collect['due_date'] = timezone.localize(naive_datetime).isoformat()
-                #collect['due_date'] = str(parse("{}T{}:{}".format(due_dt, due_24hr, due_min),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
-                #collect['due_date'] = str(parse("{}T{}".format(due_dt, due_tm),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
                 st.json(collect)
                 res_dates = requests.post('https://bpqc1s.deta.dev/update_card_dates', json = collect)
                 if res_dates.status_code == 200 :
@@ -276,7 +272,9 @@ if st.session_state['focus'] == 3 :
                     elif df['type'] == 'date' :
                         date = st.date_input("Enter date for {}".format(df['name']))
                         time = st.time_input("Enter time for {}".format(df['name']))
-                        collect[df['name']] = "{}T{}".format(date, time)
+                        naive_datetime = datetime.combine(date, time)
+                        timezone = pytz.timezone(st.session_state['timezone'])
+                        collect[df['name']] = timezone.localize(naive_datetime).isoformat()
                     elif df['type'] == 'list' :
                         options = [choice['value']['text'] for choice in df['options']]
                         collect[df['name']] = st.selectbox(df['name'], options=options)
