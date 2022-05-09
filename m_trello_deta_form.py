@@ -490,12 +490,12 @@ if st.session_state['focus'] == 7 :
                         else:
                             st.warning("Update card location attributes failed.")
                             st.stop()
-        else:
-            del st.session_state['more']
-            del st.session_state['items']
-            del st.session_state['card_id']
-            del st.session_state['more_cfd']
-            del st.session_state['desc']
-            del st.session_state['coordinates']
-            st.session_state['focus'] = 1
-            st.experimental_rerun()
+    else:
+        del st.session_state['more']
+        del st.session_state['items']
+        del st.session_state['card_id']
+        del st.session_state['more_cfd']
+        del st.session_state['desc']
+        del st.session_state['coordinates']
+        st.session_state['focus'] = 1
+        st.experimental_rerun()    
