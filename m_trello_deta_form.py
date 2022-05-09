@@ -471,7 +471,7 @@ if st.session_state['focus'] == 7 :
                             ).add_to(m)
 
                         # call to render Folium map in Streamlit a
-                        folium_static(m, width=660, height=385)
+                        folium_static(m, width=600, height=350)
                     else:
                         st.warning("Geocoding as not successful")
                         st.stop()
