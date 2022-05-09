@@ -230,7 +230,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
             due_tm = st.time_input("Enter Due Date - time")
-            collect['due_date'] = (due_dt + due_tm).strftime("%Y-%m-%dT%H:%M:%S")
+            collect['due_date'] = "{}T{}".format(due_dt,due_tm)
 
             submit = st.form_submit_button("Submit")
 
