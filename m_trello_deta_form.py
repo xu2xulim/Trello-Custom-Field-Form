@@ -89,6 +89,7 @@ with st.sidebar:
                 st.write("The following sections had been selected: {}".format(st.session_state['sections']))
 
         st.session_state['board_id'] = board_dict[option]
+        st.session_state['timezone'] = st.selectbox(["Timezone", options=["Asia/Singapore", "Australia/Adelaide", "EST"],)
         st.write(st.session_state)
     elif st.session_state['authentication_status'] == False:
         st.error('Username/password is incorrect')
@@ -230,7 +231,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
             due_tm = st.time_input("Enter Due Date - time")
-            collect['due_date'] = "{}T{}".format(due_dt,due_tm)
+            collect['due_date'] = parse("{}T{}".format(due_dt,due_tm)).astimzone(pytz.timezone(st.session_state['timezone'])).strftime("%Y-%m-%dT%H:%M:%S")
 
             submit = st.form_submit_button("Submit")
 
