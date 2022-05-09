@@ -238,7 +238,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             submit = st.form_submit_button("Submit")
 
             if submit:
-                collect['due_date'] = str(parse("{}T{}".format(due_dt,due_tm)).astimezone(pytz.timezone(st.session_state['timezone'])))
+                collect['due_date'] = str(parse("{}T{}".format(due_dt,due_tm)).astimezone(pytz.timezone("UTC")))
                 st.write('Updating card....')
                 st.json(collect)
                 res_dates = requests.post('https://bpqc1s.deta.dev/update_card_dates', json = collect)
