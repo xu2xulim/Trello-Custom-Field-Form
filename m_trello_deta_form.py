@@ -231,9 +231,9 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['card_id'] = st.session_state['card_id']
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
-            due_tm = st.time_input("Enter Due Date Time")
-            due_24hr = st.slider("Time (hour)", min_value = 0, max_value =23, step=1, format="%HH")
-            due_min = st.slider("Time (min)", min_value = 0, max_value =59, step=5, format="%mm")
+            #due_tm = st.time_input("Enter Due Date Time")
+            due_24hr = st.slider("Time (hour)", min_value = 0, max_value =23, step=1, format="%H")
+            due_min = st.slider("Time (min)", min_value = 0, max_value =59, step=5, format="%m")
 
             submit = st.form_submit_button("Submit")
 
