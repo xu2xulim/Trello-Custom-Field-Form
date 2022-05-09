@@ -475,27 +475,27 @@ if st.session_state['focus'] == 7 :
                         st.warning("Geocoding as not successful")
                         st.stop()
 
-                    if update:
-                        collect = {}
-                        collect['card_id'] = st.session_state['card_id']
-                        collect['locationName'] = locationName
-                        collect['address'] = locationAddress
-                        collect['coordinates'] = st.session_state['coordinates']
+                if update:
+                    collect = {}
+                    collect['card_id'] = st.session_state['card_id']
+                    collect['locationName'] = locationName
+                    collect['address'] = locationAddress
+                    collect['coordinates'] = st.session_state['coordinates']
 
-                        res_location = requests.post('https://bpqc1s.deta.dev/update_location', json = collect)
+                    res_location = requests.post('https://bpqc1s.deta.dev/update_location', json = collect)
 
-                        if res_location.status_code == 200:
-                            del st.session_state['more']
-                            del st.session_state['items']
-                            del st.session_state['card_id']
-                            del st.session_state['more_cfd']
-                            del st.session_state['desc']
-                            del st.session_state['coordinates']
-                            st.session_state['focus'] = 1
-                            st.experimental_rerun()
-                        else:
-                            st.warning("Update card location attributes failed.")
-                            st.stop()
+                    if res_location.status_code == 200:
+                        del st.session_state['more']
+                        del st.session_state['items']
+                        del st.session_state['card_id']
+                        del st.session_state['more_cfd']
+                        del st.session_state['desc']
+                        del st.session_state['coordinates']
+                        st.session_state['focus'] = 1
+                        st.experimental_rerun()
+                    else:
+                        st.warning("Update card location attributes failed.")
+                        st.stop()
     else:
         del st.session_state['more']
         del st.session_state['items']
