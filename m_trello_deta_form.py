@@ -228,7 +228,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
 
     with st.expander("Open to enter Start and or Due Dates."):
 
-        with st.form("Enter Start and Due Dates", clear_on_submit=True):
+        with st.form("Enter Start and Due Dates", clear_on_submit=False):
             collect={}
             collect['card_id'] = st.session_state['card_id']
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
@@ -240,8 +240,11 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
 
             if submit:
                 st.write('Updating card....')
+                naive_datetime = datetime.combine(due_dt, due_tm)
+                timezone = pytz.timezone(st.session_state['timezone'])
+                collect['due_date'] = timezone.localize(naive_datetime)
                 #collect['due_date'] = str(parse("{}T{}:{}".format(due_dt, due_24hr, due_min),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
-                collect['due_date'] = str(parse("{}T{}".format(due_dt, due_tm),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
+                #collect['due_date'] = str(parse("{}T{}".format(due_dt, due_tm),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
                 st.json(collect)
                 res_dates = requests.post('https://bpqc1s.deta.dev/update_card_dates', json = collect)
                 if res_dates.status_code == 200 :
