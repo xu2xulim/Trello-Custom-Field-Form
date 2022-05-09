@@ -333,6 +333,7 @@ if st.session_state['focus'] == 5 :
                     line['name'] = st.text_input("Item Name")
                     due = st.date_input("Enter Item Due Date")
                     line['due'] = "{}T{}".format(due, '10:00:00')
+                    st.write(type(due))
                     line['member'] = st.selectbox("Select Assigned Member", options=list(st.session_state['more_cfd']['members'].keys()))
 
                     enter = st.form_submit_button("Enter")
