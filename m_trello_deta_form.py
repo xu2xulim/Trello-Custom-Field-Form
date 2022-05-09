@@ -426,7 +426,7 @@ if st.session_state['focus'] == 6 :
                     st.write('Updating card....')
                     res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
 
-                    if res_update.status_code == 200:]
+                    if res_update.status_code == 200:
                         st.session_state['focus'] = 7
                         st.experimental_rerun()
                     else:
@@ -498,4 +498,4 @@ if st.session_state['focus'] == 7 :
         del st.session_state['desc']
         del st.session_state['coordinates']
         st.session_state['focus'] = 1
-        st.experimental_rerun()    
+        st.experimental_rerun()
