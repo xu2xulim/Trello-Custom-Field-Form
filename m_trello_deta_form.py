@@ -232,7 +232,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
             due_tm = st.time_input("Enter Due Date - time")
-            collect['due_date'] = parse("{}T{}".format(due_dt,due_tm)).astimezone(pytz.timezone(st.session_state['timezone'])).strftime("%Y-%m-%dT%H:%M:%SZ")
+            collect['due_date'] = str(parse("{}T{}".format(due_dt,due_tm)).astimezone(pytz.timezone(st.session_state['timezone'])))
 
 
             submit = st.form_submit_button("Submit")
