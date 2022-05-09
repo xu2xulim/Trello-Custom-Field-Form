@@ -4,6 +4,7 @@ import numpy as np
 
 from datetime import datetime
 import pytz
+from dateutil.parser import parse
 from deta import Deta
 import json
 import requests
