@@ -377,10 +377,16 @@ if st.session_state['focus'] ==5.5:
 
             if submit:
                 st.write('Updating card....')
-                st.session_state['items'] = []
-                st.session_state['focus'] = 5
-                st.session_state['more'] = "Yes"
-                st.experimental_rerun()
+                res_add = requests.post('https://bpqc1s.deta.dev/add_checklist', json=collect)
+                if res_add.status_code == 200:
+                    st.session_state['items'] = []
+                    st.session_state['focus'] = 5
+                    st.session_state['more'] = "Yes"
+                    st.experimental_rerun()
+                else:
+                    st.warning("Add Checklist Failed")
+                    st.stop()
+
 
 if st.session_state['focus'] == 6 :
     if 'Labels and more' in st.session_state['sections']:
