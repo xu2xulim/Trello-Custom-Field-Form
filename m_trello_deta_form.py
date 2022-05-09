@@ -477,7 +477,7 @@ if st.session_state['focus'] == 7 :
                                 [lat, lon], popup=locationName, tooltip=tooltip
                             ).add_to(m)
 
-                        # call to render Folium map in Streamlit
+                        # call to render Folium map in Streamlit a
                         folium_static(m, width=660, height=385)
                     else:
                         st.warning("Geocoding as not successful")
