@@ -453,7 +453,7 @@ if st.session_state['focus'] == 7 :
             #cfd = res_get.json()['more']
             with st.form("Enter location attributes and review map", clear_on_submit=False):
                 locationName = st.text_input("Location Name")
-                locationAddress = st.tex_input("Location Address")
+                locationAddress = st.text_input("Location Address")
 
                 review = st.form_submit_button("Review Map")
 
