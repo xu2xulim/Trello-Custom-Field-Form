@@ -77,12 +77,12 @@ with st.sidebar:
             if 'sections' not in st.session_state:
                 skip = st.button("Skip")
                 if skip:
-                    st.session_state['sections'] = ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments']
+                    st.session_state['sections'] = ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location']
 
                 with st.expander("Customise the form sections you need. The default is ALL."):
 
                     with st.form("Form Sections", clear_on_submit=True):
-                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments'], ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments'])
+                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location'], ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location'])
                         create = st.form_submit_button("Create Form")
 
                         if create:
@@ -426,31 +426,20 @@ if st.session_state['focus'] == 6 :
                     st.write('Updating card....')
                     res_update = requests.post('https://bpqc1s.deta.dev/update_card', json = {"card_id" : st.session_state['card_id'], "more" : return_struct })
 
-                    if res_update.status_code == 200:
-                        del st.session_state['more']
-                        del st.session_state['items']
-                        del st.session_state['card_id']
-                        del st.session_state['more_cfd']
-                        del st.session_state['desc']
+                    if res_update.status_code == 200:]
                         st.session_state['focus'] = 7
                         st.experimental_rerun()
                     else:
                         st.write(res_update.text)
     else:
-        del st.session_state['more']
-        del st.session_state['items']
-        del st.session_state['card_id']
-        del st.session_state['more_cfd']
-        del st.session_state['desc']
         st.session_state['focus'] = 7
         st.experimental_rerun()
-st.session_state['sections'].append('Location')
+
 if st.session_state['focus'] == 7 :
 
     if 'Location' in st.session_state['sections']:
         with st.expander("Open to add location attributes to your card."):
-            #res_get = requests.post('https://bpqc1s.deta.dev/get_more', json = {"card_id" : st.session_state['card_id'] }) #st.write("slider", slider_val, "checkbox", checkbox_val)
-            #cfd = res_get.json()['more']
+            st.warning("Review Map is mandatory action. It will perform the geocoding required to update the Location attributes to the card.")
             with st.form("Enter location attributes and review map", clear_on_submit=False):
                 locationName = st.text_input("Location Name")
                 locationAddress = st.text_input("Location Address")
@@ -464,13 +453,9 @@ if st.session_state['focus'] == 7 :
                     res_map = requests.get(url)
 
                     if res_map.status_code == 200:
-                        collect = {}
-                        #collect['card_id'] = st.session_state['card_id']
-                        collect['locationName'] = locationName
-                        collect['address'] = locationAddress
                         position = res_map.json()['items'][0]['position']
                         coordinates = {'latitude': position['lat'], 'longitude' : position['lng']}
-                        collect['coordinates'] = coordinates
+                        st.session_state['coordinates'] = coordinates
                         m = folium.Map(location=[position['lat'], position['lng']], zoom_start=16)
                         # add marker for Liberty Bell
                         tooltip = locationAddress
@@ -483,3 +468,34 @@ if st.session_state['focus'] == 7 :
                     else:
                         st.warning("Geocoding as not successful")
                         st.stop()
+
+                    if update:
+                        collect = {}
+                        collect['card_id'] = st.session_state['card_id']
+                        collect['locationName'] = locationName
+                        collect['address'] = locationAddress
+                        collect['coordinates'] = st.session_state['coordinates']
+
+                        res_location = requests.post('https://bpqc1s.deta.dev/update_location', json = collect)
+
+                        if res_location.status_code == 200:
+                            del st.session_state['more']
+                            del st.session_state['items']
+                            del st.session_state['card_id']
+                            del st.session_state['more_cfd']
+                            del st.session_state['desc']
+                            del st.session_state['coordinates']
+                            st.session_state['focus'] = 1
+                            st.experimental_rerun()
+                        else:
+                            st.warning("Update card location attributes failed.")
+                            st.stop()
+        else:
+            del st.session_state['more']
+            del st.session_state['items']
+            del st.session_state['card_id']
+            del st.session_state['more_cfd']
+            del st.session_state['desc']
+            del st.session_state['coordinates']
+            st.session_state['focus'] = 1
+            st.experimental_rerun()
