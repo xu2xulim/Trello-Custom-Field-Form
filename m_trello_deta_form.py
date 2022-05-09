@@ -231,7 +231,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['card_id'] = st.session_state['card_id']
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
-            due_tm = st.date_input("Enter Due Date Time")
+            due_tm = st.time_input("Enter Due Date Time")
 
 
 
