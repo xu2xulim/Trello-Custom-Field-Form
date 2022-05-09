@@ -87,9 +87,8 @@ with st.sidebar:
             else:
                 st.write("The following sections had been selected: {}".format(st.session_state['sections']))
 
-
-
         st.session_state['board_id'] = board_dict[option]
+        st.write(st.session_state)
     elif st.session_state['authentication_status'] == False:
         st.error('Username/password is incorrect')
     elif st.session_state['authentication_status'] == None:
@@ -151,7 +150,7 @@ if not st.session_state['authentication_status'] or 'sections' not in st.session
 ### Authentication Ends Here....
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Form with Streamlit(Personalised)")
-st.write(st.session_state)
+
 if 'more' in st.session_state :
     pass
 else:
