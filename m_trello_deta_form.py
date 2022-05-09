@@ -475,7 +475,7 @@ if st.session_state['focus'] == 7 :
                         # add marker for Liberty Bell
                         tooltip = locationAddress
                         folium.Marker(
-                                [lat, lon], popup=locationName, tooltip=tooltip
+                                [position['lat'], position['lng']], popup=locationName, tooltip=tooltip
                             ).add_to(m)
 
                         # call to render Folium map in Streamlit a
