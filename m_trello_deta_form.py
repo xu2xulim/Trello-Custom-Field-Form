@@ -329,9 +329,15 @@ if st.session_state['focus'] == 5 :
             st.info("Use the Finished button when you have no more items to add.")
             finished = st.button("Finished")
             if finished:
-                st.session_state['focus'] = 5.5
-                st.session_state['more'] = "No"
-                st.experimental_rerun()
+                if len(st.session_state['items']) == 0:
+                    st.session_state['focus'] = 6
+                    st.session_state['more'] = "Yes"
+                    st.experimental_rerun()
+                else:
+                    st.session_state['focus'] = 5.5
+                    st.session_state['more'] = "No"
+                    st.experimental_rerun()
+
 
             items = st.session_state['items']
             if st.session_state['more'] == "Yes" :
