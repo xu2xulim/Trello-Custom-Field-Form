@@ -231,16 +231,17 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['card_id'] = st.session_state['card_id']
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
-            #due_tm = st.time_input("Enter Due Date Time")
-            due_24hr = st.slider("Time (hour)", 0, 23, 8, 1, "%d")
-            due_min = st.slider("Time (min)", 0, 60, 30, 5, "%d")
+            due_tm = st.time_input("Enter Due Date Time")
+            #due_24hr = st.slider("Time (hour)", 0, 23, 8, 1, "%d")
+            #due_min = st.slider("Time (min)", 0, 60, 30, 5, "%d")
+
 
             submit = st.form_submit_button("Submit")
 
             if submit:
-                #due_tm = st.time_input('Set an alarm for', datetime.time(due_24hr, due_min))
-                collect['due_date'] = str(parse("{}T{}:{}".format(due_dt, due_24hr, due_min),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
                 st.write('Updating card....')
+                #collect['due_date'] = str(parse("{}T{}:{}".format(due_dt, due_24hr, due_min),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
+                collect['due_date'] = str(parse("{}T{}".format(due_dt, due_tm),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
                 st.json(collect)
                 res_dates = requests.post('https://bpqc1s.deta.dev/update_card_dates', json = collect)
                 if res_dates.status_code == 200 :
