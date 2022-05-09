@@ -465,7 +465,7 @@ if st.session_state['focus'] == 7 :
 
                     if res_map.status_code == 200:
                         collect = {}
-                        collect['card_id'] = st.session_state['card_id']
+                        #collect['card_id'] = st.session_state['card_id']
                         collect['locationName'] = locationName
                         collect['address'] = locationAddress
                         position = json.loads(res.text)['items'][0]['position']
