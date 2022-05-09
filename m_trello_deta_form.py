@@ -150,7 +150,7 @@ if not st.session_state['authentication_status'] or 'sections' not in st.session
 ### Authentication Ends Here....
 order = Deta(st.secrets["DETA_PROJECT_ID"]).Base("trello_orders")
 st.header("Trello Form with Streamlit")
-st.info("This is a fully configurable form to create Trello Cards. The options and fields are dynamically created based on the board definitions. This include custom fields, labels, list names, members ..etc")
+st.info("This is a fully user configurable form to create Trello Cards. The options and fields are dynamically created based on the board definitions. This include custom fields, labels, list names, members ..etc")
 
 if 'more' in st.session_state :
     pass
