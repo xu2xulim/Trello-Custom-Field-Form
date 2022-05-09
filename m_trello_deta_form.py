@@ -220,8 +220,6 @@ if st.session_state['focus'] ==1.5:
                 st.write("Failed to Create Card")
                 st.stop()
 
-
-
 if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_state['sections'] :
 
     with st.expander("Open to enter Start and or Due Dates."):
@@ -229,17 +227,23 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
         with st.form("Enter Start and Due Dates", clear_on_submit=True):
             collect={}
             collect['card_id'] = st.session_state['card_id']
-            collect['start_date'] = st.date_input("Enter Start Date")
-            collect['due_date'] = st.date_input("Enter Due Date")
-            collect['due_time'] = st.time_input("Enter Due Date - time")
+            collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
+            due_dt = st.date_input("Enter Due Date")
+            due_tm = st.time_input("Enter Due Date - time")
+            collect['due_date'] = (due_dt + due_tm).strftime("%Y-%m-%dT%H:%M:%S")
 
             submit = st.form_submit_button("Submit")
 
             if submit:
                 st.write('Updating card....')
                 st.json(collect)
-                st.session_state['focus'] = 3
-                st.experimental_rerun()
+                res_dates = requests.post('https://bpqc1s.deta.dev/update_card_dates', json = collect)
+                if res_dates.status_code == 200 :
+                    st.session_state['focus'] = 3
+                    st.experimental_rerun()
+                else:
+                    st.warning("Update card start and due dates failed")
+                    st.stop()
 
 if st.session_state['focus'] == 3 :
 
