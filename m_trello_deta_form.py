@@ -242,7 +242,7 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
                 st.write('Updating card....')
                 naive_datetime = datetime.combine(due_dt, due_tm)
                 timezone = pytz.timezone(st.session_state['timezone'])
-                collect['due_date'] = timezone.localize(naive_datetime)
+                collect['due_date'] = timezone.localize(naive_datetime).isoformat()
                 #collect['due_date'] = str(parse("{}T{}:{}".format(due_dt, due_24hr, due_min),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
                 #collect['due_date'] = str(parse("{}T{}".format(due_dt, due_tm),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
                 st.json(collect)
