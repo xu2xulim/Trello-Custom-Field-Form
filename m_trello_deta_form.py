@@ -238,8 +238,8 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             submit = st.form_submit_button("Submit")
 
             if submit:
-                due_tm = st.time_input('Set an alarm for', datetime.time(due_24hr, due_min))
-                collect['due_date'] = str(parse("{}T{}".format(due_dt,due_tm),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
+                #due_tm = st.time_input('Set an alarm for', datetime.time(due_24hr, due_min))
+                collect['due_date'] = str(parse("{}T{}:{}".format(due_dt, due_24hr, due_min),ignoretz=True).astimezone(pytz.timezone(st.session_state['timezone'])))
                 st.write('Updating card....')
                 st.json(collect)
                 res_dates = requests.post('https://bpqc1s.deta.dev/update_card_dates', json = collect)
