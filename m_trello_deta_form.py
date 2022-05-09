@@ -232,8 +232,8 @@ if st.session_state['focus'] == 2 and 'Start and or Due Dates' in st.session_sta
             collect['start_date'] = st.date_input("Enter Start Date").strftime("%Y-%m-%d")
             due_dt = st.date_input("Enter Due Date")
             due_tm = st.time_input("Enter Due Date Time")
-            datetime_str = "{}T{}".format(due_dt, due_tm)
-            datetime_obj = d
+            #datetime_str = "{}T{}".format(due_dt, due_tm)
+
 
 
 
