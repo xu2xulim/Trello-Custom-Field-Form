@@ -89,7 +89,7 @@ with st.sidebar:
                 st.write("The following sections had been selected: {}".format(st.session_state['sections']))
 
         st.session_state['board_id'] = board_dict[option]
-        st.session_state['timezone'] = st.selectbox(["Timezone", options=["Asia/Singapore", "Australia/Adelaide", "EST"],)
+        st.session_state['timezone'] = st.selectbox("Timezone", options=["Asia/Singapore", "Australia/Adelaide", "EST"])
         st.write(st.session_state)
     elif st.session_state['authentication_status'] == False:
         st.error('Username/password is incorrect')
