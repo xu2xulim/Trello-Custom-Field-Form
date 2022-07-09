@@ -46,7 +46,7 @@ with st.sidebar:
     st.title("Trello Form With Streamlit")
     #names, usernames, hashed_passwords = auth_init()
     credentials = auth_init()
-    st.write(credentials)
+    #st.write(credentials)
     if credentials:
         authenticator = stauth.Authenticate(credentials,
             'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
@@ -57,7 +57,7 @@ with st.sidebar:
 
     name, authentication_status, username = authenticator.login('Login', 'sidebar')
     st.session_state['authentication_status'] = authentication_status
-    st.info(st.session_state)
+    #st.info(st.session_state)
     if st.session_state['authentication_status']:
         authenticator.logout('Logout', 'main')
         st.write('Welcome *%s*' % (st.session_state['name']))
