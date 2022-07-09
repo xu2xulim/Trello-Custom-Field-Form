@@ -20,7 +20,7 @@ import folium
 
 Users=Deta(os.environ.get('DETA_PROJECT_ID')).Base(os.environ.get('MILYNNUS_ST_USERS_BASE'))
 
-@st.cache(suppress_st_warning=True)
+#@st.cache(suppress_st_warning=True)
 def get_board_json (urls):
     payload = {"board_urls" : urls }
     res_options = requests.post('https://bpqc1s.deta.dev/get_options', json=payload)
@@ -30,7 +30,7 @@ def get_board_json (urls):
         return {}
     return board_json
 
-@st.cache(suppress_st_warning=True)
+#@st.cache(suppress_st_warning=True)
 def auth_init():
 
     res = Users.fetch(query=None, limit=100, last=None)
