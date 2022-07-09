@@ -34,26 +34,26 @@ def get_board_json (urls):
 def auth_init():
 
     res = Users.fetch(query=None, limit=100, last=None)
-    names = []
-    usernames = []
-    hashed_passwords = []
-    for x in res.items :
-        names.append(x['name'])
-        usernames.append(x['username'])
-        hashed_passwords.append(x['hash_password'])
+    #names = []
+    #usernames = []
+    #hashed_passwords = []
+    #for x in res.items :
+        #names.append(x['name'])
+        #usernames.append(x['username'])
+        #hashed_passwords.append(x['hash_password'])
 
-    return names, usernames, hashed_passwords
+    return res.items
 
 with st.sidebar:
     st.title("Trello Form With Streamlit")
-    names, usernames, hashed_passwords = auth_init()
-
-    st.info("This application is secured by Streamlit-Authenticator.")
-    
-    authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
-        'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
-
-    name, authentication_status, username = authenticator.login('Login', 'sidebar')
+    #names, usernames, hashed_passwords = auth_init()
+    credentials = auth_init()
+    if credentials:
+        authenticator = stauth.Authenticate(credentials,
+            'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
+        st.info("This application is secured by Streamlit-Authenticator.")
+        
+    #name, authentication_status, username = authenticator.login('Login', 'sidebar')
     #st.info(st.session_state)
     if st.session_state['authentication_status']:
         authenticator.logout('Logout', 'main')
@@ -108,8 +108,10 @@ with st.sidebar:
             with st.form("Fill in your name, your preferred username and password", clear_on_submit=True):
                 name = st.text_input("Name")
                 username = st.text_input("Username")
+                email = st.text_input("Email")
                 password = st.text_input("Password", type="password")
                 username_unique = Users.fetch(query={"username" : username})
+
                 submit = st.form_submit_button("Submit")
                 if username_unique.count == 0:
                     pass
