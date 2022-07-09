@@ -123,7 +123,7 @@ with st.sidebar:
                     st.stop()
 
                 if submit:
-                    Users.put({'name' : name, 'username' : username, 'hash_password' : stauth.Hasher([password]).generate()[0]})
+                    Users.put({'name' : name, 'username' : username, 'hash_password' : stauth.Hasher([password]).generate()[0], 'email' : email})
 
         with st.expander("Admin setup"):
             st.warning("This form is used by the administrator to attach card urls to a username. An admin secret is required for the update.")
