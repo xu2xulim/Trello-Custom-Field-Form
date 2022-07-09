@@ -34,15 +34,13 @@ def get_board_json (urls):
 def auth_init():
 
     res = Users.fetch(query=None, limit=100, last=None)
-    #names = []
-    #usernames = []
-    #hashed_passwords = []
-    #for x in res.items :
-        #names.append(x['name'])
+    cd = {"usernames" : {} }
+    for x in res.items :
+        cd['usernames'][x['username']] = {'name' : x['name'], 'password' : x['hash_password'], 'email' : x['email']}
         #usernames.append(x['username'])
         #hashed_passwords.append(x['hash_password'])
 
-    return res.items
+    return cd
 
 with st.sidebar:
     st.title("Trello Form With Streamlit")
