@@ -54,8 +54,8 @@ with st.sidebar:
     else:
         st.session_state['authentication_status'] = False
         st.info("Administrator setup is required.")
-    #name, authentication_status, username = authenticator.login('Login', 'sidebar')
-    #st.info(st.session_state)
+    name, authentication_status, username = authenticator.login('Login', 'sidebar')
+    st.info(st.session_state)
     if st.session_state['authentication_status']:
         authenticator.logout('Logout', 'main')
         st.write('Welcome *%s*' % (st.session_state['name']))
