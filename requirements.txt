@@ -2,6 +2,6 @@ deta
 
 pandas
 numpy
-streamlit_authenticator
-components
+streamlit
+extra-streamlit-components >= 0.1.55
 streamlit_folium
