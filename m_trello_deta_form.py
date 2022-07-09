@@ -62,42 +62,42 @@ with st.sidebar:
         authenticator.logout('Logout', 'main')
         st.write('Welcome *%s*' % (st.session_state['name']))
 
-        #res = Users.fetch(query={"name" : name, "username" : username}, limit=None, last=None)
-        #if len(res.items) == 1:
-            #user = Users.get(res.items[0]["key"])
+        res = Users.fetch(query={"name" : name, "username" : username}, limit=None, last=None)
+        if len(res.items) == 1:
+            user = Users.get(res.items[0]["key"])
 
-            #if "cf_form_boards" in user.keys():
-                #board_dict = get_board_json(user["cf_form_boards"])
+            if "cf_form_boards" in user.keys():
+                board_dict = get_board_json(user["cf_form_boards"])
 
-        #option = st.selectbox(
-            #'Select the board you are using',
-            #options=list(board_dict.keys()))
+        option = st.selectbox(
+            'Select the board you are using',
+            options=list(board_dict.keys()))
 
-        #if option:
-            #st.write('You selected:', option)
-            #st.write("Also what section do you need for your form. The default is All sections.")
+        if option:
+            st.write('You selected:', option)
+            st.write("Also what section do you need for your form. The default is All sections.")
 
 
-            #if 'sections' not in st.session_state:
-                #skip = st.button("Skip")
-                #if skip:
-                    #st.session_state['sections'] = ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location']
+            if 'sections' not in st.session_state:
+                skip = st.button("Skip")
+                if skip:
+                    st.session_state['sections'] = ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location']
 
-                #with st.expander("Customise the form sections you need. The default is ALL."):
+                with st.expander("Customise the form sections you need. The default is ALL."):
 
-                    #with st.form("Form Sections", clear_on_submit=True):
-                        #sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location'], ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location'])
-                        #create = st.form_submit_button("Create Form")
+                    with st.form("Form Sections", clear_on_submit=True):
+                        sections = st.multiselect("Selection the sections for the form:", ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location'], ['Description with Markdown', 'Start and or Due Dates', 'Labels and more', 'Checklists', 'Custom Fields', 'Attachments', 'Location'])
+                        create = st.form_submit_button("Create Form")
 
-                        #if create:
-                            #st.session_state['sections'] = sections
-                            #st.experimental_rerun()
-            #else:
-                #st.write("The following sections had been selected: {}".format(st.session_state['sections']))
+                        if create:
+                            st.session_state['sections'] = sections
+                            st.experimental_rerun()
+            else:
+                st.write("The following sections had been selected: {}".format(st.session_state['sections']))
 
-        #st.session_state['board_id'] = board_dict[option]
-        #st.session_state['timezone'] = st.selectbox("Timezone", options=["Asia/Singapore", "Australia/Adelaide", "EST"])
-        #st.write(st.session_state)
+        st.session_state['board_id'] = board_dict[option]
+        st.session_state['timezone'] = st.selectbox("Timezone", options=["Asia/Singapore", "Australia/Adelaide", "EST"])
+        st.write(st.session_state)
     elif st.session_state['authentication_status'] == False:
         st.error('Username/password is incorrect')
     elif st.session_state['authentication_status'] == None:
