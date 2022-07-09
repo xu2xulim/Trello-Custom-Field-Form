@@ -49,7 +49,7 @@ with st.sidebar:
     names, usernames, hashed_passwords = auth_init()
 
     st.info("This application is secured by Streamlit-Authenticator.")
-    st.stop()
+    
     authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
         'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
 
