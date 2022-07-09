@@ -53,7 +53,8 @@ with st.sidebar:
         authenticator = stauth.Authenticate(credentials,
             'milynnus_stauth', os.environ.get('MILYNNUS_ST_USERS_SIGNATURE'), cookie_expiry_days=30)
         st.info("This application is secured by Streamlit-Authenticator.")
-
+    else:
+        st.info("Administrator setup is required.")
     #name, authentication_status, username = authenticator.login('Login', 'sidebar')
     #st.info(st.session_state)
     if st.session_state['authentication_status']:
